@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "797650989943",
+    "project_id": "csp-movil-2024",
+    "storage_bucket": "csp-movil-2024.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:797650989943:android:35dce45a60771a697b6772",
+        "android_client_info": {
+          "package_name": "com.remotecsolutionsperu.cspmovil"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuC485qZ7B_PsI1YMUIjapMOaZtThIceo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
