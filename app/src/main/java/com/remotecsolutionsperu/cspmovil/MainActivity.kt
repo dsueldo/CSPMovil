@@ -20,8 +20,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.remotecsolutionsperu.cspmovil.ui.theme.CSPMovilTheme
+import com.remotecsolutionsperu.presentation.shared.NavigationWrapper
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var navHostController: NavHostController
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -30,6 +37,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            navHostController = rememberNavController()
+
+            CSPMovilTheme {
+                NavigationWrapper(navHostController)
+            }
             PantallaLogo()
         }
     }
