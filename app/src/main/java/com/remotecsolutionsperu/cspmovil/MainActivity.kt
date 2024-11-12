@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,6 +41,7 @@ fun PantallaLogo() {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
+            .clickable { throw RuntimeException("Test Crash") }
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
