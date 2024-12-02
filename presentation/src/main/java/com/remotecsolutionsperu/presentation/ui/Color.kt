@@ -1,4 +1,4 @@
-package com.remotecsolutionsperu.cspmovil.ui.theme
+package com.remotecsolutionsperu.presentation.ui
 
 import androidx.compose.ui.graphics.Color
 
