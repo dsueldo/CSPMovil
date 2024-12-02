@@ -100,7 +100,7 @@ fun BenefitComponent(
 @Composable
 private fun BenefitComponentPreview() {
     BenefitComponent(
-        icon = "https://www.pngwing.com/es/free-png-ytitz",
+        icon = "https://png.pngtree.com/png-vector/20230408/ourmid/pngtree-price-tag-with-the-discount-icon-vector-png-image_6686659.png",
         discountText = "discountText",
         expirationDateText = "expirationDateText",
         conditionsText = "conditionsText"
