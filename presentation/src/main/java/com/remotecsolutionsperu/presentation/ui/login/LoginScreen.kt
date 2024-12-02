@@ -36,7 +36,7 @@ fun LoginScreen(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center,
     ) {
         AsyncImage(
-            model = "https://drive.google.com/drive/folders/1bITRk0GqWhLypebVZ2yI93OuYv6wUIYV",
+            model = "https://www.facebook.com/photo/?fbid=640077138148249&set=a.640077134814916",
             contentDescription = null,
         )
         Text(

@@ -7,7 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.remotecsolutionsperu.cspmovil.ui.theme.CSPMovilTheme
-import com.remotecsolutionsperu.presentation.ui.splash.SplashScreen
+import com.remotecsolutionsperu.presentation.ui.login.LoginScreen
 
 class MainActivity : ComponentActivity() {
 
@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CSPMovilTheme {
-                SplashScreen()
+                LoginScreen()
             }
         }
     }
