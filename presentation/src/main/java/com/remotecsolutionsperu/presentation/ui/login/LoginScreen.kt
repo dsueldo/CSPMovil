@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.paddingFrom
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -17,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.AlignmentLine
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -31,22 +33,33 @@ fun LoginScreen(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .background(Color.Black)
-            .padding(32.dp)
+            .padding(16.dp)
             .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Top,
     ) {
+        Spacer(modifier = Modifier.height(48.dp))
         AsyncImage(
-            model = "https://www.facebook.com/photo/?fbid=640077138148249&set=a.640077134814916",
+            modifier = Modifier.fillMaxWidth().padding(32.dp),
+            model = "https://csp-limacallao.org.pe/wp-content/uploads/2021/06/98e94bdf-ce87-464d-8333-f0cefec1e270.jpg",
             contentDescription = null,
+            alignment = Alignment.Center,
         )
         Text(
             text = "Bienvenido a CSP Móvil",
-            modifier = Modifier.fillMaxWidth(),
-            color = Color.White
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    top = 16.dp,
+                    bottom = 16.dp,
+                ),
+            color = Color.White,
+            fontSize = 24.sp,
+            textAlign = TextAlign.Center
         )
+        Spacer(modifier = Modifier.height(16.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = "El app del Consejo Departamental de Lima - Callao",
+            text = "El app del Colegio de Sociólogos del Perú, Región Lima - Callao",
             color = Color.White
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -80,7 +93,7 @@ fun LoginScreen(modifier: Modifier = Modifier) {
             color = Color.Red,
             textDecoration = TextDecoration.Underline
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         Row(
             modifier = Modifier,
             verticalAlignment = Alignment.CenterVertically
@@ -94,7 +107,7 @@ fun LoginScreen(modifier: Modifier = Modifier) {
                 color = Color.White
             )
         }
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         TextButton(
             onClick = {},
             modifier = Modifier
