@@ -6,11 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.remotecsolutionsperu.cspmovil.ui.theme.CSPMovilTheme
-import com.remotecsolutionsperu.presentation.ui.benefits.BenefitsScreen
+import com.remotecsolutionsperu.presentation.ui.theme.CSPMovilTheme
 import com.remotecsolutionsperu.presentation.ui.login.LoginScreen
-import com.remotecsolutionsperu.presentation.ui.main.MainScreen
-import com.remotecsolutionsperu.presentation.ui.payment.PaymentOneScreen
 
 class MainActivity : ComponentActivity() {
 
