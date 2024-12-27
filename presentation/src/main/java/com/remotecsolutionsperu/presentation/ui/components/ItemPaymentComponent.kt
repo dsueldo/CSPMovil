@@ -19,9 +19,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
-import com.remotecsolutionsperu.presentation.ui.Grey40
-import com.remotecsolutionsperu.presentation.ui.Typography
+import coil.compose.AsyncImage
+import com.remotecsolutionsperu.cspmovil.ui.theme.Grey40
+import com.remotecsolutionsperu.cspmovil.ui.theme.Typography
 
 @Composable
 fun ItemPaymentComponent(

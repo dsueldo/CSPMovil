@@ -1,8 +1,8 @@
 package com.remotecsolutionsperu.cspmovil.di
 
-import com.remotecsolutionsperu.csp.utils.CONNECT_TIMEOUT
-import com.remotecsolutionsperu.csp.utils.READ_TIMEOUT
-import com.remotecsolutionsperu.csp.utils.WRITE_TIMEOUT
+import com.remotecsolutionsperu.cspmovil.utils.CONNECT_TIMEOUT
+import com.remotecsolutionsperu.cspmovil.utils.READ_TIMEOUT
+import com.remotecsolutionsperu.cspmovil.utils.WRITE_TIMEOUT
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
