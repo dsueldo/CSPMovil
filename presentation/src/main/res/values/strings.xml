@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">CSPMovil</string>
+    <string name="login_screen_title">Bienvenido a CSP Móvil</string>
+    <string name="login_screen_subtitle">El app del Colegio de Sociólogos del Perú, Región Lima - Callao</string>
+    <string name="login_screen_code">Nro. Colegiatura</string>
+    <string name="login_screen_enter_code">Ingrese Nro. Colegiaturaa</string>
+    <string name="login_screen_password">Contraseña</string>
+    <string name="login_screen_enter_password">Ingrese Contraseña</string>
+    <string name="login_screen_forget_password">Olvidaste tu Contraseña</string>
+    <string name="login_screen_accept_terms_conditions">Acepto los términos y condiciones</string>
+    <string name="login_screen_success">Ingresar</string>
+</resources>

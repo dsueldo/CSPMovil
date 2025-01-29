@@ -93,4 +93,8 @@ dependencies {
     implementation(libs.coil)
 
     implementation(project(":presentation"))
+    implementation(project(":domain"))
+    implementation(project(":data"))
+    implementation(project(":local"))
+    implementation(project(":remote"))
 }

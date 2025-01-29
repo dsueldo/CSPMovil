@@ -10,23 +10,42 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.remotecsolutionsperu.presentation.R
+import com.remotecsolutionsperu.presentation.viewmodels.auth.AuthState
+import com.remotecsolutionsperu.presentation.viewmodels.auth.AuthViewModel
 
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier) {
+fun LoginScreen(
+    modifier: Modifier = Modifier,
+    authViewModel: AuthViewModel,
+    navigateToHome:() -> Unit,
+) {
+    val loginUiState = authViewModel.loginUiState
+    val authState by authViewModel.authState.observeAsState()
+
+    LaunchedEffect(key1 = authState) {
+        if (authState is AuthState.Authenticated) {
+            navigateToHome()
+        }
+    }
 
     Column(
         modifier = modifier
@@ -37,13 +56,15 @@ fun LoginScreen(modifier: Modifier = Modifier) {
     ) {
         Spacer(modifier = Modifier.height(48.dp))
         AsyncImage(
-            modifier = Modifier.fillMaxWidth().padding(32.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(32.dp),
             model = "https://csp-limacallao.org.pe/wp-content/uploads/2021/06/98e94bdf-ce87-464d-8333-f0cefec1e270.jpg",
             contentDescription = null,
             alignment = Alignment.Center,
         )
         Text(
-            text = "Bienvenido a CSP Móvil",
+            text = stringResource(id = R.string.login_screen_title),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
@@ -57,37 +78,38 @@ fun LoginScreen(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = "El app del Colegio de Sociólogos del Perú, Región Lima - Callao",
+            text = stringResource(id = R.string.login_screen_subtitle),
             color = Color.White
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = TextFieldValue(),
-            onValueChange = {},
+            value = loginUiState.code,
+            onValueChange = { authViewModel.updateCode(it) },
             label = {
-                Text(text = "Nro. Colegiatura", color = Color.White)
+                Text (text = stringResource(id = R.string.login_screen_code), color = Color.White)
             },
             placeholder = {
-                Text(text = "Ingrese Nro. Colegiatura", color = Color.White)
+                Text(text = stringResource(id = R.string.login_screen_enter_code), color = Color.White)
             }
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = TextFieldValue(),
-            onValueChange = {},
+            value = loginUiState.password,
+            onValueChange = { authViewModel.updatePassword(it) },
             label = {
-                Text(text = "Contraseña", color = Color.White)
+                Text(text = stringResource(id = R.string.login_screen_password), color = Color.White)
             },
             placeholder = {
-                Text(text = "Ingrese Contraseña", color = Color.White)
-            }
+                Text(text = stringResource(id = R.string.login_screen_enter_password), color = Color.White)
+            },
+            visualTransformation = PasswordVisualTransformation(),
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.End,
-            text = "Olvidaste tu contraseña",
+            text = stringResource(id = R.string.login_screen_forget_password),
             color = Color.Red,
             textDecoration = TextDecoration.Underline
         )
@@ -101,29 +123,31 @@ fun LoginScreen(modifier: Modifier = Modifier) {
                 onCheckedChange = {}
             )
             Text(
-                text = "Acepto los términos y condiciones",
+                text = stringResource(id = R.string.login_screen_accept_terms_conditions),
                 color = Color.White
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
         TextButton(
-            onClick = {},
+            onClick = { authViewModel.getCustomToken() },
             modifier = Modifier
                 .background(Color.Red)
                 .fillMaxWidth(),
             content = {
                 Text(
-                    text = "Ingresar",
+                    text = stringResource(id = R.string.login_screen_success),
                     color = Color.White,
                     fontSize = 16.sp
                 )
-            }
+            },
+            enabled = loginUiState.code.isNotEmpty() && loginUiState.password.isNotEmpty()
         )
-    }
-}
+        if (loginUiState.isLoading) {
+            CircularProgressIndicator(modifier = Modifier.padding(16.dp))
+        }
 
-@Preview
-@Composable
-private fun LoginScreenPreview() {
-    LoginScreen()
+        if (loginUiState.error != null) {
+            Text(text = "Error: ${loginUiState.error}", color = Color.Red)
+        }
+    }
 }
