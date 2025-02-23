@@ -3,7 +3,7 @@ package com.remotecsolutionsperu.cspmovil.di
 import com.remotecsolutionsperu.cspmovil.utils.CONNECT_TIMEOUT
 import com.remotecsolutionsperu.cspmovil.utils.READ_TIMEOUT
 import com.remotecsolutionsperu.cspmovil.utils.WRITE_TIMEOUT
-import com.remotecsolutionsperu.presentation.net.ApiService
+import com.remotecsolutionsperu.cspmovil.net.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
