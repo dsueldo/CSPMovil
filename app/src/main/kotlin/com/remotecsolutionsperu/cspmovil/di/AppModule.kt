@@ -1,8 +1,8 @@
 package com.remotecsolutionsperu.cspmovil.di
 
-import com.remotecsolutionsperu.presentation.net.ApiService
-import com.remotecsolutionsperu.presentation.repository.auth.AuthRepository
-import com.remotecsolutionsperu.presentation.repository.login.LoginRepository
+import com.remotecsolutionsperu.cspmovil.net.ApiService
+import com.remotecsolutionsperu.cspmovil.repository.auth.AuthRepository
+import com.remotecsolutionsperu.cspmovil.repository.login.LoginRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
