@@ -13,7 +13,7 @@ val Pink40 = Color(0xFF7D5260)
 val Gray = Color(0xFF393939)
 val Black = Color(0xFF121212)
 val Green = Color(0xFF49dd63)
-val Red = Color(0xFFFF0000)
+val Red_Dark = Color(0xFF8F1414)
 val BackgroundButton = Color(0xFF111111)
 val ShapeButton = Color(0xFF3e3e3e)
 

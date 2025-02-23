@@ -1,8 +1,8 @@
 package com.remotecsolutionsperu.cspmovil.di
 
 import com.remotecsolutionsperu.cspmovil.net.ApiService
-import com.remotecsolutionsperu.cspmovil.repository.auth.AuthRepository
-import com.remotecsolutionsperu.cspmovil.repository.login.LoginRepository
+import com.remotecsolutionsperu.cspmovil.repository.auth.SignRepository
+import com.remotecsolutionsperu.cspmovil.repository.login.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,13 +15,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideAuthRepository(apiService: ApiService): AuthRepository {
-        return AuthRepository(apiService)
+    fun provideSignRepository(): SignRepository {
+        return SignRepository()
     }
 
     @Provides
     @Singleton
-    fun provideLoginRepository(apiService: ApiService): LoginRepository {
-        return LoginRepository(apiService)
+    fun provideLoginRepository(apiService: ApiService): UserRepository {
+        return UserRepository(apiService)
     }
 }
