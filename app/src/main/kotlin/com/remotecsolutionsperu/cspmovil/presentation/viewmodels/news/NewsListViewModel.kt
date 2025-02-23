@@ -9,7 +9,7 @@ import com.remotecsolutionsperu.cspmovil.application.SPLASH_SCREEN
 import com.remotecsolutionsperu.cspmovil.entities.news.News
 import com.remotecsolutionsperu.cspmovil.entities.user.UserProfile
 import com.remotecsolutionsperu.cspmovil.net.AccountService
-import com.remotecsolutionsperu.cspmovil.repository.login.LoginRepository
+import com.remotecsolutionsperu.cspmovil.repository.login.UserRepository
 import com.remotecsolutionsperu.cspmovil.repository.auth.Result
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NewsListViewModel @Inject constructor(
-    private val repository: LoginRepository,
+    private val repository: UserRepository,
     private val accountService: AccountService,
 ) : CspAppViewModel() {
 

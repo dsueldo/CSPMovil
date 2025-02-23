@@ -37,6 +37,7 @@ uiToolingPreview = "1.7.6"
 foundationAndroid = "1.7.4"
 runtimeLivedataVersion = "1.7.7"
 firebaseAuthKtx = "23.2.0"
+firebaseFirestoreKtx = "25.1.2"
 
 [libraries]
 androidx-compose-material3-material3 = { module = "androidx.compose.material3:material3" }
@@ -90,6 +91,7 @@ ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", versio
 androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
 runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedataVersion" }
 google-firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
+firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

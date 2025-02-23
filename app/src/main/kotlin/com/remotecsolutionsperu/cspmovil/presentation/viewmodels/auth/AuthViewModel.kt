@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
-import com.remotecsolutionsperu.cspmovil.repository.auth.AuthRepository
+import com.remotecsolutionsperu.cspmovil.repository.auth.SignRepository
 import com.remotecsolutionsperu.cspmovil.repository.auth.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val signRepository: SignRepository
 ) : ViewModel() {
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -108,7 +108,7 @@ class AuthViewModel @Inject constructor(
 
     fun signUp(email: String, password: String, onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
-            val result = authRepository.signUp(email, password)
+            val result = signRepository.signUp(email, password)
             onResult(result is Result.Success)
         }
     }

@@ -7,6 +7,7 @@ import com.remotecsolutionsperu.cspmovil.net.AccountService
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -14,15 +15,24 @@ class SignInViewModel @Inject constructor(
     private val accountService: AccountService
 ) : CspAppViewModel() {
 
-    val email = MutableStateFlow("")
-    val password = MutableStateFlow("")
+    private val _email = MutableStateFlow("")
+    val email: StateFlow<String> = _email
+
+    private val _password = MutableStateFlow("")
+    val password: StateFlow<String> = _password
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
+    private val _errorMessage = MutableStateFlow("")
+    val errorMessage: StateFlow<String> = _errorMessage
 
     fun updateEmail(newEmail: String) {
-        email.value = newEmail
+        _email.value = newEmail
     }
 
     fun updatePassword(newPassword: String) {
-        password.value = newPassword
+        _password.value = newPassword
     }
 
     fun onSignInClick(openAndPopUp: (String, String) -> Unit) {
