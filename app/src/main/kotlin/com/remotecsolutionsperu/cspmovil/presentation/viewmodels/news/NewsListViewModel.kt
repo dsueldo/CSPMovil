@@ -9,11 +9,13 @@ import com.remotecsolutionsperu.cspmovil.application.SPLASH_SCREEN
 import com.remotecsolutionsperu.cspmovil.entities.news.News
 import com.remotecsolutionsperu.cspmovil.entities.user.UserProfile
 import com.remotecsolutionsperu.cspmovil.net.AccountService
+import com.remotecsolutionsperu.cspmovil.net.NewsService
 import com.remotecsolutionsperu.cspmovil.repository.login.UserRepository
 import com.remotecsolutionsperu.cspmovil.repository.auth.Result
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,9 +23,22 @@ import javax.inject.Inject
 class NewsListViewModel @Inject constructor(
     private val repository: UserRepository,
     private val accountService: AccountService,
+    private val newsService: NewsService,
 ) : CspAppViewModel() {
 
-    val new = MutableStateFlow("")
+    private val _newsList = MutableStateFlow<List<String>>(emptyList())
+    val newsList: StateFlow<List<String>> = _newsList
+
+    init {
+        fetchNewsList()
+    }
+
+    private fun fetchNewsList() {
+        viewModelScope.launch {
+            val news = newsService.getNewsList()
+            _newsList.value = news
+        }
+    }
 
     var userProfileUiState by mutableStateOf(UserProfileUiState())
         private set

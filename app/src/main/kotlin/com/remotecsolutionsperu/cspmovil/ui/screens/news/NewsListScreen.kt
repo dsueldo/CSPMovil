@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.news.NewsListViewModel
@@ -31,7 +30,7 @@ fun NewsListScreen(
         verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(16.dp)
     ) {
         Text(
-            text = "Beneficios",
+            text = "Noticias",
             style = Typography.headlineMedium
         )
 

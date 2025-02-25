@@ -4,9 +4,10 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -16,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -23,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,118 +37,136 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.remotecsolutionsperu.cspmovil.ui.theme.CSPMovilTheme
-import com.remotecsolutionsperu.cspmovil.ui.theme.Purple40
 import com.remotecsolutionsperu.presentation.R
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.signUp.SignUpViewModel
+import com.remotecsolutionsperu.cspmovil.ui.theme.Black
+import com.remotecsolutionsperu.cspmovil.ui.theme.Red_Dark
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun SignUpScreen(
     openAndPopUp: (String, String) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: SignUpViewModel = hiltViewModel()
+    signUpViewModel: SignUpViewModel = hiltViewModel()
 ) {
-    val email = viewModel.email.collectAsState()
-    val password = viewModel.password.collectAsState()
-    val confirmPassword = viewModel.confirmPassword.collectAsState()
+    val email by signUpViewModel.email.collectAsState()
+    val password by signUpViewModel.password.collectAsState()
+    val confirmPassword = signUpViewModel.confirmPassword.collectAsState()
+    val isLoading by signUpViewModel.isLoading.collectAsState()
+    val errorMessage by signUpViewModel.errorMessage.collectAsState()
 
-    Column(
+    Box(
         modifier = modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
+            .fillMaxSize()
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        contentAlignment = Alignment.Center
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_logo),
-            contentDescription = "Auth image",
+        Column(
             modifier = modifier
-                .fillMaxWidth()
-                .padding(16.dp, 4.dp)
-        )
-
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp))
-
-        OutlinedTextField(
-            singleLine = true,
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(16.dp, 4.dp)
-                .border(
-                    BorderStroke(width = 2.dp, color = Purple40),
-                    shape = RoundedCornerShape(50)
-                ),
-            colors = TextFieldDefaults.colors(
-                focusedTextColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            ),
-            value = email.value,
-            onValueChange = { viewModel.updateEmail(it) },
-            placeholder = { Text(stringResource(R.string.login_screen_enter_code)) },
-            leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") }
-        )
-
-        OutlinedTextField(
-            singleLine = true,
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(16.dp, 4.dp)
-                .border(
-                    BorderStroke(width = 2.dp, color = Purple40),
-                    shape = RoundedCornerShape(50)
-                ),
-            colors = TextFieldDefaults.colors(
-                focusedTextColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            ),
-            value = password.value,
-            onValueChange = { viewModel.updatePassword(it) },
-            placeholder = { Text(stringResource(R.string.login_screen_password)) },
-            leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Email") },
-            visualTransformation = PasswordVisualTransformation()
-        )
-
-        OutlinedTextField(
-            singleLine = true,
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(16.dp, 4.dp)
-                .border(
-                    BorderStroke(width = 2.dp, color = Purple40),
-                    shape = RoundedCornerShape(50)
-                ),
-            colors = TextFieldDefaults.colors(
-                focusedTextColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            ),
-            value = confirmPassword.value,
-            onValueChange = { viewModel.updateConfirmPassword(it) },
-            placeholder = { Text(stringResource(R.string.login_screen_confirm_password)) },
-            leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Email") },
-            visualTransformation = PasswordVisualTransformation()
-        )
-
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp))
-
-        Button(
-            onClick = { viewModel.onSignUpClick(openAndPopUp) },
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(16.dp, 0.dp)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = stringResource(R.string.login_screen_register),
-                fontSize = 16.sp,
-                modifier = modifier.padding(0.dp, 6.dp)
+            Image(
+                painter = painterResource(id = R.drawable.ic_logo),
+                contentDescription = "Logo",
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(16.dp, 4.dp)
             )
+
+            Spacer(modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp))
+
+            OutlinedTextField(
+                singleLine = true,
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(16.dp, 4.dp)
+                    .border(
+                        BorderStroke(width = 2.dp, color = Black),
+                        shape = RoundedCornerShape(50)
+                    ),
+                colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.Black,
+                    focusedIndicatorColor = Color.Transparent,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                ),
+                value = email,
+                onValueChange = { signUpViewModel.updateEmail(it) },
+                placeholder = { Text(stringResource(R.string.login_screen_enter_email)) },
+                leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") }
+            )
+
+            OutlinedTextField(
+                singleLine = true,
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(16.dp, 4.dp)
+                    .border(
+                        BorderStroke(width = 2.dp, color = Black),
+                        shape = RoundedCornerShape(50)
+                    ),
+                colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.Black,
+                    focusedIndicatorColor = Color.Transparent,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                ),
+                value = password,
+                onValueChange = { signUpViewModel.updatePassword(it) },
+                placeholder = { Text(stringResource(R.string.login_screen_password)) },
+                leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Email") },
+                visualTransformation = PasswordVisualTransformation()
+            )
+
+            OutlinedTextField(
+                singleLine = true,
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(16.dp, 4.dp)
+                    .border(
+                        BorderStroke(width = 2.dp, color = Black),
+                        shape = RoundedCornerShape(50)
+                    ),
+                colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.Black,
+                    focusedIndicatorColor = Color.Transparent,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                ),
+                value = confirmPassword.value,
+                onValueChange = { signUpViewModel.updateConfirmPassword(it) },
+                placeholder = { Text(stringResource(R.string.login_screen_confirm_password)) },
+                leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Email") },
+                visualTransformation = PasswordVisualTransformation()
+            )
+
+            Spacer(modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp))
+
+            Button(
+                onClick = { signUpViewModel.onSignUpClick(openAndPopUp) },
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(16.dp, 0.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Red_Dark,
+                    contentColor = Color.White
+                )
+            ) {
+                Text(
+                    text = stringResource(R.string.login_screen_register),
+                    fontSize = 16.sp,
+                    modifier = modifier.padding(0.dp, 6.dp)
+                )
+            }
         }
     }
 }

@@ -47,13 +47,12 @@ fun SignInScreen(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.TopCenter
     ) {
         Column(
             modifier = modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            verticalArrangement = Arrangement.Center,
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
@@ -92,7 +91,7 @@ fun SignInScreen(
 
             Spacer(modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp))
+                .padding(32.dp))
 
             OutlinedTextField(
                 singleLine = true,
