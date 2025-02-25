@@ -1,18 +1,28 @@
 package com.remotecsolutionsperu.cspmovil.application
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.remotecsolutionsperu.cspmovil.ui.screens.components.BottomNavItem
+import com.remotecsolutionsperu.cspmovil.ui.screens.components.BottomNavigationDrawer
 import com.remotecsolutionsperu.cspmovil.ui.screens.news.NewsListScreen
 import com.remotecsolutionsperu.cspmovil.ui.screens.signIn.SignInScreen
 import com.remotecsolutionsperu.cspmovil.ui.screens.signUp.SignUpScreen
@@ -25,8 +35,22 @@ fun CspApp() {
     CSPMovilTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
             val appState = rememberAppState()
+            var selectedItem by remember { mutableStateOf(0) }
 
-            Scaffold { innerPaddingModifier ->
+            val items = listOf(
+                BottomNavItem("Noticias", Icons.Default.Star, selectedItem == 0),
+                BottomNavItem("Convenios", Icons.Default.Lock, selectedItem == 1),
+                BottomNavItem("Pagos", Icons.Default.ShoppingCart, selectedItem == 2),
+                BottomNavItem("Perfil", Icons.Default.Person, selectedItem == 3)
+            )
+
+            Scaffold(
+                bottomBar = {
+                    BottomNavigationDrawer(items) { item ->
+                        selectedItem = items.indexOf(item)
+                    }
+                }
+            ) { innerPaddingModifier ->
                 NavHost(
                     navController = appState.navController,
                     startDestination = SPLASH_SCREEN,
@@ -52,7 +76,9 @@ fun NavGraphBuilder.cspGraph(appState: CspAppState) {
     }
 
     composable(SIGN_IN_SCREEN) {
-        SignInScreen(openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) })
+        SignInScreen(
+            openAndPopUp = { route, popUp ->
+                appState.navigateAndPopUp(route, popUp) })
     }
 
     composable(SIGN_UP_SCREEN) {
@@ -66,15 +92,4 @@ fun NavGraphBuilder.cspGraph(appState: CspAppState) {
             newList = listOf("new1", "new2", "new3")
         )
     }
-
-    /*composable(
-        route = "$NOTE_SCREEN$NEW_ID_ARG",
-        arguments = listOf(navArgument(NEW_ID) { defaultValue = NEW_DEFAULT_ID })
-    ) {
-        NoteScreen(
-            noteId = it.arguments?.getString(NEW_ID) ?: NEW_DEFAULT_ID,
-            popUpScreen = { appState.popUp() },
-            restartApp = { route -> appState.clearAndNavigate(route) }
-        )
-    }*/
 }

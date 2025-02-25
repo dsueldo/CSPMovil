@@ -51,6 +51,10 @@ class AccountServiceImpl @Inject constructor() : AccountService {
         Firebase.auth.createUserWithEmailAndPassword(email, password).await()
     }
 
+    override suspend fun sendEmailVerification() {
+        Firebase.auth.currentUser?.sendEmailVerification()?.await()
+    }
+
     override suspend fun signOut() {
         Firebase.auth.signOut()
     }

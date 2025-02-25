@@ -1,6 +1,5 @@
 package com.remotecsolutionsperu.cspmovil.presentation.viewmodels.splash
 
-import com.remotecsolutionsperu.cspmovil.application.NEWS_LIST_SCREEN
 import com.remotecsolutionsperu.cspmovil.application.SIGN_IN_SCREEN
 import com.remotecsolutionsperu.cspmovil.application.SPLASH_SCREEN
 import com.remotecsolutionsperu.cspmovil.net.AccountService
