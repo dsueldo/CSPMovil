@@ -23,6 +23,6 @@ rootProject.name = "CSPMovil"
 include(":app")
 include(":data")
 include(":domain")
-include(":remote")
 include(":local")
 include(":presentation")
+include(":di")

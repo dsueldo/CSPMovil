@@ -81,4 +81,6 @@ dependencies {
     implementation(libs.logging.interceptor)
 
     implementation(libs.coil)
+
+    implementation(project(":domain"))
 }

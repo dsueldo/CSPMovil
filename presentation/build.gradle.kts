@@ -81,5 +81,6 @@ dependencies {
 
     implementation(libs.coil)
 
+    implementation(project(":domain"))
     implementation(project(":data"))
 }

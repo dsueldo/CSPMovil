@@ -10,10 +10,10 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.BuildConfig
 import com.google.firebase.firestore.firestore
-import com.remotecsolutionsperu.cspmovil.application.AUTH_PORT
+import com.remotecsolutionsperu.cspmovil.presentation.navigation.AUTH_PORT
 import com.remotecsolutionsperu.cspmovil.application.CspApp
-import com.remotecsolutionsperu.cspmovil.application.FIRESTORE_PORT
-import com.remotecsolutionsperu.cspmovil.application.LOCALHOST
+import com.remotecsolutionsperu.cspmovil.presentation.navigation.FIRESTORE_PORT
+import com.remotecsolutionsperu.cspmovil.presentation.navigation.LOCALHOST
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
