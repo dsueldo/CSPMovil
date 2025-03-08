@@ -24,14 +24,10 @@ import kotlinx.coroutines.delay
 private const val SPLASH_TIMEOUT = 1000L
 
 @Composable
-fun SplashScreen(
-    openAndPopUp: (String, String) -> Unit,
-    viewModel: SplashViewModel = hiltViewModel()
-) {
+fun SplashScreen() {
 
     LaunchedEffect(true) {
         delay(SPLASH_TIMEOUT)
-        viewModel.onAppStart(openAndPopUp)
     }
 
     Box(

@@ -21,14 +21,11 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.signIn.SignInViewModel
-import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Black
-import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.CSPMovilTheme
 import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Red_Dark
+import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.signIn.SignInViewModel
 import com.remotecsolutionsperu.presentation.R
 
 @Composable
@@ -99,7 +96,7 @@ fun SignInScreen(
                     .fillMaxWidth()
                     .padding(8.dp, 4.dp)
                     .border(
-                        BorderStroke(width = 2.dp, color = Black),
+                        BorderStroke(width = 2.dp, color = Color.Black),
                         shape = RoundedCornerShape(50)
                     ),
                 colors = TextFieldDefaults.colors(
@@ -121,7 +118,7 @@ fun SignInScreen(
                     .fillMaxWidth()
                     .padding(8.dp, 4.dp)
                     .border(
-                        BorderStroke(width = 2.dp, color = Black),
+                        BorderStroke(width = 2.dp, color = Color.Black),
                         shape = RoundedCornerShape(50)
                     ),
                 colors = TextFieldDefaults.colors(
@@ -143,7 +140,7 @@ fun SignInScreen(
                 .padding(16.dp))
 
             Button(
-                onClick = { signInViewModel.onSignInClick(openAndPopUp) },
+                onClick = { signInViewModel.onSignInClick(email, password) },
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(8.dp),
@@ -179,17 +176,9 @@ fun SignInScreen(
                 Text(
                     text = stringResource(R.string.sign_up_description),
                     fontSize = 16.sp,
-                    color = Black
+                    color = Color.Black
                 )
             }
         }
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun AuthPreview() {
-    CSPMovilTheme() {
-        SignInScreen({ _, _ -> })
     }
 }

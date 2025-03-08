@@ -1,5 +1,6 @@
 package com.remotecsolutionsperu.cspmovil.ui
 
+import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,7 +12,7 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.BuildConfig
 import com.google.firebase.firestore.firestore
 import com.remotecsolutionsperu.cspmovil.presentation.navigation.AUTH_PORT
-import com.remotecsolutionsperu.cspmovil.application.CspApp
+import com.remotecsolutionsperu.cspmovil.presentation.navigation.ApplicationNavigation
 import com.remotecsolutionsperu.cspmovil.presentation.navigation.FIRESTORE_PORT
 import com.remotecsolutionsperu.cspmovil.presentation.navigation.LOCALHOST
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,8 +26,9 @@ class MainActivity : ComponentActivity() {
             installSplashScreen()
         }
         super.onCreate(savedInstanceState)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         enableEdgeToEdge()
-        setContent { CspApp() }
+        setContent { ApplicationNavigation() }
     }
 
     private fun configureFirebaseServices() {

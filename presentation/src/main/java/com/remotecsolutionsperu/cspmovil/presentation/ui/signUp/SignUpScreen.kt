@@ -32,18 +32,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.CSPMovilTheme
 import com.remotecsolutionsperu.presentation.R
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.signUp.SignUpViewModel
-import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Black
 import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Red_Dark
 
-@Composable
 @OptIn(ExperimentalMaterial3Api::class)
+@Composable
 fun SignUpScreen(
     openAndPopUp: (String, String) -> Unit,
     modifier: Modifier = Modifier,
@@ -85,7 +82,7 @@ fun SignUpScreen(
                     .fillMaxWidth()
                     .padding(16.dp, 4.dp)
                     .border(
-                        BorderStroke(width = 2.dp, color = Black),
+                        BorderStroke(width = 2.dp, color = Color.Black),
                         shape = RoundedCornerShape(50)
                     ),
                 colors = TextFieldDefaults.colors(
@@ -107,7 +104,7 @@ fun SignUpScreen(
                     .fillMaxWidth()
                     .padding(16.dp, 4.dp)
                     .border(
-                        BorderStroke(width = 2.dp, color = Black),
+                        BorderStroke(width = 2.dp, color = Color.Black),
                         shape = RoundedCornerShape(50)
                     ),
                 colors = TextFieldDefaults.colors(
@@ -130,7 +127,7 @@ fun SignUpScreen(
                     .fillMaxWidth()
                     .padding(16.dp, 4.dp)
                     .border(
-                        BorderStroke(width = 2.dp, color = Black),
+                        BorderStroke(width = 2.dp, color = Color.Black),
                         shape = RoundedCornerShape(50)
                     ),
                 colors = TextFieldDefaults.colors(
@@ -168,13 +165,5 @@ fun SignUpScreen(
                 )
             }
         }
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun AuthPreview() {
-    CSPMovilTheme() {
-        SignUpScreen({ _, _ -> })
     }
 }

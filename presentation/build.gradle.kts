@@ -80,6 +80,15 @@ dependencies {
     implementation(libs.logging.interceptor)
 
     implementation(libs.coil)
+    implementation("io.coil-kt.coil3:coil-compose:3.0.4")
+    implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
+    implementation("androidx.compose.material:material:1.7.5")
+
+    val nav_version = "2.8.4"
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+
+    implementation("androidx.compose.material:material-icons-extended:1.5.0")
 
     implementation(project(":domain"))
     implementation(project(":data"))

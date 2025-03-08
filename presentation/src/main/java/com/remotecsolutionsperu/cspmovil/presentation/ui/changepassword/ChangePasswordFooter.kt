@@ -1,0 +1,39 @@
+package com.remotecsolutionsperu.cspmovil.presentation.ui.changepassword
+
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Typography
+
+@Composable
+fun ChangePasswordFooter(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+
+    TextButton(
+        modifier = modifier.fillMaxWidth(),
+        onClick = onClick,
+        colors = ButtonDefaults.textButtonColors(MaterialTheme.colorScheme.primary),
+    ) {
+        Text(
+            text = "Guardar",
+            color = MaterialTheme.colorScheme.onPrimary,
+            style = Typography.titleMedium
+        )
+    }
+
+}
+
+@Preview
+@Composable
+private fun ChangePasswordFooterPreview() {
+    ChangePasswordFooter(
+        onClick = {}
+    )
+}
