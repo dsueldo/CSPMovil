@@ -20,8 +20,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Grey60
-import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Grey90
 import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Typography
 
 @Composable
@@ -35,7 +33,7 @@ fun NewComponent(
 
     Card(
         modifier = modifier,
-        border = BorderStroke(width = 1.dp, color = Grey60),
+        border = BorderStroke(width = 1.dp, color = Color.Gray),
         colors = CardDefaults.cardColors(
             containerColor = Color.White
         )
@@ -61,7 +59,7 @@ fun NewComponent(
                     FilledTonalButton(
                         onClick = {},
                         colors = ButtonDefaults.filledTonalButtonColors(
-                            containerColor = Grey90
+                            containerColor = Color.Gray
                         )
                     ) {
                         Text(

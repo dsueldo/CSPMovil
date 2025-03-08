@@ -1,17 +1,19 @@
 package com.remotecsolutionsperu.cspmovil.presentation.ui.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Grey40
 import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Typography
 
 @Composable
@@ -22,26 +24,26 @@ fun FeedComponent(
     modifier: Modifier = Modifier
 ) {
 
-    Column(
-        modifier = modifier.padding(16.dp).fillMaxWidth()
-    ) {
+    Column(modifier = Modifier.padding(16.dp)) {
         AsyncImage(
             modifier = Modifier.fillMaxWidth(),
             model = image,
             contentScale = ContentScale.Crop,
             contentDescription = null
         )
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = title,
-            style = Typography.headlineMedium,
-            color = Color.Black
+            fontWeight = FontWeight.Bold,
+            style = Typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onPrimaryContainer
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = content,
-            style = Typography.bodySmall,
-            color = Grey40
+            style = Typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onPrimaryContainer
         )
     }
 }

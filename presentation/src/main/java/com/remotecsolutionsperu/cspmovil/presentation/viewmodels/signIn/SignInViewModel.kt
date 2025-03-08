@@ -4,9 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.remotecsolutionsperu.cspmovil.presentation.navigation.NEWS_LIST_SCREEN
-import com.remotecsolutionsperu.cspmovil.presentation.navigation.SIGN_IN_SCREEN
-import com.remotecsolutionsperu.cspmovil.presentation.navigation.SIGN_UP_SCREEN
 import com.remotecsolutionsperu.cspmovil.domain.repositories.AccountService
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,6 +29,9 @@ class SignInViewModel @Inject constructor(
     private val _errorMessage = MutableStateFlow("")
     val errorMessage: StateFlow<String> = _errorMessage
 
+    private val _uiState = MutableStateFlow(false)
+    val uiState: StateFlow<Boolean> = _uiState
+
     fun updateEmail(newEmail: String) {
         _email.value = newEmail
     }
@@ -40,12 +40,13 @@ class SignInViewModel @Inject constructor(
         _password.value = newPassword
     }
 
-    fun onSignInClick(openAndPopUp: (String, String) -> Unit) {
+    fun onSignInClick(email: String, password: String) {
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                accountService.signIn(email.value, password.value)
-                openAndPopUp(NEWS_LIST_SCREEN, SIGN_IN_SCREEN)
+                accountService.signIn(email, password)
+                _uiState.value = true
+
             } catch (e: Exception) {
                 _errorMessage.value = when (e) {
                     is FirebaseAuthInvalidUserException -> "No existe una cuenta relacionada con este email"
@@ -54,12 +55,12 @@ class SignInViewModel @Inject constructor(
                     else -> "An unknown error occurred. Please try again."
                 }
             } finally {
-                _isLoading.value = false
+
             }
         }
     }
 
     fun onSignUpClick(openAndPopUp: (String, String) -> Unit) {
-        openAndPopUp(SIGN_UP_SCREEN, SIGN_IN_SCREEN)
+
     }
 }
