@@ -21,13 +21,17 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.remotecsolutionsperu.cspmovil.ui.screens.components.BottomNavItem
-import com.remotecsolutionsperu.cspmovil.ui.screens.components.BottomNavigationDrawer
-import com.remotecsolutionsperu.cspmovil.ui.screens.news.NewsListScreen
-import com.remotecsolutionsperu.cspmovil.ui.screens.signIn.SignInScreen
-import com.remotecsolutionsperu.cspmovil.ui.screens.signUp.SignUpScreen
-import com.remotecsolutionsperu.cspmovil.ui.screens.splash.SplashScreen
-import com.remotecsolutionsperu.cspmovil.ui.theme.CSPMovilTheme
+import com.remotecsolutionsperu.cspmovil.presentation.navigation.NEWS_LIST_SCREEN
+import com.remotecsolutionsperu.cspmovil.presentation.navigation.SIGN_IN_SCREEN
+import com.remotecsolutionsperu.cspmovil.presentation.navigation.SIGN_UP_SCREEN
+import com.remotecsolutionsperu.cspmovil.presentation.navigation.SPLASH_SCREEN
+import com.remotecsolutionsperu.cspmovil.presentation.ui.components.BottomNavItem
+import com.remotecsolutionsperu.cspmovil.presentation.ui.components.BottomNavigationDrawer
+import com.remotecsolutionsperu.cspmovil.presentation.ui.news.NewsListScreen
+import com.remotecsolutionsperu.cspmovil.presentation.ui.signIn.SignInScreen
+import com.remotecsolutionsperu.cspmovil.presentation.ui.signUp.SignUpScreen
+import com.remotecsolutionsperu.cspmovil.presentation.ui.splash.SplashScreen
+import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.CSPMovilTheme
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)

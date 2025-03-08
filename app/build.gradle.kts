@@ -67,11 +67,8 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.serialization.json)
 
-    implementation(libs.hilt.android)
     implementation(libs.runtime.livedata)
     implementation(libs.firebase.auth)
-    kapt(libs.hilt.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
 
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
@@ -94,7 +91,9 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
 
     implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
     kapt(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
@@ -106,5 +105,4 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
     implementation(project(":local"))
-    implementation(project(":remote"))
 }
