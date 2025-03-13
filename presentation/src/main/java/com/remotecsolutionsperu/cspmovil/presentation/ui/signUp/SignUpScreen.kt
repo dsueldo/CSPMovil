@@ -41,10 +41,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -71,17 +72,14 @@ fun SignUpScreen(
     val uiState by signUpViewModel.uiState.collectAsState()
     val isLoading by signUpViewModel.isLoading.collectAsState()
     val errorMessage by signUpViewModel.errorMessage.collectAsState()
-    val successMessage by signUpViewModel.successMessage.collectAsState()
     var showDialog by remember { mutableStateOf(false) }
     var showErrorDialog by remember { mutableStateOf(false) }
-    var showErrorConfirmPasswordDialog by remember { mutableStateOf(false) }
+    var showErrorConfirmPassword by remember { mutableStateOf(false) }
     var passwordStrength by remember { mutableStateOf(signUpViewModel.validatePasswordStrength(password)) }
-    var showPasswordStrengthDialog by remember { mutableStateOf(false) }
-
-    LaunchedEffect(password) {
-        passwordStrength = signUpViewModel.validatePasswordStrength(password)
-        showPasswordStrengthDialog = true
-    }
+    var showPasswordStrength by remember { mutableStateOf(false) }
+    val emailFocusRequester = remember { FocusRequester() }
+    val passwordFocusRequester = remember { FocusRequester() }
+    val confirmPasswordFocusRequester = remember { FocusRequester() }
 
     LaunchedEffect(uiState) {
         if (uiState) {
@@ -93,7 +91,7 @@ fun SignUpScreen(
         if (errorMessage == "EL correo ya se encuentra registrado.") {
             showErrorDialog = true
         } else if (errorMessage == "Ingrese la contraseña correctamente.") {
-            showErrorConfirmPasswordDialog = true
+            showErrorConfirmPassword = true
         }
     }
 
@@ -161,16 +159,16 @@ fun SignUpScreen(
         )
     }
 
-    if (showErrorConfirmPasswordDialog) {
+    if (showErrorConfirmPassword) {
         AlertDialog(
             onDismissRequest = {
-                showErrorConfirmPasswordDialog = false
+                showErrorConfirmPassword = false
                 signUpViewModel.resetState()
             },
             confirmButton = {
                 Button(
                     onClick = {
-                        showErrorConfirmPasswordDialog = false
+                        showErrorConfirmPassword = false
                         signUpViewModel.resetState()
                     },
                     colors = ButtonDefaults.buttonColors(
@@ -186,15 +184,15 @@ fun SignUpScreen(
         )
     }
 
-    if (showPasswordStrengthDialog) {
+    if (showPasswordStrength) {
         AlertDialog(
             onDismissRequest = {
-                showPasswordStrengthDialog = false
+                showPasswordStrength = false
             },
             confirmButton = {
                 Button(
                     onClick = {
-                        showPasswordStrengthDialog = false
+                        showPasswordStrength = false
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Red_Dark,
@@ -243,7 +241,8 @@ fun SignUpScreen(
                     .border(
                         BorderStroke(width = 2.dp, color = Color.Black),
                         shape = RoundedCornerShape(50)
-                    ),
+                    )
+                    .focusRequester(emailFocusRequester),
                 colors = TextFieldDefaults.colors(
                     focusedTextColor = Color.Black,
                     focusedIndicatorColor = Color.Transparent,
@@ -252,7 +251,10 @@ fun SignUpScreen(
                     unfocusedContainerColor = Color.Transparent,
                 ),
                 value = email,
-                onValueChange = { signUpViewModel.updateEmail(it) },
+                onValueChange = {
+                    signUpViewModel.updateEmail(it)
+                    signUpViewModel.resetState()
+                },
                 placeholder = { Text(stringResource(R.string.login_screen_enter_email)) },
                 leadingIcon = {
                     Icon(
@@ -279,7 +281,10 @@ fun SignUpScreen(
                     unfocusedContainerColor = Color.Transparent,
                 ),
                 value = password,
-                onValueChange = { signUpViewModel.updatePassword(it) },
+                onValueChange = {
+                    signUpViewModel.updatePassword(it)
+                    signUpViewModel.resetState()
+                },
                 placeholder = { Text(stringResource(R.string.login_screen_password)) },
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
@@ -300,9 +305,17 @@ fun SignUpScreen(
                         contentDescription = "Password"
                     )
                 },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                keyboardActions = KeyboardActions(onDone = {})
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
+                keyboardActions = KeyboardActions(onNext = { confirmPasswordFocusRequester.requestFocus() })
             )
+
+            if (showPasswordStrength) {
+                Text(
+                    text = passwordStrength,
+                    color = if (passwordStrength == "Contraseña es fuerte") Color.Blue else Color.Red,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
 
             OutlinedTextField(
                 singleLine = true,
@@ -321,7 +334,10 @@ fun SignUpScreen(
                     unfocusedContainerColor = Color.Transparent,
                 ),
                 value = confirmPassword.value,
-                onValueChange = { signUpViewModel.updateConfirmPassword(it) },
+                onValueChange = {
+                    signUpViewModel.updateConfirmPassword(it)
+                    signUpViewModel.resetState()
+                },
                 placeholder = { Text(stringResource(R.string.login_screen_confirm_password)) },
                 visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
@@ -342,8 +358,8 @@ fun SignUpScreen(
                         contentDescription = "ConfirmPassword"
                     )
                 },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                keyboardActions = KeyboardActions(onDone = {})
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+                keyboardActions = KeyboardActions(onDone = { /* Handle done action */ })
             )
 
             Spacer(
@@ -353,7 +369,11 @@ fun SignUpScreen(
             )
 
             Button(
-                onClick = { signUpViewModel.onSignUpClick() },
+                onClick = {
+                    passwordStrength = signUpViewModel.validatePasswordStrength(password)
+                    showPasswordStrength = true
+                    signUpViewModel.onSignUpClick()
+                },
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp),

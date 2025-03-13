@@ -40,14 +40,17 @@ class SignUpViewModel @Inject constructor(
 
     fun updateEmail(newEmail: String) {
         _email.value = newEmail
+        _errorMessage.value = ""
     }
 
     fun updatePassword(newPassword: String) {
         _password.value = newPassword
+        _errorMessage.value = ""
     }
 
     fun updateConfirmPassword(newConfirmPassword: String) {
         _confirmPassword.value = newConfirmPassword
+        _errorMessage.value = ""
     }
 
     private fun validatePasswords(): Boolean {
@@ -66,6 +69,19 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun onSignUpClick() {
+        val passwordStrengthMessage = validatePasswordStrength(_password.value)
+        if (passwordStrengthMessage != "Contraseña es fuerte") {
+            _errorMessage.value = passwordStrengthMessage
+            return
+        }
+        if (_email.value.isEmpty()) {
+            _errorMessage.value = "Ingrese el correo electrónico."
+            return
+        }
+        if (_password.value.isEmpty()) {
+            _errorMessage.value = "Ingrese la contraseña."
+            return
+        }
         if (!validatePasswords()) {
             _errorMessage.value = "Ingrese la contraseña correctamente."
             return
