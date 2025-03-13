@@ -54,6 +54,17 @@ class SignUpViewModel @Inject constructor(
         return _password.value == _confirmPassword.value
     }
 
+    fun validatePasswordStrength(password: String): String {
+        return when {
+            password.length < 6 -> "Contraseña es muy corta"
+            !password.any { it.isDigit() } -> "Contraseña debe contener almenos un dígito"
+            !password.any { it.isUpperCase() } -> "Password must contain at least one uppercase letter"
+            !password.any { it.isLowerCase() } -> "Password must contain at least one lowercase letter"
+            !password.any { !it.isLetterOrDigit() } -> "Password must contain at least one special character"
+            else -> "Contraseña es fuerte"
+        }
+    }
+
     fun onSignUpClick() {
         if (!validatePasswords()) {
             _errorMessage.value = "Ingrese la contraseña correctamente."
@@ -83,5 +94,10 @@ class SignUpViewModel @Inject constructor(
                 _isLoading.value = false
             }
         }
+    }
+
+    fun resetState() {
+        _uiState.value = false
+        _errorMessage.value = ""
     }
 }
