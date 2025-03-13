@@ -9,18 +9,31 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Typography
 
 @Composable
 fun LoginFooter(
-    onClick: () -> Unit,
+    onClickRegistration: () -> Unit,
+    onClickLogin: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         TextButton(
-            onClick = onClick,
+            onClick = onClickRegistration,
             modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.textButtonColors(MaterialTheme.colorScheme.primary),
+            colors = ButtonDefaults.textButtonColors(Red_Dark),
+        ) {
+            Text(
+                text = "Registrarse",
+                color = MaterialTheme.colorScheme.onPrimary,
+                style = Typography.titleMedium
+            )
+        }
+        TextButton(
+            onClick = onClickLogin,
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.textButtonColors(Red_Dark),
         ) {
             Text(
                 text = "Ingresar",
@@ -34,5 +47,5 @@ fun LoginFooter(
 @Preview
 @Composable
 private fun LoginFooterPreview() {
-    LoginFooter(onClick = {})
+    LoginFooter(onClickRegistration = {}, onClickLogin = {})
 }

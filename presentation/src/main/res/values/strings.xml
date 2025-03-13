@@ -5,6 +5,7 @@
     <string name="login_screen_subtitle_2">Región Lima - Callao</string>
     <string name="login_screen_code">Nro. Colegiatura</string>
     <string name="login_screen_enter_code">Ingrese Nro. Colegiatura</string>
+    <string name="login_screen_email">Correo</string>
     <string name="login_screen_enter_email">Ingrese Correo</string>
     <string name="login_screen_password">Contraseña</string>
     <string name="login_screen_enter_password">Ingrese Contraseña</string>
@@ -14,4 +15,6 @@
     <string name="login_screen_register">Registrarse</string>
     <string name="login_screen_success">Ingresar</string>
     <string name="sign_up_description">No tienes cuenta? Haz click aqui para registrarte!</string>
+    <string name="login_screen_hide_password">Ocultar contraseña</string>
+    <string name="login_screen_show_password">Mostrar contraseña</string>
 </resources>

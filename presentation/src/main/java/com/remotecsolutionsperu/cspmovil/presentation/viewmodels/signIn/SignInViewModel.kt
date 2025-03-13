@@ -40,13 +40,12 @@ class SignInViewModel @Inject constructor(
         _password.value = newPassword
     }
 
-    fun onSignInClick(email: String, password: String) {
+    fun onSignInClick() {
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                accountService.signIn(email, password)
+                accountService.signIn(_email.value, _password.value)
                 _uiState.value = true
-
             } catch (e: Exception) {
                 _errorMessage.value = when (e) {
                     is FirebaseAuthInvalidUserException -> "No existe una cuenta relacionada con este email"
@@ -55,12 +54,8 @@ class SignInViewModel @Inject constructor(
                     else -> "An unknown error occurred. Please try again."
                 }
             } finally {
-
+                _isLoading.value = false
             }
         }
-    }
-
-    fun onSignUpClick(openAndPopUp: (String, String) -> Unit) {
-
     }
 }

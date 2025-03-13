@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -48,11 +49,19 @@ fun LoginHeader(modifier: Modifier = Modifier) {
             textAlign = TextAlign.Center,
             letterSpacing = 5.sp
         )
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.login_screen_subtitle_2),
             color = MaterialTheme.colorScheme.onBackground,
-            style = Typography.bodySmall
+            style = Typography.titleMedium,
+            fontSize = 30.sp,
+            fontStyle = FontStyle.Italic,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            letterSpacing = 5.sp
         )
     }
 }

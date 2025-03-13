@@ -4,8 +4,8 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.Firebase
-import com.remotecsolutionsperu.cspmovil.domain.entities.user.User
 import com.remotecsolutionsperu.cspmovil.domain.repositories.AccountService
+import com.remotecsolutionsperu.cspmovil.domain.entities.user.User
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -49,6 +49,15 @@ class AccountServiceImpl @Inject constructor() : AccountService {
 
     override suspend fun signUp(email: String, password: String) {
         Firebase.auth.createUserWithEmailAndPassword(email, password).await()
+        Log.d("AccountServiceImpl", "User signUp in successfully")
+        Log.d("AccountServiceImpl", "User ID: ${Firebase.auth.currentUser!!.uid}")
+        Log.d("AccountServiceImpl", "Email: $email")
+        Log.d("AccountServiceImpl", "Password: $password")
+        Log.d("AccountServiceImpl", "User: ${Firebase.auth.currentUser}")
+        Log.d("AccountServiceImpl", "User UID: ${Firebase.auth.currentUser?.uid}")
+        Log.d("AccountServiceImpl", "User Email: ${Firebase.auth.currentUser?.email}")
+        Log.d("AccountServiceImpl", "User Display Name: ${Firebase.auth.currentUser?.displayName}")
+        Log.d("AccountServiceImpl", "User Phone Number: ${Firebase.auth.currentUser?.tenantId}")
     }
 
     override suspend fun sendEmailVerification() {
@@ -66,9 +75,4 @@ class AccountServiceImpl @Inject constructor() : AccountService {
     private suspend fun getIdToken(): String? {
         return Firebase.auth.currentUser?.getIdToken(true)?.await()?.token
     }
-}
-
-sealed class Result<out T> {
-    data class Success<out T>(val data: T) : Result<T>()
-    data class Failure(val exception: Exception) : Result<Nothing>()
 }

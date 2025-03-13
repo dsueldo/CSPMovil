@@ -1,4 +1,4 @@
-package com.remotecsolutionsperu.cspmovil.di.modules
+package com.remotecsolutionsperu.cspmovil.modules
 
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module

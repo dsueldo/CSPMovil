@@ -22,12 +22,11 @@ fun HomeScreen(
     newsListViewModel: NewsListViewModel,
     token: String
 ) {
-    val uiState = newsListViewModel.userProfileUiState
 
     LaunchedEffect(Unit) {
     }
 
-    Column(
+    /*Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
@@ -50,5 +49,5 @@ fun HomeScreen(
                 content = "Beneficio exclusivo para los ingenieros colegiados habilitados y familiares"
             )
         }
-    }
+    }*/
 }
