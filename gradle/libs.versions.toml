@@ -1,6 +1,7 @@
 [versions]
 agp = "8.7.1"
 appcompat = "1.7.0"
+googleHiltAndroid = "2.44"
 hiltAndroidVersion = "2.48"
 hiltCompiler = "2.51.1"
 hiltNavigationCompose = "1.2.0"
@@ -59,6 +60,7 @@ firebase-config = {module = "com.google.firebase:firebase-config-ktx"}
 coil = {module = "io.coil-kt:coil-compose", version.ref = "coil"}
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
+hilt-android-v244 = { module = "com.google.dagger:hilt-android", version.ref = "googleHiltAndroid" }
 hilt-android-v248 = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroidVersion" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompiler" }
 java-jwt = { module = "com.auth0:java-jwt", version.ref = "javaJwt" }

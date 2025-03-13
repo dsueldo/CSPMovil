@@ -1,15 +1,12 @@
 package com.remotecsolutionsperu.cspmovil.presentation.viewmodels.news
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.remotecsolutionsperu.cspmovil.presentation.navigation.NEW_DEFAULT_ID
-import com.remotecsolutionsperu.cspmovil.presentation.navigation.SPLASH_SCREEN
-import com.remotecsolutionsperu.cspmovil.domain.entities.news.News
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.remotecsolutionsperu.cspmovil.domain.entities.user.UserProfile
 import com.remotecsolutionsperu.cspmovil.domain.repositories.AccountService
-import com.remotecsolutionsperu.cspmovil.domain.repositories.NewsService
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,13 +15,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NewsListViewModel @Inject constructor(
-    private val accountService: AccountService,
-    private val newsService: NewsService,
-) : CspAppViewModel() {
+class NewsListViewModel @Inject constructor() : CspAppViewModel() {
 
     private val _newsList = MutableStateFlow<List<String>>(emptyList())
     val newsList: StateFlow<List<String>> = _newsList
+
+    val db = Firebase.firestore
 
     init {
         fetchNewsList()
@@ -32,40 +28,23 @@ class NewsListViewModel @Inject constructor(
 
     private fun fetchNewsList() {
         viewModelScope.launch {
-            val news = newsService.getNewsList()
-            _newsList.value = news
+            db.collection("news")
+                .addSnapshotListener { snapshot, e ->
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e)
+                        return@addSnapshotListener
+                    }
+
+                    if (snapshot != null) {
+                        val title = snapshot.documents.get(0).getString("title")
+                        Log.d(TAG, "Current data: ${title}")
+
+                        Log.d(TAG, "Current data: ${snapshot.documents}")
+                    } else {
+                        Log.d(TAG, "Current data: null")
+                    }
+                }
         }
-    }
-
-    var userProfileUiState by mutableStateOf(UserProfileUiState())
-        private set
-
-    fun initialize(noteId: String, restartApp: (String) -> Unit) {
-        observeAuthenticationState(restartApp)
-    }
-
-    private fun observeAuthenticationState(restartApp: (String) -> Unit) {
-        launchCatching {
-            accountService.currentUser.collect { user ->
-                if (user == null) restartApp(SPLASH_SCREEN)
-            }
-        }
-    }
-
-    fun onSignOutClick() {
-        launchCatching {
-            accountService.signOut()
-        }
-    }
-
-    fun onDeleteAccountClick() {
-        launchCatching {
-            accountService.deleteAccount()
-        }
-    }
-
-    companion object {
-        private val DEFAULT_NOTE = News(NEW_DEFAULT_ID, "My News")
     }
 }
 

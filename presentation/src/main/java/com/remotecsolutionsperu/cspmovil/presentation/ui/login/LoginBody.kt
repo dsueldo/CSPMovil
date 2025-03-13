@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
@@ -18,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
@@ -26,13 +29,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Typography
+import com.remotecsolutionsperu.presentation.R
 
 @Composable
 fun LoginBody(
     onNavigateChangePassword: () -> Unit,
     modifier: Modifier = Modifier,
-    enrollmentNumber: TextFieldValue,
-    enrollmentNumberValueChange: (TextFieldValue) -> Unit,
+    email: TextFieldValue,
+    emaiValueChange: (TextFieldValue) -> Unit,
     password: TextFieldValue,
     passwordValueChange: (TextFieldValue) -> Unit,
     passwordVisible: Boolean = false,
@@ -45,38 +49,39 @@ fun LoginBody(
     ) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = enrollmentNumber,
-            onValueChange = enrollmentNumberValueChange,
+            value = email,
+            onValueChange = emaiValueChange,
             label = {
                 Text(
-                    text = "Nro. Colegiatura",
+                    text = stringResource(R.string.login_screen_email),
                     style = Typography.bodySmall
                 )
             },
             placeholder = {
                 Text(
-                    text = "Ingrese Nro. Colegiatura",
+                    text = stringResource(R.string.login_screen_enter_email),
                     style = Typography.bodySmall
                 )
             },
-            singleLine = true,
+            leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") },
+            singleLine = false,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             keyboardActions = KeyboardActions(onNext = {})
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = password,
             onValueChange = passwordValueChange,
             label = {
                 Text(
-                    text = "Contraseña",
+                    text = stringResource(R.string.login_screen_password),
                     style = Typography.bodySmall
                 )
             },
             placeholder = {
                 Text(
-                    text = "Ingrese Contraseña",
+                    text = stringResource(R.string.login_screen_enter_password),
                     style = Typography.bodySmall
                 )
             },
@@ -85,10 +90,15 @@ fun LoginBody(
                 IconButton(onClick = { passwordVisibleValueChange(!passwordVisible) }) {
                     Icon(
                         imageVector = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                        contentDescription = if (passwordVisible) "Hide password" else "Show password"
+                        contentDescription =
+                        if (passwordVisible)
+                            stringResource(R.string.login_screen_hide_password)
+                        else
+                            stringResource(R.string.login_screen_show_password),
                     )
                 }
             },
+            leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Lock") },
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             keyboardActions = KeyboardActions(onDone = {})
@@ -98,18 +108,10 @@ fun LoginBody(
             modifier = Modifier
                 .clickable { onNavigateChangePassword() },
             textAlign = TextAlign.End,
-            text = "Olvidaste tu contraseña",
+            text = stringResource(R.string.login_screen_forget_password),
             color = MaterialTheme.colorScheme.onBackground,
             textDecoration = TextDecoration.Underline,
             style = Typography.bodySmall
         )
     }
 }
-
-//@Preview
-//@Composable
-//private fun LoginBodyPreview() {
-//    LoginBody(
-//        onNavigateChangePassword = {}
-//    )
-//}

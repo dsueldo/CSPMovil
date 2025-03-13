@@ -16,18 +16,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.splash.SplashViewModel
+import androidx.navigation.NavController
+import com.remotecsolutionsperu.cspmovil.presentation.navigation.Login
 import com.remotecsolutionsperu.presentation.R
 import kotlinx.coroutines.delay
 
 private const val SPLASH_TIMEOUT = 1000L
 
 @Composable
-fun SplashScreen() {
+fun SplashScreen(
+    navController: NavController,
+) {
 
     LaunchedEffect(true) {
         delay(SPLASH_TIMEOUT)
+        navController.navigate(Login) {
+            popUpTo(navController.graph.startDestinationId) {
+                inclusive = true
+            }
+        }
     }
 
     Box(

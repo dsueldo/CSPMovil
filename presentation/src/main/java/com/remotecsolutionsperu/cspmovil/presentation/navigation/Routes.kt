@@ -7,7 +7,9 @@ import androidx.compose.material.icons.filled.Newspaper
 import androidx.compose.material.icons.filled.Work
 import kotlinx.serialization.Serializable
 
+@Serializable data object Splash
 @Serializable data object Login
+@Serializable data object SignUp
 @Serializable data object ChangePassword
 @Serializable data object Main
 @Serializable data object Profile

@@ -1,4 +1,4 @@
-package com.remotecsolutionsperu.cspmovil.di.modules
+package com.remotecsolutionsperu.cspmovil.modules
 
 import okhttp3.OkHttpClient
 import javax.net.ssl.SSLContext
