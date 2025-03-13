@@ -40,6 +40,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -74,6 +75,13 @@ fun SignUpScreen(
     var showDialog by remember { mutableStateOf(false) }
     var showErrorDialog by remember { mutableStateOf(false) }
     var showErrorConfirmPasswordDialog by remember { mutableStateOf(false) }
+    var passwordStrength by remember { mutableStateOf(signUpViewModel.validatePasswordStrength(password)) }
+    var showPasswordStrengthDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(password) {
+        passwordStrength = signUpViewModel.validatePasswordStrength(password)
+        showPasswordStrengthDialog = true
+    }
 
     LaunchedEffect(uiState) {
         if (uiState) {
@@ -82,7 +90,9 @@ fun SignUpScreen(
     }
 
     LaunchedEffect(errorMessage) {
-        if (errorMessage.isNotEmpty()) {
+        if (errorMessage == "EL correo ya se encuentra registrado.") {
+            showErrorDialog = true
+        } else if (errorMessage == "Ingrese la contraseña correctamente.") {
             showErrorConfirmPasswordDialog = true
         }
     }
@@ -103,58 +113,99 @@ fun SignUpScreen(
 
     if (showDialog) {
         AlertDialog(
-            onDismissRequest = { showDialog = false },
+            onDismissRequest = {
+                showDialog = false
+                signUpViewModel.resetState()
+            },
             confirmButton = {
-                Button(onClick = {
-                    showDialog = false
-                    navController.navigate(Login)
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Red_Dark,
-                    contentColor = Color.White
+                Button(
+                    onClick = {
+                        showDialog = false
+                        signUpViewModel.resetState()
+                        navController.navigate(Login)
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Red_Dark,
+                        contentColor = Color.White
                     )
-                ){
+                ) {
                     Text("OK")
                 }
             },
-            title = { Text("Registration Successful") },
-            text = { Text("You have registered successfully.") }
+            title = { Text("Registro Exitoso") },
+            text = { Text("Te has registrado correctamente.") }
         )
     }
 
     if (showErrorDialog) {
         AlertDialog(
-            onDismissRequest = { showErrorDialog = false },
+            onDismissRequest = {
+                showErrorDialog = false
+                signUpViewModel.resetState()
+            },
             confirmButton = {
-                Button(onClick = { showErrorDialog = false },
+                Button(onClick = {
+                    showErrorDialog = false
+                    signUpViewModel.resetState()
+                },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Red_Dark,
                         contentColor = Color.White
                     )
-                ){
-                    Text("ShowErrorDialog")
+                ) {
+                    Text("Ok")
                 }
             },
-            title = { Text("Cuenta ya registrada") },
-            text = { Text(errorMessage) }
+            title = { Text("Cuenta Registrada") },
+            text = { Text("El correo ya se encuentra registrado.") }
         )
     }
 
     if (showErrorConfirmPasswordDialog) {
         AlertDialog(
-            onDismissRequest = { showErrorConfirmPasswordDialog = false },
+            onDismissRequest = {
+                showErrorConfirmPasswordDialog = false
+                signUpViewModel.resetState()
+            },
             confirmButton = {
-                Button(onClick = { showErrorConfirmPasswordDialog = false },
+                Button(
+                    onClick = {
+                        showErrorConfirmPasswordDialog = false
+                        signUpViewModel.resetState()
+                    },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Red_Dark,
                         contentColor = Color.White
                     )
-                ){
+                ) {
                     Text("ShowErrorConfirmPasswordDialog")
                 }
             },
             title = { Text("Contraseñas no coinciden") },
-            text = { Text(errorMessage) }
+            text = { Text("Las contraseñas no coinciden.") }
+        )
+    }
+
+    if (showPasswordStrengthDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                showPasswordStrengthDialog = false
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showPasswordStrengthDialog = false
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Red_Dark,
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text("OK")
+                }
+            },
+            title = { Text("Password Strength") },
+            text = { Text(passwordStrength) }
         )
     }
 
@@ -178,9 +229,11 @@ fun SignUpScreen(
                     .padding(16.dp, 4.dp)
             )
 
-            Spacer(modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp))
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp)
+            )
 
             OutlinedTextField(
                 singleLine = true,
@@ -201,7 +254,12 @@ fun SignUpScreen(
                 value = email,
                 onValueChange = { signUpViewModel.updateEmail(it) },
                 placeholder = { Text(stringResource(R.string.login_screen_enter_email)) },
-                leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") }
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Email,
+                        contentDescription = "Email"
+                    )
+                }
             )
 
             OutlinedTextField(
@@ -236,7 +294,12 @@ fun SignUpScreen(
                         )
                     }
                 },
-                leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Password") },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = "Password"
+                    )
+                },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 keyboardActions = KeyboardActions(onDone = {})
             )
@@ -273,14 +336,21 @@ fun SignUpScreen(
                         )
                     }
                 },
-                leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "ConfirmPassword") },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = "ConfirmPassword"
+                    )
+                },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 keyboardActions = KeyboardActions(onDone = {})
             )
 
-            Spacer(modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp))
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp)
+            )
 
             Button(
                 onClick = { signUpViewModel.onSignUpClick() },
