@@ -52,7 +52,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.remotecsolutionsperu.cspmovil.presentation.navigation.Login
 import com.remotecsolutionsperu.presentation.R
 import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.signUp.SignUpViewModel
@@ -71,7 +70,7 @@ fun SignUpScreen(
     var confirmPasswordVisible by remember { mutableStateOf(false) }
     val uiState by signUpViewModel.uiState.collectAsState()
     val isLoading by signUpViewModel.isLoading.collectAsState()
-    val errorMessage by signUpViewModel.errorMessage.collectAsState()
+    var errorMessage by remember { mutableStateOf("") }
     var showDialog by remember { mutableStateOf(false) }
     var showErrorDialog by remember { mutableStateOf(false) }
     var showErrorConfirmPassword by remember { mutableStateOf(false) }
@@ -84,14 +83,6 @@ fun SignUpScreen(
     LaunchedEffect(uiState) {
         if (uiState) {
             showDialog = true
-        }
-    }
-
-    LaunchedEffect(errorMessage) {
-        if (errorMessage == "EL correo ya se encuentra registrado.") {
-            showErrorDialog = true
-        } else if (errorMessage == "Ingrese la contraseña correctamente.") {
-            showErrorConfirmPassword = true
         }
     }
 
@@ -109,7 +100,32 @@ fun SignUpScreen(
         )
     }
 
-    if (showDialog) {
+    if (showErrorDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                showErrorDialog = false
+                signUpViewModel.resetState()
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showErrorDialog = false
+                        signUpViewModel.resetState()
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Red_Dark,
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text("OK")
+                }
+            },
+            title = { Text("Alerta!") },
+            text = { Text(errorMessage) }
+        )
+    }
+
+    /*if (showDialog) {
         AlertDialog(
             onDismissRequest = {
                 showDialog = false
@@ -157,55 +173,7 @@ fun SignUpScreen(
             title = { Text("Cuenta Registrada") },
             text = { Text("El correo ya se encuentra registrado.") }
         )
-    }
-
-    if (showErrorConfirmPassword) {
-        AlertDialog(
-            onDismissRequest = {
-                showErrorConfirmPassword = false
-                signUpViewModel.resetState()
-            },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        showErrorConfirmPassword = false
-                        signUpViewModel.resetState()
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Red_Dark,
-                        contentColor = Color.White
-                    )
-                ) {
-                    Text("ShowErrorConfirmPasswordDialog")
-                }
-            },
-            title = { Text("Contraseñas no coinciden") },
-            text = { Text("Las contraseñas no coinciden.") }
-        )
-    }
-
-    if (showPasswordStrength) {
-        AlertDialog(
-            onDismissRequest = {
-                showPasswordStrength = false
-            },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        showPasswordStrength = false
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Red_Dark,
-                        contentColor = Color.White
-                    )
-                ) {
-                    Text("OK")
-                }
-            },
-            title = { Text("Password Strength") },
-            text = { Text(passwordStrength) }
-        )
-    }
+    }*/
 
     Box(
         modifier = modifier
@@ -272,7 +240,8 @@ fun SignUpScreen(
                     .border(
                         BorderStroke(width = 2.dp, color = Color.Black),
                         shape = RoundedCornerShape(50)
-                    ),
+                    )
+                    .focusRequester(passwordFocusRequester),
                 colors = TextFieldDefaults.colors(
                     focusedTextColor = Color.Black,
                     focusedIndicatorColor = Color.Transparent,
@@ -312,7 +281,7 @@ fun SignUpScreen(
             if (showPasswordStrength) {
                 Text(
                     text = passwordStrength,
-                    color = if (passwordStrength == "Contraseña es fuerte") Color.Blue else Color.Red,
+                    color = if (passwordStrength == "La contraseña es fuerte") Color.Blue else Color.Red,
                     modifier = Modifier.padding(top = 8.dp)
                 )
             }
@@ -370,9 +339,27 @@ fun SignUpScreen(
 
             Button(
                 onClick = {
+                    val isPasswordValid = signUpViewModel.validateEnterPassword()
+                    val isConfirmPasswordValid = signUpViewModel.validateEnterConfirmPassword()
+                    val isEmailValid = signUpViewModel.validateEnterEmail()
+                    if (isEmailValid && isPasswordValid && isConfirmPasswordValid) {
+                        if (signUpViewModel.password.value != signUpViewModel.confirmPassword.value) {
+                            errorMessage = "Las contraseñas no coinciden."
+                            showErrorDialog = true
+                        } else {
+                            signUpViewModel.onSignUpClick()
+                        }
+                    } else {
+                        showErrorDialog = true
+                        errorMessage = signUpViewModel.errorMessage.value
+                    }
                     passwordStrength = signUpViewModel.validatePasswordStrength(password)
                     showPasswordStrength = true
-                    signUpViewModel.onSignUpClick()
+                    /*signUpViewModel.onSignUpClick()
+                    enterEmail = signUpViewModel.validateEnterEmail()
+                    enterPassword = signUpViewModel.validateEnterPassword()
+                    passwordStrength = signUpViewModel.validatePasswordStrength(password)
+                    showPasswordStrength = true*/
                 },
                 modifier = modifier
                     .fillMaxWidth()
