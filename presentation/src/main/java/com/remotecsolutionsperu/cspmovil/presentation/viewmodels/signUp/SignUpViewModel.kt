@@ -2,8 +2,8 @@ package com.remotecsolutionsperu.cspmovil.presentation.viewmodels.signUp
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.remotecsolutionsperu.cspmovil.presentation.navigation.NEWS_LIST_SCREEN
-import com.remotecsolutionsperu.cspmovil.presentation.navigation.SIGN_UP_SCREEN
+import com.remotecsolutionsperu.cspmovil.data.repositories.EmailValidationService
+import com.remotecsolutionsperu.cspmovil.data.repositories.PasswordValidationService
 import com.remotecsolutionsperu.cspmovil.domain.repositories.AccountService
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,11 +32,11 @@ class SignUpViewModel @Inject constructor(
     private val _errorMessage = MutableStateFlow("")
     val errorMessage: StateFlow<String> = _errorMessage
 
-    private val _successMessage = MutableStateFlow("")
-    val successMessage: StateFlow<String> = _successMessage
-
     private val _uiState = MutableStateFlow(false)
     val uiState: StateFlow<Boolean> = _uiState
+
+    private val emailValidationService = EmailValidationService()
+    private val passwordValidationService = PasswordValidationService()
 
     fun updateEmail(newEmail: String) {
         _email.value = newEmail
@@ -53,40 +53,53 @@ class SignUpViewModel @Inject constructor(
         _errorMessage.value = ""
     }
 
-    private fun validatePasswords(): Boolean {
-        return _password.value == _confirmPassword.value
+    fun validateEnterEmail(): Boolean {
+        val isValid = emailValidationService.validate(_email.value)
+        if (!isValid) {
+            _errorMessage.value = emailValidationService.getErrorMessage()
+            Log.d("SignUpViewModel", "Error: ${_errorMessage.value}")
+        }
+        return isValid
+    }
+
+    fun validateEnterPassword(): Boolean {
+        val isValid = passwordValidationService.validate(_password.value)
+        if (!isValid) {
+            _errorMessage.value = passwordValidationService.getErrorMessage()
+            Log.d("SignUpViewModel", "Error: ${_errorMessage.value}")
+        }
+        return isValid
+    }
+
+    fun validateEnterConfirmPassword(): Boolean {
+        val isValid = passwordValidationService.validate(_confirmPassword.value)
+        if (!isValid) {
+            _errorMessage.value = passwordValidationService.getErrorMessage()
+            Log.d("SignUpViewModel", "Error: ${_errorMessage.value}")
+        }
+        return isValid
     }
 
     fun validatePasswordStrength(password: String): String {
         return when {
-            password.length < 6 -> "Contraseña es muy corta"
-            !password.any { it.isDigit() } -> "Contraseña debe contener almenos un dígito"
-            !password.any { it.isUpperCase() } -> "Password must contain at least one uppercase letter"
-            !password.any { it.isLowerCase() } -> "Password must contain at least one lowercase letter"
-            !password.any { !it.isLetterOrDigit() } -> "Password must contain at least one special character"
-            else -> "Contraseña es fuerte"
+            password.length < 6 -> "La contraseña es muy corta"
+            !password.any { it.isDigit() } -> "La contraseña debe contener al menos un dígito"
+            !password.any { it.isUpperCase() } -> "La contraseña debe contener al menos una letra mayúscula"
+            !password.any { it.isLowerCase() } -> "La contraseña debe contener al menos una letra minúscula"
+            !password.any { !it.isLetterOrDigit() } -> "La contraseña debe contener al menos un carácter especial"
+            else -> "La contraseña es fuerte"
         }
     }
 
     fun onSignUpClick() {
-        val passwordStrengthMessage = validatePasswordStrength(_password.value)
-        if (passwordStrengthMessage != "Contraseña es fuerte") {
-            _errorMessage.value = passwordStrengthMessage
-            return
-        }
-        if (_email.value.isEmpty()) {
-            _errorMessage.value = "Ingrese el correo electrónico."
-            return
-        }
-        if (_password.value.isEmpty()) {
-            _errorMessage.value = "Ingrese la contraseña."
-            return
-        }
-        if (!validatePasswords()) {
-            _errorMessage.value = "Ingrese la contraseña correctamente."
-            return
-        }
 
+        if (
+            !validateEnterEmail()
+            || !validateEnterPassword()
+            || !validateEnterConfirmPassword()
+        ) {
+            return
+        }
         _isLoading.value = true
         viewModelScope.launch {
             try {
@@ -99,15 +112,24 @@ class SignUpViewModel @Inject constructor(
                 _uiState.value = true
             } catch (e: Exception) {
                 _uiState.value = false
-//                _errorMessage.value = "An error occurred: ${e.message}"
-                _errorMessage.value = if (e.message?.contains("The email address is already in use by another account") == true ) {
-                    "EL correo ya se encuentra registrado."
-                } else {
-                    "An error occurred: ${e.message}"
+                _errorMessage.value = when {
+                    e.message?.contains("The email address is already in use by another account.") == true -> {
+                        "El correo ya se encuentra registrado."
+                    }
+                    e.message?.contains("Network error") == true -> {
+                        "Error de red. Por favor, inténtelo de nuevo."
+                    }
+                    e.message?.contains("Weak password") == true -> {
+                        "La contraseña es demasiado débil."
+                    }
+                    else -> {
+                        "Ocurrió un error: ${e.message}"
+                    }
                 }
                 Log.d("SignUpViewModel", "Error: ${e.message}")
             } finally {
                 _isLoading.value = false
+                resetState()
             }
         }
     }
