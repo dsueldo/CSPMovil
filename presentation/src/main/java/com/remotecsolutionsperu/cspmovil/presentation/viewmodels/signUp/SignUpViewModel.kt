@@ -38,6 +38,11 @@ class SignUpViewModel @Inject constructor(
     private val emailValidationService = EmailValidationService()
     private val passwordValidationService = PasswordValidationService()
 
+    fun resetState() {
+        _uiState.value = false
+        _errorMessage.value = ""
+    }
+
     fun updateEmail(newEmail: String) {
         _email.value = newEmail
         _errorMessage.value = ""
@@ -93,13 +98,7 @@ class SignUpViewModel @Inject constructor(
 
     fun onSignUpClick() {
 
-        if (
-            !validateEnterEmail()
-            || !validateEnterPassword()
-            || !validateEnterConfirmPassword()
-        ) {
-            return
-        }
+        if (!validateEnterEmail() || !validateEnterPassword() || !validateEnterConfirmPassword()) { return }
         _isLoading.value = true
         viewModelScope.launch {
             try {
@@ -129,13 +128,7 @@ class SignUpViewModel @Inject constructor(
                 Log.d("SignUpViewModel", "Error: ${e.message}")
             } finally {
                 _isLoading.value = false
-                resetState()
             }
         }
-    }
-
-    fun resetState() {
-        _uiState.value = false
-        _errorMessage.value = ""
     }
 }
