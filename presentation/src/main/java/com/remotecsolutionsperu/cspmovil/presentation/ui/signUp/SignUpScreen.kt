@@ -52,6 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.remotecsolutionsperu.cspmovil.presentation.navigation.Login
 import com.remotecsolutionsperu.presentation.R
 import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.signUp.SignUpViewModel
@@ -71,9 +72,9 @@ fun SignUpScreen(
     val uiState by signUpViewModel.uiState.collectAsState()
     val isLoading by signUpViewModel.isLoading.collectAsState()
     var errorMessage by remember { mutableStateOf("") }
+    val errorAccountValidationMessage by signUpViewModel.errorMessage.collectAsState()
     var showDialog by remember { mutableStateOf(false) }
     var showErrorDialog by remember { mutableStateOf(false) }
-    var showErrorConfirmPassword by remember { mutableStateOf(false) }
     var passwordStrength by remember { mutableStateOf(signUpViewModel.validatePasswordStrength(password)) }
     var showPasswordStrength by remember { mutableStateOf(false) }
     val emailFocusRequester = remember { FocusRequester() }
@@ -125,7 +126,7 @@ fun SignUpScreen(
         )
     }
 
-    /*if (showDialog) {
+    if (showDialog) {
         AlertDialog(
             onDismissRequest = {
                 showDialog = false
@@ -151,15 +152,13 @@ fun SignUpScreen(
         )
     }
 
-    if (showErrorDialog) {
+    if (errorAccountValidationMessage == "El correo ya se encuentra registrado.") {
         AlertDialog(
             onDismissRequest = {
-                showErrorDialog = false
                 signUpViewModel.resetState()
             },
             confirmButton = {
                 Button(onClick = {
-                    showErrorDialog = false
                     signUpViewModel.resetState()
                 },
                     colors = ButtonDefaults.buttonColors(
@@ -173,7 +172,7 @@ fun SignUpScreen(
             title = { Text("Cuenta Registrada") },
             text = { Text("El correo ya se encuentra registrado.") }
         )
-    }*/
+    }
 
     Box(
         modifier = modifier
@@ -355,11 +354,6 @@ fun SignUpScreen(
                     }
                     passwordStrength = signUpViewModel.validatePasswordStrength(password)
                     showPasswordStrength = true
-                    /*signUpViewModel.onSignUpClick()
-                    enterEmail = signUpViewModel.validateEnterEmail()
-                    enterPassword = signUpViewModel.validateEnterPassword()
-                    passwordStrength = signUpViewModel.validatePasswordStrength(password)
-                    showPasswordStrength = true*/
                 },
                 modifier = modifier
                     .fillMaxWidth()
