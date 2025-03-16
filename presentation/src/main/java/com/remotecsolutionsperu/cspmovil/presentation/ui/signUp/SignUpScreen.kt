@@ -1,8 +1,6 @@
 package com.remotecsolutionsperu.cspmovil.presentation.ui.signUp
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -29,8 +26,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -46,6 +43,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -55,6 +53,7 @@ import androidx.navigation.NavController
 import com.remotecsolutionsperu.cspmovil.presentation.navigation.Login
 import com.remotecsolutionsperu.presentation.R
 import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Red_Dark
+import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Typography
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.signUp.SignUpViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -205,28 +204,30 @@ fun SignUpScreen(
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(16.dp, 4.dp)
-                    .border(
-                        BorderStroke(width = 2.dp, color = Color.Black),
-                        shape = RoundedCornerShape(50)
-                    )
                     .focusRequester(emailFocusRequester),
-                colors = TextFieldDefaults.colors(
-                    focusedTextColor = Color.Black,
-                    focusedIndicatorColor = Color.Transparent,
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.Black,
+                    cursorColor = Color.Black
                 ),
                 value = email,
                 onValueChange = {
                     signUpViewModel.updateEmail(it)
                     signUpViewModel.resetState()
                 },
+                label = {
+                    Text(
+                        text = stringResource(R.string.login_screen_email),
+                        style = Typography.bodyLarge,
+                        color = Color.Black,
+                    )
+                },
                 placeholder = { Text(stringResource(R.string.login_screen_enter_email)) },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Email,
-                        contentDescription = "Email"
+                        contentDescription = "Email",
+                        tint = Color.Black
                     )
                 }
             )
@@ -236,24 +237,25 @@ fun SignUpScreen(
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(16.dp, 4.dp)
-                    .border(
-                        BorderStroke(width = 2.dp, color = Color.Black),
-                        shape = RoundedCornerShape(50)
-                    )
                     .focusRequester(passwordFocusRequester),
-                colors = TextFieldDefaults.colors(
-                    focusedTextColor = Color.Black,
-                    focusedIndicatorColor = Color.Transparent,
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.Black,
+                    cursorColor = Color.Black
                 ),
                 value = password,
                 onValueChange = {
                     signUpViewModel.updatePassword(it)
                     signUpViewModel.resetState()
                 },
-                placeholder = { Text(stringResource(R.string.login_screen_password)) },
+                label = {
+                    Text(
+                        text = stringResource(R.string.login_screen_password),
+                        style = Typography.bodyLarge,
+                        color = Color.Black,
+                    )
+                },
+                placeholder = { Text(stringResource(R.string.login_screen_enter_password)) },
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
                     IconButton(onClick = { passwordVisible = (!passwordVisible) }) {
@@ -264,16 +266,18 @@ fun SignUpScreen(
                                 stringResource(R.string.login_screen_hide_password)
                             else
                                 stringResource(R.string.login_screen_show_password),
+                            tint = Color.Black
                         )
                     }
                 },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Lock,
-                        contentDescription = "Password"
+                        contentDescription = "Password",
+                        tint = Color.Black
                     )
                 },
-                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Text),
                 keyboardActions = KeyboardActions(onNext = { confirmPasswordFocusRequester.requestFocus() })
             )
 
@@ -289,24 +293,25 @@ fun SignUpScreen(
                 singleLine = true,
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(16.dp, 4.dp)
-                    .border(
-                        BorderStroke(width = 2.dp, color = Color.Black),
-                        shape = RoundedCornerShape(50)
-                    ),
-                colors = TextFieldDefaults.colors(
-                    focusedTextColor = Color.Black,
-                    focusedIndicatorColor = Color.Transparent,
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
+                    .padding(16.dp, 4.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.Black,
+                    cursorColor = Color.Black
                 ),
                 value = confirmPassword.value,
                 onValueChange = {
                     signUpViewModel.updateConfirmPassword(it)
                     signUpViewModel.resetState()
                 },
-                placeholder = { Text(stringResource(R.string.login_screen_confirm_password)) },
+                label = {
+                    Text(
+                        text = stringResource(R.string.login_screen_confirm_password),
+                        style = Typography.bodyLarge,
+                        color = Color.Black,
+                    )
+                },
+                placeholder = { Text(stringResource(R.string.login_screen_enter_password)) },
                 visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
                     IconButton(onClick = { confirmPasswordVisible = (!confirmPasswordVisible) }) {
@@ -317,13 +322,15 @@ fun SignUpScreen(
                                 stringResource(R.string.login_screen_hide_password)
                             else
                                 stringResource(R.string.login_screen_show_password),
+                            tint = Color.Black
                         )
                     }
                 },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Lock,
-                        contentDescription = "ConfirmPassword"
+                        contentDescription = "ConfirmPassword",
+                        tint = Color.Black
                     )
                 },
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
