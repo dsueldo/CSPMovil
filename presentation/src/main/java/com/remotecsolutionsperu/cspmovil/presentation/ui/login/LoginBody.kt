@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -49,6 +50,8 @@ fun LoginBody(
     passwordVisibleValueChange: (Boolean) -> Unit,
     emailFocusRequester: FocusRequester,
     passwordFocusRequester: FocusRequester,
+    showPasswordStrength: Boolean,
+    passwordStrength: String
 ) {
 
     Column(
@@ -130,6 +133,13 @@ fun LoginBody(
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = {})
         )
+        if (showPasswordStrength) {
+            Text(
+                text = passwordStrength,
+                color = if (passwordStrength == "La contraseña es fuerte") Color.Blue else Color.Red,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+        }
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             modifier = Modifier
@@ -155,6 +165,8 @@ private fun LoginHeaderPreview() {
         passwordVisible = false,
         passwordVisibleValueChange = {},
         emailFocusRequester = FocusRequester(),
-        passwordFocusRequester = FocusRequester()
+        passwordFocusRequester = FocusRequester(),
+        showPasswordStrength = false,
+        passwordStrength = ""
     )
 }
