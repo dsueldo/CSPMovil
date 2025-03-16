@@ -16,17 +16,23 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Typography
 import com.remotecsolutionsperu.presentation.R
@@ -36,11 +42,13 @@ fun LoginBody(
     onNavigateChangePassword: () -> Unit,
     modifier: Modifier = Modifier,
     email: TextFieldValue,
-    emaiValueChange: (TextFieldValue) -> Unit,
+    emailValueChange: (TextFieldValue) -> Unit,
     password: TextFieldValue,
     passwordValueChange: (TextFieldValue) -> Unit,
     passwordVisible: Boolean = false,
     passwordVisibleValueChange: (Boolean) -> Unit,
+    emailFocusRequester: FocusRequester,
+    passwordFocusRequester: FocusRequester,
 ) {
 
     Column(
@@ -48,43 +56,55 @@ fun LoginBody(
         horizontalAlignment = Alignment.End,
     ) {
         OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
+            modifier = Modifier
+                .fillMaxWidth()
+                .focusRequester(emailFocusRequester),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color.Black,
+                unfocusedBorderColor = Color.Black,
+                cursorColor = Color.Black
+            ),
             value = email,
-            onValueChange = emaiValueChange,
+            onValueChange = emailValueChange,
             label = {
                 Text(
                     text = stringResource(R.string.login_screen_email),
-                    style = Typography.bodySmall
+                    style = Typography.bodyLarge,
+                    color = Color.Black,
                 )
             },
-            placeholder = {
-                Text(
-                    text = stringResource(R.string.login_screen_enter_email),
-                    style = Typography.bodySmall
+            placeholder = { Text(stringResource(R.string.login_screen_enter_email),) },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Email,
+                    contentDescription = "Email",
+                    tint = Color.Black
                 )
             },
-            leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") },
-            singleLine = false,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            keyboardActions = KeyboardActions(onNext = {})
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Email),
+            keyboardActions = KeyboardActions(onNext = {passwordFocusRequester.requestFocus()})
         )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .focusRequester(passwordFocusRequester),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color.Black,
+                unfocusedBorderColor = Color.Black,
+                cursorColor = Color.Black
+            ),
             value = password,
             onValueChange = passwordValueChange,
             label = {
                 Text(
                     text = stringResource(R.string.login_screen_password),
-                    style = Typography.bodySmall
+                    style = Typography.bodyLarge,
+                    color = Color.Black,
                 )
             },
-            placeholder = {
-                Text(
-                    text = stringResource(R.string.login_screen_enter_password),
-                    style = Typography.bodySmall
-                )
-            },
+            placeholder = { Text(stringResource(R.string.login_screen_enter_password)) },
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 IconButton(onClick = { passwordVisibleValueChange(!passwordVisible) }) {
@@ -95,12 +115,19 @@ fun LoginBody(
                             stringResource(R.string.login_screen_hide_password)
                         else
                             stringResource(R.string.login_screen_show_password),
+                        tint = Color.Black
                     )
                 }
             },
-            leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Lock") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Lock,
+                    contentDescription = "Lock",
+                    tint = Color.Black
+                )
+            },
             singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = {})
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -114,4 +141,20 @@ fun LoginBody(
             style = Typography.bodySmall
         )
     }
+}
+
+@Preview
+@Composable
+private fun LoginHeaderPreview() {
+    LoginBody(
+        onNavigateChangePassword = {},
+        email = TextFieldValue(""),
+        emailValueChange = {},
+        password = TextFieldValue(""),
+        passwordValueChange = {},
+        passwordVisible = false,
+        passwordVisibleValueChange = {},
+        emailFocusRequester = FocusRequester(),
+        passwordFocusRequester = FocusRequester()
+    )
 }
