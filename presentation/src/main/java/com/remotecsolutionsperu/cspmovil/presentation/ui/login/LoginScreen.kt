@@ -98,16 +98,10 @@ fun LoginScreen(
                 passwordVisible = passwordVisible,
                 passwordVisibleValueChange = { passwordVisible = it },
                 emailFocusRequester = emailFocusRequester,
-                passwordFocusRequester = passwordFocusRequester
+                passwordFocusRequester = passwordFocusRequester,
+                showPasswordStrength = showPasswordStrength,
+                passwordStrength = passwordStrength,
             )
-
-            if (showPasswordStrength) {
-                Text(
-                    text = passwordStrength,
-                    color = if (passwordStrength == "La contraseña es fuerte") Color.Blue else Color.Red,
-                    modifier = Modifier.padding(top = 8.dp)
-                )
-            }
         },
         bottomBar = {
             LoginFooter(
