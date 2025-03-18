@@ -64,6 +64,10 @@ class AccountServiceImpl @Inject constructor() : AccountService {
         Firebase.auth.currentUser?.sendEmailVerification()?.await()
     }
 
+    override suspend fun sendPasswordResetEmail(email: String) {
+        Firebase.auth.sendPasswordResetEmail(email).await()
+    }
+
     override suspend fun signOut() {
         Firebase.auth.signOut()
     }
@@ -72,7 +76,7 @@ class AccountServiceImpl @Inject constructor() : AccountService {
         Firebase.auth.currentUser!!.delete().await()
     }
 
-    private suspend fun getIdToken(): String? {
+    override suspend fun getIdToken(): String? {
         return Firebase.auth.currentUser?.getIdToken(true)?.await()?.token
     }
 }

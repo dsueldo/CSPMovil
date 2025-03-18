@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-  private val accountService: AccountService
+  private val accountService: AccountService,
 ) : CspAppViewModel() {
 
   fun hasUser(): Boolean {

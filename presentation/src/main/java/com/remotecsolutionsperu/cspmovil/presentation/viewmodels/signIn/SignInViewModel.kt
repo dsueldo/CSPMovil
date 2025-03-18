@@ -1,11 +1,13 @@
 package com.remotecsolutionsperu.cspmovil.presentation.viewmodels.signIn
 
+import android.util.Log
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.remotecsolutionsperu.cspmovil.domain.repositories.AccountService
+import com.remotecsolutionsperu.cspmovil.presentation.utils.SessionManager
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val accountService: AccountService
+    private val accountService: AccountService,
+    private val sessionManager: SessionManager,
 ) : CspAppViewModel() {
 
     private val _email = MutableStateFlow(TextFieldValue(""))
@@ -57,6 +60,14 @@ class SignInViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 accountService.signIn(_email.value.text, _password.value.text)
+                val expirationTime = System.currentTimeMillis() + TOKEN_EXPIRATION_DURATION
+                sessionManager.saveUserSession(
+                    accountService.currentUserId,
+                    accountService.getIdToken()?:"",
+                    expirationTime
+                )
+                Log.d("SignInViewModel", "currentUserId: ${accountService.currentUserId}")
+                Log.d("SignInViewModel", "User signed in getIdToken: ${accountService.getIdToken()}")
                 _uiState.value = true
             } catch (e: Exception) {
                 _errorMessage.value = when (e) {
@@ -76,5 +87,9 @@ class SignInViewModel @Inject constructor(
         _password.value = TextFieldValue("")
         _errorMessage.value = ""
         _uiState.value = false
+    }
+
+    companion object {
+        private const val TOKEN_EXPIRATION_DURATION = 60000 // 1 hour in milliseconds
     }
 }
