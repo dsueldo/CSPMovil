@@ -229,7 +229,8 @@ fun SignUpScreen(
                         contentDescription = "Email",
                         tint = Color.Black
                     )
-                }
+                },
+                textStyle = Typography.bodyLarge
             )
 
             OutlinedTextField(
@@ -278,7 +279,8 @@ fun SignUpScreen(
                     )
                 },
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Text),
-                keyboardActions = KeyboardActions(onNext = { confirmPasswordFocusRequester.requestFocus() })
+                keyboardActions = KeyboardActions(onNext = { confirmPasswordFocusRequester.requestFocus() }),
+                textStyle = Typography.bodyLarge
             )
 
             if (showPasswordStrength) {
@@ -334,7 +336,8 @@ fun SignUpScreen(
                     )
                 },
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-                keyboardActions = KeyboardActions(onDone = { /* Handle done action */ })
+                keyboardActions = KeyboardActions(onDone = { /* Handle done action */ }),
+                textStyle = Typography.bodyLarge
             )
 
             Spacer(

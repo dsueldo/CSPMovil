@@ -86,7 +86,8 @@ fun LoginBody(
                 )
             },
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Email),
-            keyboardActions = KeyboardActions(onNext = {passwordFocusRequester.requestFocus()})
+            keyboardActions = KeyboardActions(onNext = {passwordFocusRequester.requestFocus()}),
+            textStyle = Typography.bodyLarge
         )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
@@ -131,7 +132,8 @@ fun LoginBody(
             },
             singleLine = true,
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-            keyboardActions = KeyboardActions(onDone = {})
+            keyboardActions = KeyboardActions(onDone = {}),
+            textStyle = Typography.bodyLarge
         )
         if (showPasswordStrength) {
             Text(
@@ -148,7 +150,7 @@ fun LoginBody(
             text = stringResource(R.string.login_screen_forget_password),
             color = MaterialTheme.colorScheme.onBackground,
             textDecoration = TextDecoration.Underline,
-            style = Typography.bodySmall
+            style = Typography.bodyMedium
         )
     }
 }

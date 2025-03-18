@@ -60,12 +60,15 @@ class SignInViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 accountService.signIn(_email.value.text, _password.value.text)
-                val expirationTime = System.currentTimeMillis() + TOKEN_EXPIRATION_DURATION
-                sessionManager.saveUserSession(
-                    accountService.currentUserId,
-                    accountService.getIdToken()?:"",
-                    expirationTime
-                )
+                val idToken = accountService.getIdToken()
+                if (idToken != null) {
+                    val expirationTime = System.currentTimeMillis() + TOKEN_EXPIRATION_DURATION
+                    sessionManager.saveUserSession(
+                        accountService.currentUserId,
+                        idToken,
+                        expirationTime
+                    )
+                }
                 Log.d("SignInViewModel", "currentUserId: ${accountService.currentUserId}")
                 Log.d("SignInViewModel", "User signed in getIdToken: ${accountService.getIdToken()}")
                 _uiState.value = true
@@ -90,6 +93,6 @@ class SignInViewModel @Inject constructor(
     }
 
     companion object {
-        private const val TOKEN_EXPIRATION_DURATION = 60000 // 1 hour in milliseconds
+        private const val TOKEN_EXPIRATION_DURATION = 60000 // 1 min in milliseconds
     }
 }
