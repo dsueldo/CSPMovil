@@ -8,6 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 open class CspAppViewModel : ViewModel() {
+
     fun launchCatching(block: suspend CoroutineScope.() -> Unit) =
         viewModelScope.launch(
             CoroutineExceptionHandler { _, throwable ->
