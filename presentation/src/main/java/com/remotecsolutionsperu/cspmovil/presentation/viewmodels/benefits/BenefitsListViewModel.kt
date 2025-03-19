@@ -1,4 +1,4 @@
-package com.remotecsolutionsperu.cspmovil.presentation.viewmodels.news
+package com.remotecsolutionsperu.cspmovil.presentation.viewmodels.benefits
 
 import android.content.ContentValues.TAG
 import android.util.Log
@@ -13,20 +13,20 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NewsListViewModel @Inject constructor() : CspAppViewModel() {
+class BenefitsListViewModel @Inject constructor() : CspAppViewModel() {
 
-    private val _newsList = MutableStateFlow<List<NewsItem>>(emptyList())
-    val newsList: StateFlow<List<NewsItem>> = _newsList
+    private val _benefitsList = MutableStateFlow<List<BenefitsItem>>(emptyList())
+    val benefitsList : StateFlow<List<BenefitsItem>> = _benefitsList
 
     private val db = Firebase.firestore
 
     init {
-        fetchNewsList()
+        fetchBenefitsList()
     }
 
-    private fun fetchNewsList() {
+    private fun fetchBenefitsList() {
         viewModelScope.launch {
-            db.collection("news")
+            db.collection("benefits")
                 .addSnapshotListener { snapshot, e ->
                     if (e != null) {
                         Log.w(TAG, "Listen failed.", e)
@@ -34,20 +34,21 @@ class NewsListViewModel @Inject constructor() : CspAppViewModel() {
                     }
 
                     if (snapshot != null) {
-                        val newsItems = snapshot.documents.mapNotNull { document ->
+                        val benefitsItems = snapshot.documents.mapNotNull { document ->
                             val image = document.getString("image")
                             val title = document.getString("title")
                             val content = document.getString("content")
+                            val order = document.getLong("order")?.toInt()
                             Log.d(TAG, "Current data Image: $image")
                             Log.d(TAG, "Current data Title: $title")
                             Log.d(TAG, "Current data Content: $content")
-                            if (image != null && title != null && content != null) {
-                                NewsItem(image, title, content)
+                            if (image != null && title != null && content != null && order != null) {
+                                BenefitsItem(image, title, content, order)
                             } else {
                                 null
                             }
-                        }
-                        _newsList.value = newsItems
+                        }.sortedBy { it.order }
+                        _benefitsList.value = benefitsItems
                     } else {
                         Log.d(TAG, "Current data: null")
                     }
@@ -56,8 +57,13 @@ class NewsListViewModel @Inject constructor() : CspAppViewModel() {
     }
 }
 
-data class NewsItem(
+data class BenefitsItem(
     val image: String,
     val title: String,
-    val content: String
-)
+    val content: String,
+    val order: Int,
+) {
+    companion object {
+        fun empty() = BenefitsItem("", "", "", 0)
+    }
+}

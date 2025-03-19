@@ -19,10 +19,10 @@ import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Typography
 
 @Composable
 fun FeedComponent(
+    modifier: Modifier = Modifier,
     image: String,
     title: String,
     content: String,
-    modifier: Modifier = Modifier
 ) {
 
     Column(modifier = Modifier.padding(4.dp)) {

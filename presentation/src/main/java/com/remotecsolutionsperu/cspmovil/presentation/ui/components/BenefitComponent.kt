@@ -10,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,11 +20,11 @@ import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Typography
 
 @Composable
 fun BenefitComponent(
-    onNavigateWhatsapp: () -> Unit,
+    modifier: Modifier = Modifier,
     image: String,
     title: String,
     content: String,
-    modifier: Modifier = Modifier
+    onNavigateWhatsapp: () -> Unit,
 ) {
 
     Card(
@@ -44,17 +45,17 @@ fun BenefitComponent(
                 text = title,
                 fontWeight = FontWeight.Bold,
                 style = Typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onPrimaryContainer
+                color = Color.Black
             )
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = content,
                 style = Typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onPrimaryContainer
+                color = Color.Black
             )
         }
     }
-
 }
 
 @Preview

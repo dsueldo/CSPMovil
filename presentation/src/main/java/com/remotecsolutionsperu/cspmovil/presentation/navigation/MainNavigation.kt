@@ -7,7 +7,6 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -71,19 +70,10 @@ fun MainNavigation() {
             startDestination = Main,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable<Main> { MainScreen(listOf("main1", "main2", "main3", "main4")) }
+            composable<Main> { MainScreen() }
             composable<Profile> { ProfileScreen(navController) }
             composable<EditProfile> { EditProfileScreen(navController) }
-            composable<Benefit> {
-                BenefitsScreen(
-                    listOf(
-                        "benefit1",
-                        "benefit2",
-                        "benefit3",
-                        "benefit4"
-                    )
-                )
-            }
+            composable<Benefit> { BenefitsScreen() }
             composable<Payment> {
                 PaymentOneScreen(
                     navController = navController,
