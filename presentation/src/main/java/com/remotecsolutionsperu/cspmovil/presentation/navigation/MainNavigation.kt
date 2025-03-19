@@ -12,6 +12,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -24,6 +25,7 @@ import com.remotecsolutionsperu.cspmovil.presentation.ui.main.MainScreen
 import com.remotecsolutionsperu.cspmovil.presentation.ui.payment.PaymentOneScreen
 import com.remotecsolutionsperu.cspmovil.presentation.ui.payment.instruction.PaymentInstructionScreen
 import com.remotecsolutionsperu.cspmovil.presentation.ui.profile.ProfileScreen
+import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Red_Dark
 
 @SuppressLint("RestrictedApi")
 @Composable
@@ -33,8 +35,8 @@ fun MainNavigation() {
         modifier = Modifier.systemBarsPadding(),
         bottomBar = {
             BottomNavigation(
-                backgroundColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
+                backgroundColor = Red_Dark,
+                contentColor = Color.White
             ) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
