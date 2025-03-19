@@ -16,7 +16,16 @@ import javax.inject.Inject
 class BenefitsListViewModel @Inject constructor() : CspAppViewModel() {
 
     private val _benefitsList = MutableStateFlow<List<BenefitsItem>>(emptyList())
-    val benefitsList : StateFlow<List<BenefitsItem>> = _benefitsList
+    val benefitsList: StateFlow<List<BenefitsItem>> = _benefitsList
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
+    private val _errorMessage = MutableStateFlow("")
+    val errorMessage: StateFlow<String> = _errorMessage
+
+    private val _uiState = MutableStateFlow(false)
+    val uiState: StateFlow<Boolean> = _uiState
 
     private val db = Firebase.firestore
 
@@ -26,32 +35,33 @@ class BenefitsListViewModel @Inject constructor() : CspAppViewModel() {
 
     private fun fetchBenefitsList() {
         viewModelScope.launch {
+            _isLoading.value = true
             db.collection("benefits")
-                .addSnapshotListener { snapshot, e ->
-                    if (e != null) {
-                        Log.w(TAG, "Listen failed.", e)
-                        return@addSnapshotListener
-                    }
-
-                    if (snapshot != null) {
-                        val benefitsItems = snapshot.documents.mapNotNull { document ->
-                            val image = document.getString("image")
-                            val title = document.getString("title")
-                            val content = document.getString("content")
-                            val order = document.getLong("order")?.toInt()
-                            Log.d(TAG, "Current data Image: $image")
-                            Log.d(TAG, "Current data Title: $title")
-                            Log.d(TAG, "Current data Content: $content")
-                            if (image != null && title != null && content != null && order != null) {
-                                BenefitsItem(image, title, content, order)
-                            } else {
-                                null
-                            }
-                        }.sortedBy { it.order }
-                        _benefitsList.value = benefitsItems
-                    } else {
-                        Log.d(TAG, "Current data: null")
-                    }
+                .get()
+                .addOnSuccessListener { snapshot ->
+                    val benefitsItems = snapshot.documents.mapNotNull { document ->
+                        val image = document.getString("image")
+                        val title = document.getString("title")
+                        val content = document.getString("content")
+                        val order = document.getLong("order")?.toInt()
+                        Log.d(TAG, "Current data Image: $image")
+                        Log.d(TAG, "Current data Title: $title")
+                        Log.d(TAG, "Current data Content: $content")
+                        if (image != null && title != null && content != null && order != null) {
+                            BenefitsItem(image, title, content, order)
+                        } else {
+                            null
+                        }
+                    }.sortedBy { it.order }
+                    _benefitsList.value = benefitsItems
+                    _uiState.value = true
+                    _isLoading.value = false
+                }
+                .addOnFailureListener { e ->
+                    Log.w(TAG, "Error fetching benefits", e)
+                    _errorMessage.value = "Error fetching benefits: ${e.message}"
+                    _uiState.value = false
+                    _isLoading.value = false
                 }
         }
     }
