@@ -4,7 +4,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -53,11 +55,12 @@ fun ItemPaymentComponent(
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = title,
-                        style = Typography.bodyMedium
+                        style = Typography.bodyLarge
                     )
+                    Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = content,
-                        style = Typography.bodySmall,
+                        style = Typography.bodyMedium,
                         color = Color.Gray
                     )
                 }
@@ -74,11 +77,7 @@ fun ItemPaymentComponent(
                 color = Color.LightGray
             )
         }
-
-
     }
-
-
 }
 
 @Preview

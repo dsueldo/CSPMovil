@@ -74,11 +74,7 @@ fun MainNavigation() {
             composable<Profile> { ProfileScreen(navController) }
             composable<EditProfile> { EditProfileScreen(navController) }
             composable<Benefit> { BenefitsScreen() }
-            composable<Payment> {
-                PaymentOneScreen(
-                    navController = navController,
-                    paymentList = listOf("pay1", "pay2", "pay3", "pay4"))
-            }
+            composable<Payment> { PaymentOneScreen(navController = navController)}
             composable<PaymentInstructions> {
                 PaymentInstructionScreen(
                     navController = navController
