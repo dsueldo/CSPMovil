@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.remotecsolutionsperu.cspmovil.domain.entities.user.UserProfile
-import com.remotecsolutionsperu.cspmovil.domain.repositories.AccountService
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,10 +16,10 @@ import javax.inject.Inject
 @HiltViewModel
 class NewsListViewModel @Inject constructor() : CspAppViewModel() {
 
-    private val _newsList = MutableStateFlow<List<String>>(emptyList())
-    val newsList: StateFlow<List<String>> = _newsList
+    private val _newsList = MutableStateFlow<List<NewsItem>>(emptyList())
+    val newsList: StateFlow<List<NewsItem>> = _newsList
 
-    val db = Firebase.firestore
+    private val db = Firebase.firestore
 
     init {
         fetchNewsList()
@@ -36,10 +35,20 @@ class NewsListViewModel @Inject constructor() : CspAppViewModel() {
                     }
 
                     if (snapshot != null) {
-                        val title = snapshot.documents.get(0).getString("title")
-                        Log.d(TAG, "Current data: ${title}")
-
-                        Log.d(TAG, "Current data: ${snapshot.documents}")
+                        val newsItems = snapshot.documents.mapNotNull { document ->
+                            val image = document.getString("image")
+                            val title = document.getString("title")
+                            val content = document.getString("content")
+                            Log.d(TAG, "Current data Image: $image")
+                            Log.d(TAG, "Current data Title: $title")
+                            Log.d(TAG, "Current data Content: $content")
+                            if (image != null && title != null && content != null) {
+                                NewsItem(image, title, content)
+                            } else {
+                                null
+                            }
+                        }
+                        _newsList.value = newsItems
                     } else {
                         Log.d(TAG, "Current data: null")
                     }
@@ -48,9 +57,8 @@ class NewsListViewModel @Inject constructor() : CspAppViewModel() {
     }
 }
 
-data class UserProfileUiState(
-    val isLoading: Boolean = false,
-    val isSuccess: Boolean = false,
-    val error: String? = null,
-    val userProfile: UserProfile? = null
+data class NewsItem(
+    val image: String,
+    val title: String,
+    val content: String
 )

@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,7 +25,7 @@ fun FeedComponent(
     modifier: Modifier = Modifier
 ) {
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier.padding(4.dp)) {
         AsyncImage(
             modifier = Modifier.fillMaxWidth(),
             model = image,
@@ -37,13 +38,14 @@ fun FeedComponent(
             text = title,
             fontWeight = FontWeight.Bold,
             style = Typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onPrimaryContainer
+            color = Color.Black
         )
+        Spacer(modifier = Modifier.height(4.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = content,
             style = Typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onPrimaryContainer
+            color = Color.Black
         )
     }
 }
