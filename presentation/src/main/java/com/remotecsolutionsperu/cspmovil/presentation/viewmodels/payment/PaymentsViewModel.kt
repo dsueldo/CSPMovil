@@ -1,4 +1,4 @@
-package com.remotecsolutionsperu.cspmovil.presentation.viewmodels.benefits
+package com.remotecsolutionsperu.cspmovil.presentation.viewmodels.payment
 
 import android.content.ContentValues.TAG
 import android.util.Log
@@ -13,10 +13,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BenefitsListViewModel @Inject constructor() : CspAppViewModel() {
+class PaymentsViewModel @Inject constructor() : CspAppViewModel() {
 
-    private val _benefitsList = MutableStateFlow<List<BenefitsItem>>(emptyList())
-    val benefitsList: StateFlow<List<BenefitsItem>> = _benefitsList
+    private val _paymentsList = MutableStateFlow<List<PaymentsItem>>(emptyList())
+    val paymentsList: StateFlow<List<PaymentsItem>> = _paymentsList
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
@@ -30,16 +30,16 @@ class BenefitsListViewModel @Inject constructor() : CspAppViewModel() {
     private val db = Firebase.firestore
 
     init {
-        fetchBenefitsList()
+        fetchPaymentsList()
     }
 
-    private fun fetchBenefitsList() {
+    private fun fetchPaymentsList() {
         _isLoading.value = true
         viewModelScope.launch {
-            db.collection("benefits")
+            db.collection("payments")
                 .get()
                 .addOnSuccessListener { snapshot ->
-                    val benefitsItems = snapshot.documents.mapNotNull { document ->
+                    val paymentsItems = snapshot.documents.mapNotNull { document ->
                         val image = document.getString("image")
                         val title = document.getString("title")
                         val content = document.getString("content")
@@ -48,18 +48,18 @@ class BenefitsListViewModel @Inject constructor() : CspAppViewModel() {
                         Log.d(TAG, "Current data Title: $title")
                         Log.d(TAG, "Current data Content: $content")
                         if (image != null && title != null && content != null && order != null) {
-                            BenefitsItem(image, title, content, order)
+                            PaymentsItem(image, title, content, order)
                         } else {
                             null
                         }
                     }.sortedBy { it.order }
-                    _benefitsList.value = benefitsItems
+                    _paymentsList.value = paymentsItems
                     _uiState.value = true
                     _isLoading.value = false
                 }
                 .addOnFailureListener { e ->
-                    Log.w(TAG, "Error fetching benefits", e)
-                    _errorMessage.value = "Error fetching benefits: ${e.message}"
+                    Log.w(TAG, "Error fetching payments", e)
+                    _errorMessage.value = "Error fetching payments: ${e.message}"
                     _uiState.value = false
                     _isLoading.value = false
                 }
@@ -67,13 +67,9 @@ class BenefitsListViewModel @Inject constructor() : CspAppViewModel() {
     }
 }
 
-data class BenefitsItem(
+data class PaymentsItem(
     val image: String,
     val title: String,
     val content: String,
     val order: Int,
-) {
-    companion object {
-        fun empty() = BenefitsItem("", "", "", 0)
-    }
-}
+)
