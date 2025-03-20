@@ -16,9 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.remotecsolutionsperu.cspmovil.presentation.ui.components.ItemProfileComponent
+import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.profile.ProfileItem
 
 @Composable
-fun ProfileBody(modifier: Modifier = Modifier) {
+fun ProfileBody(
+    modifier: Modifier = Modifier,
+    profileItem: ProfileItem? = null,
+) {
 
     Column(
         modifier = modifier,
@@ -27,74 +31,75 @@ fun ProfileBody(modifier: Modifier = Modifier) {
 
         Divider()
 
-        ItemProfileComponent(
-            imageVector = Icons.Outlined.PersonOutline,
-            title = "Nombres",
-            content = "Diego Renato"
-        )
+        profileItem?.let {
+            ItemProfileComponent(
+                imageVector = Icons.Outlined.PersonOutline,
+                title = "Nombres",
+                content = it.name
+            )
 
-        ItemProfileComponent(
-            imageVector = Icons.Outlined.PersonOutline,
-            title = "Apellidos",
-            content = "Sueldo Huerta"
-        )
+            ItemProfileComponent(
+                imageVector = Icons.Outlined.PersonOutline,
+                title = "Apellidos",
+                content = it.lastName
+            )
 
-        ItemProfileComponent(
-            imageVector = Icons.Outlined.Phone,
-            title = "Celular",
-            content = "985187065"
-        )
+            ItemProfileComponent(
+                imageVector = Icons.Outlined.Phone,
+                title = "Celular",
+                content = it.phone
+            )
 
-        ItemProfileComponent(
-            imageVector = Icons.Outlined.Email,
-            title = "Correo",
-            content = "diego5@hotmail.com"
-        )
+            ItemProfileComponent(
+                imageVector = Icons.Outlined.Email,
+                title = "Correo",
+                content = it.email
+            )
 
-        ItemProfileComponent(
-            imageVector = Icons.Outlined.People,
-            title = "Genero",
-            content = "Masculino"
-        )
+            ItemProfileComponent(
+                imageVector = Icons.Outlined.People,
+                title = "Genero",
+                content = it.gender
+            )
 
-        ItemProfileComponent(
-            imageVector = Icons.Outlined.CalendarToday,
-            title = "Cumpleanos",
-            content = "08/05/1994"
-        )
+            ItemProfileComponent(
+                imageVector = Icons.Outlined.CalendarToday,
+                title = "Cumpleanos",
+                content = it.birthday
+            )
 
-        ItemProfileComponent(
-            imageVector = Icons.Outlined.Fingerprint,
-            title = "D.N.I.",
-            content = "70787708"
-        )
+            ItemProfileComponent(
+                imageVector = Icons.Outlined.Fingerprint,
+                title = "D.N.I.",
+                content = it.dni
+            )
 
-        ItemProfileComponent(
-            imageVector = Icons.Outlined.School,
-            title = "Número de Colegiatura",
-            content = "000001"
-        )
+            ItemProfileComponent(
+                imageVector = Icons.Outlined.School,
+                title = "Número de Colegiatura",
+                content = it.codeNumber
+            )
 
-        ItemProfileComponent(
-            imageVector = Icons.Outlined.School,
-            title = "Consejo Departamental",
-            content = "000000"
-        )
+            ItemProfileComponent(
+                imageVector = Icons.Outlined.School,
+                title = "Consejo Departamental",
+                content = it.council
+            )
 
-        ItemProfileComponent(
-            imageVector = Icons.Outlined.School,
-            title = "Condición",
-            content = "Habilitado"
-        )
+            ItemProfileComponent(
+                imageVector = Icons.Outlined.School,
+                title = "Condición",
+                content = it.condition
+            )
 
-        ItemProfileComponent(
-            imageVector = Icons.Outlined.School,
-            title = "Ultimo periodo pagado",
-            content = "2025-I"
-        )
+            ItemProfileComponent(
+                imageVector = Icons.Outlined.School,
+                title = "Ultimo periodo pagado",
+                content = it.payLastPeriod
+            )
+        }
 
         Divider()
-
     }
 }
 

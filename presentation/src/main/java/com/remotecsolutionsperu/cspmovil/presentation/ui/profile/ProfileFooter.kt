@@ -29,7 +29,7 @@ fun ProfileFooter(
             textAlign = TextAlign.Center,
             text = "Cerrar sesion",
             color = Color.Black,
-            style = Typography.bodyLarge
+            style = Typography.bodyMedium
         )
     }
 }
