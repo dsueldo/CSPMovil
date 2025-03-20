@@ -28,7 +28,7 @@ fun ProfileScreen(
             .padding(16.dp),
         topBar = {
             ProfileHeader(
-                name = "Christian",
+                name = "Diego",
                 onEditAccount = { navController.navigate(EditProfile) }
             )
         },

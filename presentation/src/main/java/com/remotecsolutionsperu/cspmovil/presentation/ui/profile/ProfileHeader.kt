@@ -3,12 +3,15 @@ package com.remotecsolutionsperu.cspmovil.presentation.ui.profile
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Typography
 
 @Composable
@@ -29,12 +32,16 @@ fun ProfileHeader(
             style = Typography.headlineLarge
         )
 
-        Button(onClick = onEditAccount) {
-            Text(text = "Editar cuenta")
+        Button(
+            onClick = onEditAccount,
+            colors = ButtonDefaults.textButtonColors(Red_Dark),
+        ) {
+            Text(
+                text = "Editar cuenta",
+                color = Color.White
+            )
         }
-
     }
-
 }
 
 @Preview
