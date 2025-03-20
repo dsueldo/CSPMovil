@@ -8,12 +8,16 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.remotecsolutionsperu.cspmovil.domain.repositories.AccountService
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ProfileViewModel @Inject constructor() : CspAppViewModel() {
+@HiltViewModel
+class ProfileViewModel @Inject constructor(
+    private val accountService: AccountService,
+) : CspAppViewModel() {
 
     private val _profileData = MutableStateFlow<ProfileItem?>(null)
     val profileData: StateFlow<ProfileItem?> = _profileData
@@ -105,6 +109,16 @@ class ProfileViewModel @Inject constructor() : CspAppViewModel() {
             _errorMessage.value = "User not authenticated"
             _uiState.value = false
             _isLoading.value = false
+        }
+    }
+
+    fun signOut() {
+        viewModelScope.launch {
+            try {
+                accountService.signOut()
+            } catch (e: Exception) {
+                _errorMessage.value = "Error signing out: ${e.message}"
+            }
         }
     }
 }

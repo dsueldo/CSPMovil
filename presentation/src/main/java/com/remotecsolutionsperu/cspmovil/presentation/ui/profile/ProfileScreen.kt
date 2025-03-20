@@ -25,6 +25,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.remotecsolutionsperu.cspmovil.presentation.navigation.EditProfile
 import com.remotecsolutionsperu.cspmovil.presentation.navigation.Login
+import com.remotecsolutionsperu.cspmovil.presentation.navigation.Splash
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.profile.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -74,8 +75,12 @@ fun ProfileScreen(
         bottomBar = {
             ProfileFooter(
                 onSignOut = {
-                    navController.navigate(Login)
-
+                    viewModel.signOut()
+                    navController.navigate(Login) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+                    }
                 }
             )
         }
