@@ -41,7 +41,6 @@ fun SplashScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .clickable { throw RuntimeException("Test Crash") }
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),

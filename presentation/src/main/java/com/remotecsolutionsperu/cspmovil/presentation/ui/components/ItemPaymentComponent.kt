@@ -41,14 +41,6 @@ fun ItemPaymentComponent(
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
 
-        AsyncImage(
-            modifier = Modifier
-                .size(64.dp)
-                .clip(CircleShape),
-            model = image,
-            contentDescription = "Avatar",
-        )
-
         Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
 
             Row {

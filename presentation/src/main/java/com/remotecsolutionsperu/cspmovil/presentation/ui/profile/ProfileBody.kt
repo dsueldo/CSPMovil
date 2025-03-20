@@ -29,20 +29,26 @@ fun ProfileBody(modifier: Modifier = Modifier) {
 
         ItemProfileComponent(
             imageVector = Icons.Outlined.PersonOutline,
-            title = "Nombre",
-            content = "Christian"
+            title = "Nombres",
+            content = "Diego Renato"
         )
 
         ItemProfileComponent(
             imageVector = Icons.Outlined.PersonOutline,
-            title = "Apellido",
-            content = "Quispe"
+            title = "Apellidos",
+            content = "Sueldo Huerta"
         )
 
         ItemProfileComponent(
-            imageVector = Icons.Outlined.School,
-            title = "Numero de Colegiatura",
-            content = "000000"
+            imageVector = Icons.Outlined.Phone,
+            title = "Celular",
+            content = "985187065"
+        )
+
+        ItemProfileComponent(
+            imageVector = Icons.Outlined.Email,
+            title = "Correo",
+            content = "diego5@hotmail.com"
         )
 
         ItemProfileComponent(
@@ -52,33 +58,44 @@ fun ProfileBody(modifier: Modifier = Modifier) {
         )
 
         ItemProfileComponent(
-            imageVector = Icons.Outlined.Fingerprint,
-            title = "D.N.I.",
-            content = "111111"
-        )
-
-        ItemProfileComponent(
             imageVector = Icons.Outlined.CalendarToday,
             title = "Cumpleanos",
-            content = "12/12/24"
+            content = "08/05/1994"
         )
 
         ItemProfileComponent(
-            imageVector = Icons.Outlined.Email,
-            title = "Correo",
-            content = "hola@gmail.com"
+            imageVector = Icons.Outlined.Fingerprint,
+            title = "D.N.I.",
+            content = "70787708"
         )
 
         ItemProfileComponent(
-            imageVector = Icons.Outlined.Phone,
-            title = "Celular",
-            content = "1212111"
+            imageVector = Icons.Outlined.School,
+            title = "Número de Colegiatura",
+            content = "000001"
+        )
+
+        ItemProfileComponent(
+            imageVector = Icons.Outlined.School,
+            title = "Consejo Departamental",
+            content = "000000"
+        )
+
+        ItemProfileComponent(
+            imageVector = Icons.Outlined.School,
+            title = "Condición",
+            content = "Habilitado"
+        )
+
+        ItemProfileComponent(
+            imageVector = Icons.Outlined.School,
+            title = "Ultimo periodo pagado",
+            content = "2025-I"
         )
 
         Divider()
 
     }
-
 }
 
 @Preview
