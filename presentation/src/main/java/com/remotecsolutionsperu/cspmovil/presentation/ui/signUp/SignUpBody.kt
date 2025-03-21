@@ -1,8 +1,9 @@
-package com.remotecsolutionsperu.cspmovil.presentation.ui.login
+package com.remotecsolutionsperu.cspmovil.presentation.ui.signUp
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -15,7 +16,6 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -31,29 +31,32 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Typography
 import com.remotecsolutionsperu.presentation.R
 
 @Composable
-fun LoginBody(
-    onNavigateChangePassword: () -> Unit,
+fun SignUpBody(
     modifier: Modifier = Modifier,
 
     email: TextFieldValue,
     password: TextFieldValue,
+    confirmPassword: TextFieldValue,
 
     emailValueChange: (TextFieldValue) -> Unit,
     passwordValueChange: (TextFieldValue) -> Unit,
+    confirmPasswordValueChange: (TextFieldValue) -> Unit,
 
     passwordVisible: Boolean = false,
+    confirmPasswordVisible: Boolean = false,
+
     passwordVisibleValueChange: (Boolean) -> Unit,
+    confirmPasswordVisibleValueChange: (Boolean) -> Unit,
 
     emailFocusRequester: FocusRequester,
     passwordFocusRequester: FocusRequester,
+    confirmPasswordFocusRequester: FocusRequester,
 
     showPasswordStrength: Boolean,
     passwordStrength: String
@@ -61,8 +64,9 @@ fun LoginBody(
 
     Column(
         modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.End,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+
         OutlinedTextField(
             singleLine = true,
             modifier = Modifier
@@ -82,7 +86,7 @@ fun LoginBody(
                     color = Color.Black,
                 )
             },
-            placeholder = { Text(stringResource(R.string.login_screen_enter_email),) },
+            placeholder = { Text(stringResource(R.string.login_screen_enter_email)) },
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Email,
@@ -90,8 +94,6 @@ fun LoginBody(
                     tint = Color.Black
                 )
             },
-            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Email),
-            keyboardActions = KeyboardActions(onNext = { passwordFocusRequester.requestFocus() }),
             textStyle = Typography.bodyLarge
         )
 
@@ -138,8 +140,6 @@ fun LoginBody(
                 )
             },
             singleLine = true,
-            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-            keyboardActions = KeyboardActions(onDone = {}),
             textStyle = Typography.bodyLarge
         )
 
@@ -147,37 +147,76 @@ fun LoginBody(
             Text(
                 text = passwordStrength,
                 color = if (passwordStrength == "La contraseña es fuerte") Color.Blue else Color.Red,
-                modifier = Modifier.padding(top = 8.dp)
+                modifier = Modifier
+                    .padding(top = 8.dp)
             )
         }
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(
+        OutlinedTextField(
             modifier = Modifier
-                .clickable { onNavigateChangePassword() },
-            textAlign = TextAlign.End,
-            text = stringResource(R.string.login_screen_forget_password),
-            color = MaterialTheme.colorScheme.onBackground,
-            textDecoration = TextDecoration.Underline,
-            style = Typography.bodyMedium
+                .fillMaxWidth()
+                .focusRequester(confirmPasswordFocusRequester),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color.Black,
+                unfocusedBorderColor = Color.Black,
+                cursorColor = Color.Black
+            ),
+            value = confirmPassword,
+            onValueChange = confirmPasswordValueChange,
+            label = {
+                Text(
+                    text = stringResource(R.string.login_screen_confirm_password),
+                    style = Typography.bodyLarge,
+                    color = Color.Black,
+                )
+            },
+            placeholder = { Text(stringResource(R.string.login_screen_enter_password)) },
+            visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            trailingIcon = {
+                IconButton(onClick = { confirmPasswordVisibleValueChange(!confirmPasswordVisible) }) {
+                    Icon(
+                        imageVector = if (confirmPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                        contentDescription =
+                        if (confirmPasswordVisible)
+                            stringResource(R.string.login_screen_hide_password)
+                        else
+                            stringResource(R.string.login_screen_show_password),
+                        tint = Color.Black
+                    )
+                }
+            },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Lock,
+                    contentDescription = "Lock",
+                    tint = Color.Black
+                )
+            },
+            singleLine = true,
+            textStyle = Typography.bodyLarge
         )
     }
 }
 
 @Preview
 @Composable
-private fun LoginHeaderPreview() {
-    LoginBody(
-        onNavigateChangePassword = {},
+private fun SignUpBodyPreview() {
+    SignUpBody(
         email = TextFieldValue(""),
-        emailValueChange = {},
         password = TextFieldValue(""),
+        confirmPassword = TextFieldValue(""),
+        emailValueChange = {},
         passwordValueChange = {},
+        confirmPasswordValueChange = {},
         passwordVisible = false,
+        confirmPasswordVisible = false,
         passwordVisibleValueChange = {},
+        confirmPasswordVisibleValueChange = {},
         emailFocusRequester = FocusRequester(),
         passwordFocusRequester = FocusRequester(),
+        confirmPasswordFocusRequester = FocusRequester(),
         showPasswordStrength = false,
         passwordStrength = ""
     )

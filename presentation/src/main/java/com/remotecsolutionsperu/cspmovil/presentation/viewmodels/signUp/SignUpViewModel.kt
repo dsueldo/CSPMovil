@@ -1,6 +1,7 @@
 package com.remotecsolutionsperu.cspmovil.presentation.viewmodels.signUp
 
 import android.util.Log
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.viewModelScope
 import com.remotecsolutionsperu.cspmovil.data.repositories.EmailValidationService
 import com.remotecsolutionsperu.cspmovil.data.repositories.PasswordValidationService
@@ -17,14 +18,14 @@ class SignUpViewModel @Inject constructor(
     private val accountService: AccountService
 ) : CspAppViewModel() {
 
-    private val _email = MutableStateFlow("")
-    val email: StateFlow<String> = _email
+    private val _email = MutableStateFlow(TextFieldValue(""))
+    val email: StateFlow<TextFieldValue> = _email
 
-    private val _password = MutableStateFlow("")
-    val password: StateFlow<String> = _password
+    private val _password = MutableStateFlow(TextFieldValue(""))
+    val password: StateFlow<TextFieldValue> = _password
 
-    private val _confirmPassword = MutableStateFlow("")
-    val confirmPassword: StateFlow<String> = _confirmPassword
+    private val _confirmPassword = MutableStateFlow(TextFieldValue(""))
+    val confirmPassword: StateFlow<TextFieldValue> = _confirmPassword
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
@@ -43,17 +44,17 @@ class SignUpViewModel @Inject constructor(
         _errorMessage.value = ""
     }
 
-    fun updateEmail(newEmail: String) {
+    fun updateEmail(newEmail: TextFieldValue) {
         _email.value = newEmail
         _errorMessage.value = ""
     }
 
-    fun updatePassword(newPassword: String) {
+    fun updatePassword(newPassword: TextFieldValue) {
         _password.value = newPassword
         _errorMessage.value = ""
     }
 
-    fun updateConfirmPassword(newConfirmPassword: String) {
+    fun updateConfirmPassword(newConfirmPassword: TextFieldValue) {
         _confirmPassword.value = newConfirmPassword
         _errorMessage.value = ""
     }
@@ -107,7 +108,7 @@ class SignUpViewModel @Inject constructor(
 //                    _errorMessage.value = "Invalid collegiate code."
 //                    return@launch
 //                }
-                accountService.signUp(email = _email.value, password = _password.value)
+                accountService.signUp(email = _email.value.text, password = _password.value.text)
                 _uiState.value = true
             } catch (e: Exception) {
                 _uiState.value = false

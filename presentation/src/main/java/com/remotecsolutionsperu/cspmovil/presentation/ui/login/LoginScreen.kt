@@ -41,13 +41,18 @@ fun LoginScreen(
 
     val email by signInViewModel.email.collectAsState()
     val password by signInViewModel.password.collectAsState()
+
     var passwordVisible by remember { mutableStateOf(false) }
+
     val emailFocusRequester = remember { FocusRequester() }
     val passwordFocusRequester = remember { FocusRequester() }
+
     var passwordStrength by remember { mutableStateOf(signInViewModel.validatePasswordStrength(password.toString())) }
     var showPasswordStrength by remember { mutableStateOf(false) }
+
     val uiState by signInViewModel.uiState.collectAsState()
     val isLoading by signInViewModel.isLoading.collectAsState()
+
     val errorMessage by signInViewModel.errorMessage.collectAsState()
 
     if (uiState) {

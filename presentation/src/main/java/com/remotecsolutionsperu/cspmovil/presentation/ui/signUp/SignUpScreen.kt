@@ -1,35 +1,24 @@
 package com.remotecsolutionsperu.cspmovil.presentation.ui.signUp
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,22 +27,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.remotecsolutionsperu.cspmovil.presentation.navigation.Login
-import com.remotecsolutionsperu.presentation.R
 import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Red_Dark
-import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Typography
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.signUp.SignUpViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,30 +42,31 @@ import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.signUp.SignUpVi
 fun SignUpScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
-    signUpViewModel: SignUpViewModel = hiltViewModel()
+    signUpViewModel: SignUpViewModel = hiltViewModel(),
 ) {
+
     val email by signUpViewModel.email.collectAsState()
     val password by signUpViewModel.password.collectAsState()
-    val confirmPassword = signUpViewModel.confirmPassword.collectAsState()
+    val confirmPassword by signUpViewModel.confirmPassword.collectAsState()
+
     var passwordVisible by remember { mutableStateOf(false) }
     var confirmPasswordVisible by remember { mutableStateOf(false) }
-    val uiState by signUpViewModel.uiState.collectAsState()
-    val isLoading by signUpViewModel.isLoading.collectAsState()
-    var errorMessage by remember { mutableStateOf("") }
-    val errorAccountValidationMessage by signUpViewModel.errorMessage.collectAsState()
-    var showDialog by remember { mutableStateOf(false) }
-    var showErrorDialog by remember { mutableStateOf(false) }
-    var passwordStrength by remember { mutableStateOf(signUpViewModel.validatePasswordStrength(password)) }
+
+    var passwordStrength by remember { mutableStateOf(signUpViewModel.validatePasswordStrength(password.toString())) }
     var showPasswordStrength by remember { mutableStateOf(false) }
+
     val emailFocusRequester = remember { FocusRequester() }
     val passwordFocusRequester = remember { FocusRequester() }
     val confirmPasswordFocusRequester = remember { FocusRequester() }
 
-    LaunchedEffect(uiState) {
-        if (uiState) {
-            showDialog = true
-        }
-    }
+    val uiState by signUpViewModel.uiState.collectAsState()
+    val isLoading by signUpViewModel.isLoading.collectAsState()
+
+    var errorMessage by remember { mutableStateOf("") }
+    val errorAccountValidationMessage by signUpViewModel.errorMessage.collectAsState()
+
+    var showDialog by remember { mutableStateOf(false) }
+    var showErrorDialog by remember { mutableStateOf(false) }
 
     if (isLoading) {
         BasicAlertDialog(
@@ -173,181 +155,54 @@ fun SignUpScreen(
         )
     }
 
-    Box(
+    Scaffold(
         modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            modifier = modifier
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_logo),
-                contentDescription = "Logo",
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(16.dp, 4.dp)
+            .systemBarsPadding()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(16.dp),
+        topBar = {
+            SignUpHeader(
+                modifier = Modifier.padding(bottom = 16.dp)
             )
-
-            Spacer(
+        },
+        content = { padding ->
+            SignUpBody(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp)
-            )
+                    .padding(padding)
+                    .verticalScroll(rememberScrollState()),
 
-            OutlinedTextField(
-                singleLine = true,
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(16.dp, 4.dp)
-                    .focusRequester(emailFocusRequester),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color.Black,
-                    unfocusedBorderColor = Color.Black,
-                    cursorColor = Color.Black
-                ),
-                value = email,
-                onValueChange = {
-                    signUpViewModel.updateEmail(it)
-                    signUpViewModel.resetState()
-                },
-                label = {
-                    Text(
-                        text = stringResource(R.string.login_screen_email),
-                        style = Typography.bodyLarge,
-                        color = Color.Black,
-                    )
-                },
-                placeholder = { Text(stringResource(R.string.login_screen_enter_email)) },
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Email,
-                        contentDescription = "Email",
-                        tint = Color.Black
-                    )
-                },
-                textStyle = Typography.bodyLarge
-            )
+                email = email,
+                password = password,
+                confirmPassword = confirmPassword,
 
-            OutlinedTextField(
-                singleLine = true,
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(16.dp, 4.dp)
-                    .focusRequester(passwordFocusRequester),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color.Black,
-                    unfocusedBorderColor = Color.Black,
-                    cursorColor = Color.Black
-                ),
-                value = password,
-                onValueChange = {
+                passwordVisible = passwordVisible,
+                confirmPasswordVisible = confirmPasswordVisible,
+
+                passwordStrength = passwordStrength,
+                showPasswordStrength = showPasswordStrength,
+
+                emailFocusRequester = emailFocusRequester,
+                passwordFocusRequester = passwordFocusRequester,
+                confirmPasswordFocusRequester = confirmPasswordFocusRequester,
+
+                emailValueChange = { signUpViewModel.updateEmail(it) },
+                passwordValueChange = {
                     signUpViewModel.updatePassword(it)
-                    signUpViewModel.resetState()
+                    passwordStrength = signUpViewModel.validatePasswordStrength(it.text)
+                    showPasswordStrength = true
                 },
-                label = {
-                    Text(
-                        text = stringResource(R.string.login_screen_password),
-                        style = Typography.bodyLarge,
-                        color = Color.Black,
-                    )
-                },
-                placeholder = { Text(stringResource(R.string.login_screen_enter_password)) },
-                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                trailingIcon = {
-                    IconButton(onClick = { passwordVisible = (!passwordVisible) }) {
-                        Icon(
-                            imageVector = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                            contentDescription =
-                            if (passwordVisible)
-                                stringResource(R.string.login_screen_hide_password)
-                            else
-                                stringResource(R.string.login_screen_show_password),
-                            tint = Color.Black
-                        )
-                    }
-                },
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = "Password",
-                        tint = Color.Black
-                    )
-                },
-                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Text),
-                keyboardActions = KeyboardActions(onNext = { confirmPasswordFocusRequester.requestFocus() }),
-                textStyle = Typography.bodyLarge
+                confirmPasswordValueChange = { signUpViewModel.updateConfirmPassword(it) },
+
+                passwordVisibleValueChange = { passwordVisible = it },
+                confirmPasswordVisibleValueChange = { confirmPasswordVisible = it },
             )
-
-            if (showPasswordStrength) {
-                Text(
-                    text = passwordStrength,
-                    color = if (passwordStrength == "La contraseña es fuerte") Color.Blue else Color.Red,
-                    modifier = Modifier.padding(top = 8.dp)
-                )
-            }
-
-            OutlinedTextField(
-                singleLine = true,
+        },
+        bottomBar = {
+            SignUpFooter(
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(16.dp, 4.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color.Black,
-                    unfocusedBorderColor = Color.Black,
-                    cursorColor = Color.Black
-                ),
-                value = confirmPassword.value,
-                onValueChange = {
-                    signUpViewModel.updateConfirmPassword(it)
-                    signUpViewModel.resetState()
-                },
-                label = {
-                    Text(
-                        text = stringResource(R.string.login_screen_confirm_password),
-                        style = Typography.bodyLarge,
-                        color = Color.Black,
-                    )
-                },
-                placeholder = { Text(stringResource(R.string.login_screen_enter_password)) },
-                visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                trailingIcon = {
-                    IconButton(onClick = { confirmPasswordVisible = (!confirmPasswordVisible) }) {
-                        Icon(
-                            imageVector = if (confirmPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                            contentDescription =
-                            if (confirmPasswordVisible)
-                                stringResource(R.string.login_screen_hide_password)
-                            else
-                                stringResource(R.string.login_screen_show_password),
-                            tint = Color.Black
-                        )
-                    }
-                },
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = "ConfirmPassword",
-                        tint = Color.Black
-                    )
-                },
-                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-                keyboardActions = KeyboardActions(onDone = { /* Handle done action */ }),
-                textStyle = Typography.bodyLarge
-            )
-
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp)
-            )
-
-            Button(
-                onClick = {
+                    .padding(16.dp, 0.dp),
+                onClickRegistration = {
                     val isPasswordValid = signUpViewModel.validateEnterPassword()
                     val isConfirmPasswordValid = signUpViewModel.validateEnterConfirmPassword()
                     val isEmailValid = signUpViewModel.validateEnterEmail()
@@ -362,23 +217,18 @@ fun SignUpScreen(
                         showErrorDialog = true
                         errorMessage = signUpViewModel.errorMessage.value
                     }
-                    passwordStrength = signUpViewModel.validatePasswordStrength(password)
+                    passwordStrength = signUpViewModel.validatePasswordStrength(password.text)
                     showPasswordStrength = true
                 },
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(16.dp, 0.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Red_Dark,
-                    contentColor = Color.White
-                )
-            ) {
-                Text(
-                    text = stringResource(R.string.login_screen_register),
-                    fontSize = 16.sp,
-                    modifier = modifier.padding(0.dp, 6.dp)
-                )
-            }
+            )
         }
-    }
+    )
+}
+
+@Preview
+@Composable
+private fun SignUpScreenPreview() {
+    SignUpScreen(
+        navController = rememberNavController()
+    )
 }

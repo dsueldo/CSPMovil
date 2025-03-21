@@ -1,13 +1,14 @@
 package com.remotecsolutionsperu.cspmovil.data.repositories
 
+import androidx.compose.ui.text.input.TextFieldValue
 import com.remotecsolutionsperu.cspmovil.domain.repositories.ValidationService
 
 class PasswordValidationService : ValidationService {
     private var errorMessage: String = ""
 
-    override fun validate(input: String): Boolean {
+    override fun validate(input: TextFieldValue): Boolean {
         return when {
-            input.isEmpty() -> {
+            input.text.isEmpty() -> {
                 errorMessage = "Ingrese la contraseña"
                 false
             }
