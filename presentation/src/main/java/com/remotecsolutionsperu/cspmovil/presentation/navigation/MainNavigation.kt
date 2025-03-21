@@ -20,7 +20,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.remotecsolutionsperu.cspmovil.presentation.ui.benefits.BenefitsScreen
 import com.remotecsolutionsperu.cspmovil.presentation.ui.editprofile.EditProfileScreen
-import com.remotecsolutionsperu.cspmovil.presentation.ui.login.LoginScreen
 import com.remotecsolutionsperu.cspmovil.presentation.ui.main.MainScreen
 import com.remotecsolutionsperu.cspmovil.presentation.ui.payment.PaymentOneScreen
 import com.remotecsolutionsperu.cspmovil.presentation.ui.payment.instruction.PaymentInstructionScreen
@@ -83,16 +82,6 @@ fun MainNavigation() {
                     navController = navController
                 )
             }
-            composable<Login> { LoginScreen(
-                navController = navController,
-                onAuthComplete = {
-                    navController.navigate(Main) {
-                        popUpTo(navController.graph.startDestinationId) {
-                            inclusive = true
-                        }
-                    }
-                }
-            )}
         }
     }
 }
