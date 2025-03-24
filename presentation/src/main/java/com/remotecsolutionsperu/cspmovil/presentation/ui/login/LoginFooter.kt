@@ -20,23 +20,23 @@ fun LoginFooter(
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         TextButton(
-            onClick = onClickRegistration,
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.textButtonColors(Red_Dark),
-        ) {
-            Text(
-                text = "Registrarse",
-                color = MaterialTheme.colorScheme.onPrimary,
-                style = Typography.titleMedium
-            )
-        }
-        TextButton(
             onClick = onClickLogin,
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.textButtonColors(Red_Dark),
         ) {
             Text(
                 text = "Ingresar",
+                color = MaterialTheme.colorScheme.onPrimary,
+                style = Typography.titleMedium
+            )
+        }
+        TextButton(
+            onClick = onClickRegistration,
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.textButtonColors(Red_Dark),
+        ) {
+            Text(
+                text = "Registrarse",
                 color = MaterialTheme.colorScheme.onPrimary,
                 style = Typography.titleMedium
             )

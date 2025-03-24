@@ -64,7 +64,7 @@ fun SignUpBody(
 
     Column(
         modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.End,
     ) {
 
         OutlinedTextField(

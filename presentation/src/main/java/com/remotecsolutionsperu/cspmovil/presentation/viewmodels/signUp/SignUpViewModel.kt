@@ -117,7 +117,7 @@ class SignUpViewModel @Inject constructor(
                         "El correo ya se encuentra registrado."
                     }
                     e.message?.contains("Network error") == true -> {
-                        "Error de red. Por favor, inténtelo de nuevo."
+                        "Error de conexión. Por favor, inténtelo de nuevo."
                     }
                     e.message?.contains("Weak password") == true -> {
                         "La contraseña es demasiado débil."

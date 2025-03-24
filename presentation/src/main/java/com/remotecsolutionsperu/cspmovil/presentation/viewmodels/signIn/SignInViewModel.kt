@@ -1,11 +1,15 @@
 package com.remotecsolutionsperu.cspmovil.presentation.viewmodels.signIn
 
 import android.util.Log
+import androidx.compose.runtime.currentCompositionErrors
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.remotecsolutionsperu.cspmovil.data.repositories.EmailValidationService
+import com.remotecsolutionsperu.cspmovil.data.repositories.PasswordValidationService
 import com.remotecsolutionsperu.cspmovil.domain.repositories.AccountService
 import com.remotecsolutionsperu.cspmovil.presentation.utils.SessionManager
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
@@ -36,12 +40,43 @@ class SignInViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(false)
     val uiState: StateFlow<Boolean> = _uiState
 
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+
+    private val emailValidationService = EmailValidationService()
+    private val passwordValidationService = PasswordValidationService()
+
+
+    fun resetState() {
+        _uiState.value = false
+        _errorMessage.value = ""
+    }
+
     fun updateEmail(newEmail: TextFieldValue) {
         _email.value = newEmail
+        _errorMessage.value = ""
     }
 
     fun updatePassword(newPassword: TextFieldValue) {
         _password.value = newPassword
+        _errorMessage.value = ""
+    }
+
+    fun validateEnterEmail(): Boolean {
+        val isValid = emailValidationService.validate(_email.value)
+        if (!isValid) {
+            _errorMessage.value = emailValidationService.getErrorMessage()
+            Log.d("SignInViewModel", "Error: ${_errorMessage.value}")
+        }
+        return isValid
+    }
+
+    fun validateEnterPassword(): Boolean {
+        val isValid = passwordValidationService.validate(_password.value)
+        if (!isValid) {
+            _errorMessage.value = passwordValidationService.getErrorMessage()
+            Log.d("SignInViewModel", "Error: ${_errorMessage.value}")
+        }
+        return isValid
     }
 
     fun validatePasswordStrength(password: String): String {
@@ -56,6 +91,7 @@ class SignInViewModel @Inject constructor(
     }
 
     fun onSignInClick() {
+        if (!validateEnterEmail() || !validateEnterPassword()) return
         _isLoading.value = true
         viewModelScope.launch {
             try {
@@ -73,12 +109,17 @@ class SignInViewModel @Inject constructor(
                 Log.d("SignInViewModel", "User signed in getIdToken: ${accountService.getIdToken()}")
                 _uiState.value = true
             } catch (e: Exception) {
-                _errorMessage.value = when (e) {
-                    is FirebaseAuthInvalidUserException -> "No existe una cuenta relacionada con este email"
-                    is FirebaseAuthInvalidCredentialsException -> "Credenciales incorrectas. Intente de nuevo"
-                    is FirebaseNetworkException -> "Error de conexión. Por favor revise su conexión a internet "
-                    else -> "An unknown error occurred. Please try again."
+                _uiState.value = false
+                _errorMessage.value = when {
+                    e.message?.contains("The supplied auth credential is incorrect, malformed or has expired.") == true -> {
+                        "Credenciales incorrectas. Intente de nuevo."
+                    }
+                    e.message?.contains("Network error") == true -> {
+                        "Error de conexión. Por favor, inténtelo de nuevo."
+                    }
+                    else -> "Ocurrió un error: ${e.message}"
                 }
+                Log.d("SignInViewModel", "Error: ${e.message}")
             } finally {
                 _isLoading.value = false
             }
