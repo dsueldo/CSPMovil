@@ -3,7 +3,6 @@ package com.remotecsolutionsperu.cspmovil.presentation.ui.signUp
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -59,7 +58,6 @@ fun SignUpScreen(
     val passwordFocusRequester = remember { FocusRequester() }
     val confirmPasswordFocusRequester = remember { FocusRequester() }
 
-    val uiState by signUpViewModel.uiState.collectAsState()
     val isLoading by signUpViewModel.isLoading.collectAsState()
 
     var errorMessage by remember { mutableStateOf("") }
@@ -79,31 +77,6 @@ fun SignUpScreen(
                     CircularProgressIndicator()
                 }
             },
-        )
-    }
-
-    if (showErrorDialog) {
-        AlertDialog(
-            onDismissRequest = {
-                showErrorDialog = false
-                signUpViewModel.resetState()
-            },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        showErrorDialog = false
-                        signUpViewModel.resetState()
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Red_Dark,
-                        contentColor = Color.White
-                    )
-                ) {
-                    Text("OK")
-                }
-            },
-            title = { Text("Alerta!") },
-            text = { Text(errorMessage) }
         )
     }
 
@@ -130,6 +103,31 @@ fun SignUpScreen(
             },
             title = { Text("Registro Exitoso") },
             text = { Text("Te has registrado correctamente.") }
+        )
+    }
+
+    if (showErrorDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                showErrorDialog = false
+                signUpViewModel.resetState()
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showErrorDialog = false
+                        signUpViewModel.resetState()
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Red_Dark,
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text("OK")
+                }
+            },
+            title = { Text("Alerta!") },
+            text = { Text(errorMessage) }
         )
     }
 

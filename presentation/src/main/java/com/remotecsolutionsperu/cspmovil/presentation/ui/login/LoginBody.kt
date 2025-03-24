@@ -54,9 +54,6 @@ fun LoginBody(
 
     emailFocusRequester: FocusRequester,
     passwordFocusRequester: FocusRequester,
-
-    showPasswordStrength: Boolean,
-    passwordStrength: String
 ) {
 
     Column(
@@ -143,14 +140,6 @@ fun LoginBody(
             textStyle = Typography.bodyLarge
         )
 
-        if (showPasswordStrength) {
-            Text(
-                text = passwordStrength,
-                color = if (passwordStrength == "La contraseña es fuerte") Color.Blue else Color.Red,
-                modifier = Modifier.padding(top = 8.dp)
-            )
-        }
-
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
@@ -178,7 +167,5 @@ private fun LoginHeaderPreview() {
         passwordVisibleValueChange = {},
         emailFocusRequester = FocusRequester(),
         passwordFocusRequester = FocusRequester(),
-        showPasswordStrength = false,
-        passwordStrength = ""
     )
 }
