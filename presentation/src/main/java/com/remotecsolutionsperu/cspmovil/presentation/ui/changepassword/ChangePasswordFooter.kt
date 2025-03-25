@@ -8,6 +8,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Typography
 
 @Composable
@@ -19,10 +20,10 @@ fun ChangePasswordFooter(
     TextButton(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
-        colors = ButtonDefaults.textButtonColors(MaterialTheme.colorScheme.primary),
+        colors = ButtonDefaults.textButtonColors(Red_Dark),
     ) {
         Text(
-            text = "Guardar",
+            text = "Enviar",
             color = MaterialTheme.colorScheme.onPrimary,
             style = Typography.titleMedium
         )

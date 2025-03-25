@@ -94,12 +94,15 @@ fun SignUpBody(
                     tint = Color.Black
                 )
             },
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Email),
+            keyboardActions = KeyboardActions(onNext = { emailFocusRequester.requestFocus() }),
             textStyle = Typography.bodyLarge
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
+            singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
                 .focusRequester(passwordFocusRequester),
@@ -139,7 +142,8 @@ fun SignUpBody(
                     tint = Color.Black
                 )
             },
-            singleLine = true,
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Password),
+            keyboardActions = KeyboardActions(onNext = { passwordFocusRequester.requestFocus() }),
             textStyle = Typography.bodyLarge
         )
 
@@ -155,6 +159,7 @@ fun SignUpBody(
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
+            singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
                 .focusRequester(confirmPasswordFocusRequester),
@@ -194,7 +199,8 @@ fun SignUpBody(
                     tint = Color.Black
                 )
             },
-            singleLine = true,
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(onDone = {}),
             textStyle = Typography.bodyLarge
         )
     }
