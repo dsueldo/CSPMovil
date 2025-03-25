@@ -11,6 +11,7 @@
     <string name="login_screen_enter_password">Ingrese Contraseña</string>
     <string name="login_screen_forget_password">Olvidaste tu Contraseña</string>
     <string name="login_screen_confirm_password">Confirma tu Contraseña</string>
+    <string name="login_screen_confirm_email">Confirma tu Correo</string>
     <string name="login_screen_accept_terms_conditions">Acepto los términos y condiciones</string>
     <string name="login_screen_register">Registrarse</string>
     <string name="login_screen_success">Ingresar</string>

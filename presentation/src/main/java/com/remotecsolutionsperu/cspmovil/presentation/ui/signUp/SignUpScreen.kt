@@ -43,7 +43,6 @@ fun SignUpScreen(
     modifier: Modifier = Modifier,
     signUpViewModel: SignUpViewModel = hiltViewModel(),
 ) {
-
     val email by signUpViewModel.email.collectAsState()
     val password by signUpViewModel.password.collectAsState()
     val confirmPassword by signUpViewModel.confirmPassword.collectAsState()
