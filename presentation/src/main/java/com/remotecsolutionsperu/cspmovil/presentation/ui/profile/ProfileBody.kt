@@ -12,17 +12,19 @@ import androidx.compose.material.icons.outlined.PersonOutline
 import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material.icons.outlined.School
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.remotecsolutionsperu.cspmovil.presentation.ui.components.ItemProfileComponent
-import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.profile.ProfileItem
+import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.profile.ProfileViewModel
 
 @Composable
 fun ProfileBody(
     modifier: Modifier = Modifier,
-    profileItem: ProfileItem? = null,
+    viewModel: ProfileViewModel,
 ) {
+    val profileUiState by viewModel.profileUiState.collectAsState()
 
     Column(
         modifier = modifier,
@@ -31,7 +33,7 @@ fun ProfileBody(
 
         Divider()
 
-        profileItem?.let {
+        profileUiState.let {
             ItemProfileComponent(
                 imageVector = Icons.Outlined.PersonOutline,
                 title = "Nombres",
@@ -64,7 +66,7 @@ fun ProfileBody(
 
             ItemProfileComponent(
                 imageVector = Icons.Outlined.CalendarToday,
-                title = "Cumpleanos",
+                title = "Cumpleaños",
                 content = it.birthday
             )
 
@@ -101,10 +103,4 @@ fun ProfileBody(
 
         Divider()
     }
-}
-
-@Preview
-@Composable
-private fun ProfileBodyPreview() {
-    ProfileBody()
 }

@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.remotecsolutionsperu.cspmovil.presentation.ui.components.BenefitComponent
-import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Typography
+import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.benefits.BenefitsListViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

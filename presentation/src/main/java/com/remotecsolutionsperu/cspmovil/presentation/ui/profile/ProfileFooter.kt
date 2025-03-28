@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Typography
+import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
 
 @Composable
 fun ProfileFooter(

@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Typography
+import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
 
 @Composable
 fun ItemProfileComponent(

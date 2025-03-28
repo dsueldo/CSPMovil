@@ -1,12 +1,10 @@
 package com.remotecsolutionsperu.cspmovil.presentation.viewmodels.profile
 
-import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.remotecsolutionsperu.cspmovil.domain.entities.user.ProfileUiState
 import com.remotecsolutionsperu.cspmovil.domain.repositories.AccountService
+import com.remotecsolutionsperu.cspmovil.domain.usecases.GetProfileUseCase
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,10 +15,14 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val accountService: AccountService,
+    private val getProfileUseCase: GetProfileUseCase,
 ) : CspAppViewModel() {
 
-    private val _profileData = MutableStateFlow<ProfileItem?>(null)
-    val profileData: StateFlow<ProfileItem?> = _profileData
+    private val _uiState = MutableStateFlow(false)
+    val uiState: StateFlow<Boolean> = _uiState
+
+    private val _profileUiState = MutableStateFlow(ProfileUiState())
+    val profileUiState: StateFlow<ProfileUiState> = _profileUiState
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
@@ -28,18 +30,41 @@ class ProfileViewModel @Inject constructor(
     private val _errorMessage = MutableStateFlow("")
     val errorMessage: StateFlow<String> = _errorMessage
 
-    private val _uiState = MutableStateFlow(false)
-    val uiState: StateFlow<Boolean> = _uiState
-
-    private val db = Firebase.firestore
-    private val auth = Firebase.auth
-
-    init {
-        fetchProfileData()
+    fun resetState() {
+        _uiState.value = false
+        _errorMessage.value = ""
     }
 
-    private fun fetchProfileData() {
-        val currentUser = auth.currentUser
+    init {
+        fetchUserProfileData()
+    }
+
+    private fun fetchUserProfileData() {
+        _isLoading.value = true
+        viewModelScope.launch {
+            try {
+                val profile = getProfileUseCase.invoke()
+                _profileUiState.value = profile
+                _uiState.value = true
+                Log.d("ProfileViewModel", "profile: ${_profileUiState.value}")
+            } catch (e: Exception) {
+                _errorMessage.value = "Error fetching profile data: ${e.message}"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun signOut() {
+        viewModelScope.launch {
+            try {
+                accountService.signOut()
+            } catch (e: Exception) {
+                _errorMessage.value = "Error signing out: ${e.message}"
+            }
+        }
+    }
+        /*val currentUser = auth.currentUser
         if (currentUser != null) {
             val userUid = currentUser.uid
             _isLoading.value = true
@@ -109,30 +134,5 @@ class ProfileViewModel @Inject constructor(
             _errorMessage.value = "User not authenticated"
             _uiState.value = false
             _isLoading.value = false
-        }
-    }
-
-    fun signOut() {
-        viewModelScope.launch {
-            try {
-                accountService.signOut()
-            } catch (e: Exception) {
-                _errorMessage.value = "Error signing out: ${e.message}"
-            }
-        }
-    }
+        }*/
 }
-
-data class ProfileItem(
-    val name: String,
-    val lastName: String,
-    val phone: String,
-    val email: String,
-    val gender: String,
-    val birthday: String,
-    val dni: String,
-    val codeNumber: String,
-    val council: String,
-    val condition: String,
-    val payLastPeriod: String,
-)

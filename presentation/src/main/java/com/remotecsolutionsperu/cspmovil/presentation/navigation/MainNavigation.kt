@@ -24,7 +24,7 @@ import com.remotecsolutionsperu.cspmovil.presentation.ui.main.MainScreen
 import com.remotecsolutionsperu.cspmovil.presentation.ui.payment.PaymentOneScreen
 import com.remotecsolutionsperu.cspmovil.presentation.ui.payment.instruction.PaymentInstructionScreen
 import com.remotecsolutionsperu.cspmovil.presentation.ui.profile.ProfileScreen
-import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Red_Dark
+import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 
 @SuppressLint("RestrictedApi")
 @Composable
@@ -76,12 +76,8 @@ fun MainNavigation() {
             composable<Profile> { ProfileScreen(navController) }
             composable<EditProfile> { EditProfileScreen(navController) }
             composable<Benefit> { BenefitsScreen() }
-            composable<Payment> { PaymentOneScreen(navController = navController)}
-            composable<PaymentInstructions> {
-                PaymentInstructionScreen(
-                    navController = navController
-                )
-            }
+            composable<Payment> { PaymentOneScreen(navController) }
+            composable<PaymentInstructions> { PaymentInstructionScreen( navController) }
         }
     }
 }
