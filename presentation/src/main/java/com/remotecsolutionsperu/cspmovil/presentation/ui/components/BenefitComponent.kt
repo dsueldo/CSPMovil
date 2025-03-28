@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Typography
+import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
 
 @Composable
 fun BenefitComponent(

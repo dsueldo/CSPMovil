@@ -9,7 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.splash.SplashViewModel
+import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.auth.splash.SplashViewModel
 
 @SuppressLint("RestrictedApi")
 @Composable

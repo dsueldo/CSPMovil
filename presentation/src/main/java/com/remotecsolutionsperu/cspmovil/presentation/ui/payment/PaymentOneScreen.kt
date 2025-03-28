@@ -25,7 +25,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.remotecsolutionsperu.cspmovil.presentation.navigation.PaymentInstructions
 import com.remotecsolutionsperu.cspmovil.presentation.ui.components.ItemPaymentComponent
-import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Typography
+import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.payment.PaymentsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

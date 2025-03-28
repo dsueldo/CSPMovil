@@ -8,17 +8,24 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.editprofile.EditProfileViewModel
 
 @Composable
 fun EditProfileScreen(
     navController: NavController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: EditProfileViewModel = hiltViewModel(),
 ) {
+
+    val userProfile by viewModel.profileUiState.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
+    val errorMessage by viewModel.errorMessage.collectAsState()
 
     Scaffold(
         modifier = modifier
@@ -31,26 +38,22 @@ fun EditProfileScreen(
                 modifier = Modifier
             )
         },
+        content = { paddingValues ->
+            EditProfileBody(
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .verticalScroll(rememberScrollState()),
+                viewModel = viewModel,
+            )
+        },
         bottomBar = {
             EditProfileFooter(
-                onClick = { navController.popBackStack() },
-                modifier = Modifier
+                modifier = Modifier,
+                onClickSave = {
+                    viewModel.saveProfile()
+                    navController.popBackStack()
+                }
             )
         }
-    ) { paddingValues ->
-        EditProfileBody(
-            modifier = Modifier
-                .padding(paddingValues)
-                .verticalScroll(rememberScrollState())
-        )
-    }
-
-}
-
-@Preview
-@Composable
-private fun EditProfileScreenPreview() {
-    EditProfileScreen(
-        navController = rememberNavController()
     )
 }

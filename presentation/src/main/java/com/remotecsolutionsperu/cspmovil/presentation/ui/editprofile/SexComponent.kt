@@ -5,6 +5,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ExposedDropdownMenuBox
 import androidx.compose.material.ExposedDropdownMenuDefaults
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -13,9 +14,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
-import com.remotecsolutionsperu.cspmovil.presentation.ui.theme.Typography
+import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
 
 data class Sexo(val id: String, val name: String)
 
@@ -38,14 +40,20 @@ fun SexComponent(modifier: Modifier = Modifier) {
     ) {
 
         TextField(
+            modifier = Modifier.fillMaxWidth(),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color.Black,
+                unfocusedBorderColor = Color.Black,
+                cursorColor = Color.Black,
+            ),
             value = TextFieldValue(selectedSex.name),
             onValueChange = {},
             readOnly = true,
-            modifier = Modifier.fillMaxWidth(),
             label = {
                 Text(
-                    text = "Sexo",
-                    style = Typography.bodySmall
+                    text = "Género",
+                    style = Typography.bodySmall,
+                    color = Color.Black
                 )
             },
             trailingIcon = {
