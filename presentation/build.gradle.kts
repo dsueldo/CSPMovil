@@ -76,6 +76,7 @@ dependencies {
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage.ktx)
     implementation(libs.firebase.realtime)
     implementation(libs.firebase.config)
     implementation(libs.java.jwt)

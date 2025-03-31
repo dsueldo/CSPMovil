@@ -1,5 +1,5 @@
 package com.remotecsolutionsperu.cspmovil.domain.repositories
 
-interface NewsService {
+interface NewsRepository {
     suspend fun getNewsList(): List<String>
 }

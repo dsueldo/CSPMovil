@@ -24,7 +24,7 @@ fun EditProfileFooter(
         Text(
             text = "Guardar",
             color = MaterialTheme.colorScheme.onPrimary,
-            style = Typography.titleMedium
+            style = Typography.titleSmall
         )
     }
 }

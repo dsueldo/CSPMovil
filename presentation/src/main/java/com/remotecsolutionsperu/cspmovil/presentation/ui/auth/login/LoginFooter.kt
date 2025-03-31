@@ -27,7 +27,7 @@ fun LoginFooter(
             Text(
                 text = "Ingresar",
                 color = MaterialTheme.colorScheme.onPrimary,
-                style = Typography.titleMedium
+                style = Typography.titleSmall
             )
         }
         TextButton(
@@ -38,7 +38,7 @@ fun LoginFooter(
             Text(
                 text = "Registrarse",
                 color = MaterialTheme.colorScheme.onPrimary,
-                style = Typography.titleMedium
+                style = Typography.titleSmall
             )
         }
     }

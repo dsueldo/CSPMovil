@@ -1,13 +1,13 @@
 package com.remotecsolutionsperu.cspmovil.data.repositories
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.remotecsolutionsperu.cspmovil.domain.repositories.NewsService
+import com.remotecsolutionsperu.cspmovil.domain.repositories.NewsRepository
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class NewsServiceImpl @Inject constructor(
+class NewsRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore
-) : NewsService {
+) : NewsRepository {
 
     override suspend fun getNewsList(): List<String> {
         val snapshot = firestore.collection("news").get().await()

@@ -82,7 +82,7 @@ fun SignUpBody(
             label = {
                 Text(
                     text = stringResource(R.string.login_screen_email),
-                    style = Typography.bodyLarge,
+                    style = Typography.bodySmall,
                     color = Color.Black,
                 )
             },
@@ -96,7 +96,7 @@ fun SignUpBody(
             },
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Email),
             keyboardActions = KeyboardActions(onNext = { emailFocusRequester.requestFocus() }),
-            textStyle = Typography.bodyLarge
+            textStyle = Typography.bodySmall
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -116,7 +116,7 @@ fun SignUpBody(
             label = {
                 Text(
                     text = stringResource(R.string.login_screen_password),
-                    style = Typography.bodyLarge,
+                    style = Typography.bodySmall,
                     color = Color.Black,
                 )
             },
@@ -144,7 +144,7 @@ fun SignUpBody(
             },
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Password),
             keyboardActions = KeyboardActions(onNext = { passwordFocusRequester.requestFocus() }),
-            textStyle = Typography.bodyLarge
+            textStyle = Typography.bodySmall
         )
 
         if (showPasswordStrength) {
@@ -173,7 +173,7 @@ fun SignUpBody(
             label = {
                 Text(
                     text = stringResource(R.string.login_screen_confirm_password),
-                    style = Typography.bodyLarge,
+                    style = Typography.bodySmall,
                     color = Color.Black,
                 )
             },
@@ -201,7 +201,7 @@ fun SignUpBody(
             },
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = {}),
-            textStyle = Typography.bodyLarge
+            textStyle = Typography.bodySmall
         )
     }
 }

@@ -30,14 +30,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.remotecsolutionsperu.cspmovil.presentation.navigation.EditProfile
-import com.remotecsolutionsperu.cspmovil.presentation.navigation.Login
-import com.remotecsolutionsperu.cspmovil.presentation.navigation.Splash
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.profile.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
+    onSignOut: () -> Unit,
     navController: NavController = rememberNavController(),
     modifier: Modifier = Modifier,
     viewModel: ProfileViewModel = hiltViewModel()
@@ -46,6 +45,7 @@ fun ProfileScreen(
     val profileState by viewModel.profileUiState.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
+    val signOutResult by viewModel.signOutResult.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
     val showSignOutDialog = remember { mutableStateOf(false) }
 
@@ -75,11 +75,7 @@ fun ProfileScreen(
                     onClick = {
                         viewModel.signOut()
                         showSignOutDialog.value = false
-                        navController.navigate(Splash) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                inclusive = true
-                            }
-                        }
+                        onSignOut()
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Red_Dark,
@@ -127,7 +123,6 @@ fun ProfileScreen(
         bottomBar = {
             ProfileFooter(
                 onSignOut = {
-                    viewModel.signOut()
                     showSignOutDialog.value = true
                 }
             )
@@ -138,5 +133,5 @@ fun ProfileScreen(
 @Preview
 @Composable
 private fun ProfileScreenPreview() {
-    ProfileScreen()
+    ProfileScreen(onSignOut = {})
 }

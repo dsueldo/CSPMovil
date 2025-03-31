@@ -28,7 +28,7 @@ import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 
 @SuppressLint("RestrictedApi")
 @Composable
-fun MainNavigation() {
+fun MainNavigation(onSignOut: () -> Unit) {
 
     val navController = rememberNavController()
 
@@ -73,7 +73,7 @@ fun MainNavigation() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable<Main> { MainScreen() }
-            composable<Profile> { ProfileScreen(navController) }
+            composable<Profile> { ProfileScreen(onSignOut,navController) }
             composable<EditProfile> { EditProfileScreen(navController) }
             composable<Benefit> { BenefitsScreen() }
             composable<Payment> { PaymentOneScreen(navController) }

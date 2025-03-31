@@ -9,6 +9,7 @@ import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,6 +18,9 @@ class ProfileViewModel @Inject constructor(
     private val accountService: AccountService,
     private val getProfileUseCase: GetProfileUseCase,
 ) : CspAppViewModel() {
+
+    private val _signOutResult = MutableStateFlow<SignOutResult>(SignOutResult.Initial)
+    val signOutResult = _signOutResult.asStateFlow()
 
     private val _uiState = MutableStateFlow(false)
     val uiState: StateFlow<Boolean> = _uiState
@@ -56,15 +60,27 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun signOut() {
+        _signOutResult.value = SignOutResult.Loading
         viewModelScope.launch {
             try {
                 accountService.signOut()
+                _signOutResult.value = SignOutResult.Success
             } catch (e: Exception) {
                 _errorMessage.value = "Error signing out: ${e.message}"
+                _signOutResult.value = SignOutResult.Error(e.message ?: "Error desconocido")
             }
         }
     }
-        /*val currentUser = auth.currentUser
+
+    sealed class SignOutResult {
+        object Initial : SignOutResult()
+        object Loading : SignOutResult()
+        object Success : SignOutResult()
+        data class Error(val message: String) : SignOutResult()
+    }
+}
+
+/*val currentUser = auth.currentUser
         if (currentUser != null) {
             val userUid = currentUser.uid
             _isLoading.value = true
@@ -135,4 +151,3 @@ class ProfileViewModel @Inject constructor(
             _uiState.value = false
             _isLoading.value = false
         }*/
-}
