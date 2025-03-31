@@ -47,14 +47,14 @@ fun EditProfileBody(
             onValueChange = { viewModel.updateName(it) },
             label = {
                 Text(
-                    text = "Nombre",
+                    text = "Nombres",
                     style = Typography.bodySmall,
                     color = Color.Black,
                 )
             },
             placeholder = {
                 Text(
-                    text = "Ingrese su nombre",
+                    text = "Ingrese sus nombres",
                     style = Typography.bodySmall,
                     color = Color.Black,
                 )
@@ -76,14 +76,14 @@ fun EditProfileBody(
             onValueChange = { viewModel.updateLastName(it) },
             label = {
                 Text(
-                    text = "Apellido",
+                    text = "Apellidos",
                     style = Typography.bodySmall,
                     color = Color.Black,
                 )
             },
             placeholder = {
                 Text(
-                    text = "Ingrese su apellido",
+                    text = "Ingrese sus apellidos",
                     style = Typography.bodySmall,
                     color = Color.Black,
                 )

@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import com.remotecsolutionsperu.cspmovil.domain.entities.news.NewsItem
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,6 +30,9 @@ class NewsListViewModel @Inject constructor() : CspAppViewModel() {
     val uiState: StateFlow<Boolean> = _uiState
 
     private val db = Firebase.firestore
+    private val storage = Firebase.storage
+    private var storageRef = storage.reference
+    val newsImagesRef = storageRef.child("news")
 
     init {
         fetchNewsList()
@@ -65,9 +70,3 @@ class NewsListViewModel @Inject constructor() : CspAppViewModel() {
         }
     }
 }
-
-data class NewsItem(
-    val image: String,
-    val title: String,
-    val content: String
-)

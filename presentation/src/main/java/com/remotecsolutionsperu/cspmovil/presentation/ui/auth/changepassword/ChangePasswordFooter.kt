@@ -25,7 +25,7 @@ fun ChangePasswordFooter(
         Text(
             text = "Enviar",
             color = MaterialTheme.colorScheme.onPrimary,
-            style = Typography.titleMedium
+            style = Typography.titleSmall
         )
     }
 

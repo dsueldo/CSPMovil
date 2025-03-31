@@ -58,7 +58,7 @@ fun ChangePasswordBody(
             label = {
                 Text(
                     text = stringResource(R.string.login_screen_email),
-                    style = Typography.bodyLarge,
+                    style = Typography.bodySmall,
                     color = Color.Black,
                 )
             },
@@ -72,7 +72,7 @@ fun ChangePasswordBody(
             },
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Email),
             keyboardActions = KeyboardActions(onNext = { emailFocusRequester.requestFocus() }),
-            textStyle = Typography.bodyLarge,
+            textStyle = Typography.bodySmall,
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -92,7 +92,7 @@ fun ChangePasswordBody(
             label = {
                 Text(
                     text = stringResource(R.string.login_screen_confirm_email),
-                    style = Typography.bodyLarge,
+                    style = Typography.bodySmall,
                     color = Color.Black,
                 )
             },
@@ -106,7 +106,7 @@ fun ChangePasswordBody(
             },
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done, keyboardType = KeyboardType.Email),
             keyboardActions = KeyboardActions(onDone = {}),
-            textStyle = Typography.bodyLarge
+            textStyle = Typography.bodySmall
         )
     }
 }

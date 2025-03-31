@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -161,7 +160,7 @@ fun LoginBody(
             text = stringResource(R.string.login_screen_forget_password),
             color = MaterialTheme.colorScheme.onBackground,
             textDecoration = TextDecoration.Underline,
-            style = Typography.bodyMedium
+            style = Typography.bodySmall
         )
     }
 }

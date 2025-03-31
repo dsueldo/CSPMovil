@@ -25,7 +25,10 @@ fun ApplicationNavigation(
             "ApplicationNavigation",
             "MainNavigation.isAuthenticated: $isAuthenticated"
         )
-        MainNavigation()
+        MainNavigation(onSignOut = {
+            splashViewModel.signOut()
+            isAuthenticated = false
+        })
     } else {
         AuthNavigation(onAuthComplete = { isAuthenticated = true })
         Log.d("ApplicationNavigation", "isAuthenticated: $isAuthenticated")

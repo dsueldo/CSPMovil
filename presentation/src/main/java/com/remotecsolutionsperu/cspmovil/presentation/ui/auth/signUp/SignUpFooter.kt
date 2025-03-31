@@ -26,7 +26,7 @@ fun SignUpFooter(
             Text(
                 text = "Registrarse",
                 color = MaterialTheme.colorScheme.onPrimary,
-                style = Typography.titleMedium
+                style = Typography.titleSmall
             )
         }
     }

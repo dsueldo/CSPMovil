@@ -29,7 +29,7 @@ fun ProfileHeader(
             modifier = Modifier.fillMaxWidth(),
             text = name,
             textAlign = TextAlign.Center,
-            style = Typography.headlineLarge
+            style = Typography.headlineSmall
         )
 
         Button(
