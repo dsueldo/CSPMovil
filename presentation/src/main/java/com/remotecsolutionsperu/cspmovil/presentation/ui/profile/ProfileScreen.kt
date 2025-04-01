@@ -44,8 +44,6 @@ fun ProfileScreen(
 
     val profileState by viewModel.profileUiState.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
-    val uiState by viewModel.uiState.collectAsState()
-    val signOutResult by viewModel.signOutResult.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
     val showSignOutDialog = remember { mutableStateOf(false) }
 
@@ -73,7 +71,6 @@ fun ProfileScreen(
             confirmButton = {
                 Button(
                     onClick = {
-                        viewModel.signOut()
                         showSignOutDialog.value = false
                         onSignOut()
                     },

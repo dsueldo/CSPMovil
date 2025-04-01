@@ -38,8 +38,6 @@ fun PaymentOneScreen(
 
     val paymentsList by viewModel.paymentsList.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
-    val uiState by viewModel.uiState.collectAsState()
-    val errorMessage by viewModel.errorMessage.collectAsState()
 
     if (isLoading) {
         BasicAlertDialog (

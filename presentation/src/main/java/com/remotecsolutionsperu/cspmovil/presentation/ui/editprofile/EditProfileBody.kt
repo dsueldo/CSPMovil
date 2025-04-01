@@ -179,7 +179,7 @@ fun EditProfileBody(
                     color = Color.Black,
                 )
             },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             keyboardActions = KeyboardActions(onNext = {}),
             textStyle = Typography.bodySmall
         )
@@ -196,19 +196,77 @@ fun EditProfileBody(
             onValueChange = { viewModel.updateDni(it) },
             label = {
                 Text(
-                    text = "D.N.I.",
+                    text = "DNI",
                     style = Typography.bodySmall,
                     color = Color.Black,
                 )
             },
             placeholder = {
                 Text(
-                    text = "Ingrese su D.N.I.",
+                    text = "Ingrese su DNI",
                     style = Typography.bodySmall,
                     color = Color.Black,
                 )
             },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            keyboardActions = KeyboardActions(onNext = {}),
+            textStyle = Typography.bodySmall
+        )
+
+        OutlinedTextField(
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth(),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color.Black,
+                unfocusedBorderColor = Color.Black,
+                cursorColor = Color.Black
+            ),
+            value = profileUiState.codeNumber,
+            onValueChange = { viewModel.updateCodeNumber(it) },
+            label = {
+                Text(
+                    text = "Número de Colegiatura",
+                    style = Typography.bodySmall,
+                    color = Color.Black,
+                )
+            },
+            placeholder = {
+                Text(
+                    text = "Ingrese su Número de Colegiatura",
+                    style = Typography.bodySmall,
+                    color = Color.Black,
+                )
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            keyboardActions = KeyboardActions(onNext = {}),
+            textStyle = Typography.bodySmall
+        )
+
+        OutlinedTextField(
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth(),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color.Black,
+                unfocusedBorderColor = Color.Black,
+                cursorColor = Color.Black
+            ),
+            value = profileUiState.specialized,
+            onValueChange = { viewModel.updateSpecialized(it) },
+            label = {
+                Text(
+                    text = "Especialidad",
+                    style = Typography.bodySmall,
+                    color = Color.Black,
+                )
+            },
+            placeholder = {
+                Text(
+                    text = "Ingrese su Especialidad",
+                    style = Typography.bodySmall,
+                    color = Color.Black,
+                )
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             keyboardActions = KeyboardActions(onNext = {}),
             textStyle = Typography.bodySmall
         )

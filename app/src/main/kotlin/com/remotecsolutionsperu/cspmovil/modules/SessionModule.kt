@@ -1,7 +1,7 @@
 package com.remotecsolutionsperu.cspmovil.modules
 
 import android.content.Context
-import com.remotecsolutionsperu.cspmovil.presentation.utils.SessionManager
+import com.remotecsolutionsperu.cspmovil.presentation.shared.SessionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

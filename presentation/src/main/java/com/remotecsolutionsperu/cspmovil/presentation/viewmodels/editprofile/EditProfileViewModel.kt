@@ -65,6 +65,10 @@ class EditProfileViewModel @Inject constructor(
         _profileUiState.value = _profileUiState.value.copy(codeNumber = codeNumber)
     }
 
+    fun updateSpecialized(specialized: String) {
+        _profileUiState.value = _profileUiState.value.copy(specialized = specialized)
+    }
+
     fun validateFields(): Boolean {
         return _profileUiState.value.name.isNotEmpty() &&
                 _profileUiState.value.lastName.isNotEmpty() &&

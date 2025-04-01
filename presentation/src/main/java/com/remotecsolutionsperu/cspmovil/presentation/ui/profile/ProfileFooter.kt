@@ -14,8 +14,8 @@ import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
 
 @Composable
 fun ProfileFooter(
-    onSignOut: () -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onSignOut: () -> Unit,
 ) {
     TextButton(
         modifier = modifier,
@@ -37,5 +37,5 @@ fun ProfileFooter(
 @Preview
 @Composable
 private fun ProfileFooterPreview() {
-    ProfileFooter()
+    ProfileFooter(onSignOut = {})
 }
