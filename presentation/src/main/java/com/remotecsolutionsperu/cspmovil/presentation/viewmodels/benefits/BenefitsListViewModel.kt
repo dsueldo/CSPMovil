@@ -51,6 +51,7 @@ class BenefitsListViewModel @Inject constructor() : CspAppViewModel() {
                         Log.d(TAG, "Current data Image: $image")
                         Log.d(TAG, "Current data Title: $title")
                         Log.d(TAG, "Current data Content: $content")
+                        Log.d(TAG, "Current data Order: $order")
                         if (image != null && title != null && content != null && order != null) {
                             BenefitsItem(image, title, content, order)
                         } else {
