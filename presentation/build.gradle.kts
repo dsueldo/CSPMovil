@@ -101,6 +101,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 
     implementation("androidx.compose.material:material-icons-extended:1.5.0")
+    implementation("com.google.accompanist:accompanist-swiperefresh:0.24.13-rc")
 
     implementation(project(":domain"))
     implementation(project(":data"))

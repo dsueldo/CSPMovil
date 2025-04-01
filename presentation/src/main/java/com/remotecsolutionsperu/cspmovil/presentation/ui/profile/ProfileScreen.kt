@@ -29,6 +29,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.remotecsolutionsperu.cspmovil.presentation.navigation.EditProfile
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.profile.ProfileViewModel
@@ -46,6 +49,7 @@ fun ProfileScreen(
     val isLoading by viewModel.isLoading.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
     val showSignOutDialog = remember { mutableStateOf(false) }
+    val isRefreshing by viewModel.isRefreshing.collectAsState()
 
     if (isLoading) {
         BasicAlertDialog(
@@ -110,12 +114,25 @@ fun ProfileScreen(
             )
         },
         content = { paddingValues ->
-            ProfileBody(
-                modifier = Modifier
-                    .padding(paddingValues)
-                    .verticalScroll(rememberScrollState()),
-                viewModel = viewModel,
-            )
+            SwipeRefresh(
+                state = SwipeRefreshState(isRefreshing),
+                onRefresh = { viewModel.refreshProfile() },
+                indicator = { state, trigger ->
+                    SwipeRefreshIndicator(
+                        state = state,
+                        refreshTriggerDistance = trigger,
+                        scale = true,
+                        contentColor = Red_Dark,
+                    )
+                }
+            ) {
+                ProfileBody(
+                    modifier = Modifier
+                        .padding(paddingValues)
+                        .verticalScroll(rememberScrollState()),
+                    viewModel = viewModel,
+                )
+            }
         },
         bottomBar = {
             ProfileFooter(
