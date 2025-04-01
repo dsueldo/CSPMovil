@@ -21,7 +21,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.remotecsolutionsperu.cspmovil.presentation.ui.components.BenefitComponent
+import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.benefits.BenefitsListViewModel
 
@@ -34,6 +38,7 @@ fun BenefitsScreen(
 
     val benefitList by viewModel.benefitsList.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
+    val isRefreshing by viewModel.isRefreshing.collectAsState()
 
     if (isLoading) {
         BasicAlertDialog (
@@ -59,22 +64,35 @@ fun BenefitsScreen(
             style = Typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
-        LazyColumn(
-            modifier = modifier
-                .background(MaterialTheme.colorScheme.background)
-                .fillMaxSize()
-        ) {
-            items(benefitList) { benefitsItem ->
-                BenefitComponent(
-                    modifier = Modifier.padding(
-                        vertical = 8.dp,
-                        horizontal = 0.dp
-                    ),
-                    image = benefitsItem.image,
-                    title = benefitsItem.title,
-                    content = benefitsItem.content,
-                    onNavigateWhatsapp = {}
+        SwipeRefresh(
+            state = SwipeRefreshState(isRefreshing),
+            onRefresh = { viewModel.refreshBenefitsList() },
+            indicator = { state, trigger ->
+                SwipeRefreshIndicator(
+                    state = state,
+                    refreshTriggerDistance = trigger,
+                    scale = true,
+                    contentColor = Red_Dark,
                 )
+            }
+        ) {
+            LazyColumn(
+                modifier = modifier
+                    .background(MaterialTheme.colorScheme.background)
+                    .fillMaxSize()
+            ) {
+                items(benefitList) { benefitsItem ->
+                    BenefitComponent(
+                        modifier = Modifier.padding(
+                            vertical = 8.dp,
+                            horizontal = 0.dp
+                        ),
+                        image = benefitsItem.image,
+                        title = benefitsItem.title,
+                        content = benefitsItem.content,
+                        onNavigateWhatsapp = {}
+                    )
+                }
             }
         }
     }

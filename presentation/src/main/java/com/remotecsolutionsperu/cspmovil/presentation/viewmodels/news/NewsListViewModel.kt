@@ -29,6 +29,9 @@ class NewsListViewModel @Inject constructor() : CspAppViewModel() {
     private val _uiState = MutableStateFlow(false)
     val uiState: StateFlow<Boolean> = _uiState
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing
+
     private val db = Firebase.firestore
     private val storage = Firebase.storage
     private var storageRef = storage.reference
@@ -66,6 +69,40 @@ class NewsListViewModel @Inject constructor() : CspAppViewModel() {
                     _errorMessage.value = "Error fetching news: ${e.message}"
                     _uiState.value = false
                     _isLoading.value = false
+                }
+        }
+    }
+
+    fun refreshNewsList() {
+        _isRefreshing.value = true
+        viewModelScope.launch {
+            db.collection("news")
+                .get()
+                .addOnSuccessListener { snapshot ->
+                    val newsItems = snapshot.documents.mapNotNull { document ->
+                        val image = document.getString("image")
+                        val title = document.getString("title")
+                        val content = document.getString("content")
+                        Log.d(TAG, "Current data Image: $image")
+                        Log.d(TAG, "Current data Title: $title")
+                        Log.d(TAG, "Current data Content: $content")
+                        if (image != null && title != null && content != null) {
+                            NewsItem(image, title, content)
+                        } else {
+                            null
+                        }
+                    }
+                    _newsList.value = newsItems
+                    _uiState.value = true
+                    _isLoading.value = false
+                    _isRefreshing.value = false
+                }
+                .addOnFailureListener { e ->
+                    Log.w(TAG, "Error fetching news", e)
+                    _errorMessage.value = "Error fetching news: ${e.message}"
+                    _uiState.value = false
+                    _isLoading.value = false
+                    _isRefreshing.value = false
                 }
         }
     }

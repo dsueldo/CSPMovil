@@ -21,7 +21,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.remotecsolutionsperu.cspmovil.presentation.ui.components.FeedComponent
+import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.news.NewsListViewModel
 
@@ -34,6 +38,7 @@ fun MainScreen(
 
     val newsList by viewModel.newsList.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
+    val isRefreshing by viewModel.isRefreshing.collectAsState()
 
     if (isLoading) {
         BasicAlertDialog (
@@ -59,21 +64,34 @@ fun MainScreen(
             style = Typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
-        LazyColumn(
-            modifier = modifier
-                .background(MaterialTheme.colorScheme.background)
-                .fillMaxSize()
-        ) {
-            items(newsList) { newsItem ->
-                FeedComponent(
-                    modifier = Modifier.padding(
-                        vertical = 8.dp,
-                        horizontal = 16.dp
-                    ),
-                    image = newsItem.image,
-                    title = newsItem.title,
-                    content = newsItem.content,
+        SwipeRefresh(
+            state = SwipeRefreshState(isRefreshing),
+            onRefresh = { viewModel.refreshNewsList() },
+            indicator = { state, trigger ->
+                SwipeRefreshIndicator(
+                    state = state,
+                    refreshTriggerDistance = trigger,
+                    scale = true,
+                    contentColor = Red_Dark,
                 )
+            }
+        ) {
+            LazyColumn(
+                modifier = modifier
+                    .background(MaterialTheme.colorScheme.background)
+                    .fillMaxSize()
+            ) {
+                items(newsList) { newsItem ->
+                    FeedComponent(
+                        modifier = Modifier.padding(
+                            vertical = 8.dp,
+                            horizontal = 16.dp
+                        ),
+                        image = newsItem.image,
+                        title = newsItem.title,
+                        content = newsItem.content,
+                    )
+                }
             }
         }
     }

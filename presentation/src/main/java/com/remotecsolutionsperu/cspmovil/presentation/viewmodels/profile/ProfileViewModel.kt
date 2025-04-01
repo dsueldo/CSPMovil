@@ -28,6 +28,9 @@ class ProfileViewModel @Inject constructor(
     private val _errorMessage = MutableStateFlow("")
     val errorMessage: StateFlow<String> = _errorMessage
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing
+
     init {
         fetchUserProfileData()
     }
@@ -44,6 +47,20 @@ class ProfileViewModel @Inject constructor(
                 _errorMessage.value = "Error fetching profile data: ${e.message}"
             } finally {
                 _isLoading.value = false
+            }
+        }
+    }
+
+    fun refreshProfile() {
+        _isRefreshing.value = true
+        viewModelScope.launch {
+            try {
+                val profile = getProfileUseCase.invoke()
+                _profileUiState.value = profile
+            } catch (e: Exception) {
+                _errorMessage.value = e.message ?: "Error"
+            } finally {
+                _isRefreshing.value = false
             }
         }
     }
