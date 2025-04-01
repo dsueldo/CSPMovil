@@ -1,7 +1,5 @@
 package com.remotecsolutionsperu.cspmovil.domain.entities.news
 
-import com.google.firebase.firestore.DocumentId
-
 private const val TITLE_MAX_SIZE = 30
 
 data class NewsItem (
@@ -9,6 +7,7 @@ data class NewsItem (
     val image: String = "",
     val title: String = "",
     val content: String = "",
+    val order: Int = 0,
 //    val date: String = ""
 )
 

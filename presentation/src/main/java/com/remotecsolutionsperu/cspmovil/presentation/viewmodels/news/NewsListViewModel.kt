@@ -51,15 +51,17 @@ class NewsListViewModel @Inject constructor() : CspAppViewModel() {
                         val image = document.getString("image")
                         val title = document.getString("title")
                         val content = document.getString("content")
+                        val order = document.getLong("order")?.toInt()
                         Log.d(TAG, "Current data Image: $image")
                         Log.d(TAG, "Current data Title: $title")
                         Log.d(TAG, "Current data Content: $content")
-                        if (image != null && title != null && content != null) {
-                            NewsItem(image, title, content)
+                        Log.d(TAG, "Current data Order: $order")
+                        if (image != null && title != null && content != null && order != null) {
+                            NewsItem(image, title, content, order)
                         } else {
                             null
                         }
-                    }
+                    }.sortedBy { it.order }
                     _newsList.value = newsItems
                     _uiState.value = true
                     _isLoading.value = false
@@ -83,15 +85,17 @@ class NewsListViewModel @Inject constructor() : CspAppViewModel() {
                         val image = document.getString("image")
                         val title = document.getString("title")
                         val content = document.getString("content")
+                        val order = document.getLong("order")?.toInt()
                         Log.d(TAG, "Current data Image: $image")
                         Log.d(TAG, "Current data Title: $title")
                         Log.d(TAG, "Current data Content: $content")
-                        if (image != null && title != null && content != null) {
-                            NewsItem(image, title, content)
+                        Log.d(TAG, "Current data Order: $order")
+                        if (image != null && title != null && content != null && order != null) {
+                            NewsItem(image, title, content, order)
                         } else {
                             null
                         }
-                    }
+                    }.sortedBy { it.order }
                     _newsList.value = newsItems
                     _uiState.value = true
                     _isLoading.value = false
