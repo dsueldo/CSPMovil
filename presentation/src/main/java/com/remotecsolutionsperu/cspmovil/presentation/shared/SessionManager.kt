@@ -1,4 +1,4 @@
-package com.remotecsolutionsperu.cspmovil.presentation.utils
+package com.remotecsolutionsperu.cspmovil.presentation.shared
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -84,8 +84,6 @@ class SessionManager(context: Context) {
     }
 
     companion object {
-        const val KEY_USER_ID = "user_id"
-        const val KEY_USER_EMAIL = "user_email"
         private const val TOKEN_EXPIRATION_DURATION = 3600000 // 1 hour in milliseconds
         private const val TOKEN_REFRESH_THRESHOLD = 600000 // 10 minutes in milliseconds
     }

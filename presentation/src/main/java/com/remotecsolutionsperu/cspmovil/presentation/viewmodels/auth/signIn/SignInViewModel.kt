@@ -1,17 +1,12 @@
 package com.remotecsolutionsperu.cspmovil.presentation.viewmodels.auth.signIn
 
 import android.util.Log
-import androidx.compose.runtime.currentCompositionErrors
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.FirebaseNetworkException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.remotecsolutionsperu.cspmovil.data.repositories.EmailValidationService
 import com.remotecsolutionsperu.cspmovil.data.repositories.PasswordValidationService
 import com.remotecsolutionsperu.cspmovil.domain.repositories.AccountService
-import com.remotecsolutionsperu.cspmovil.presentation.utils.SessionManager
+import com.remotecsolutionsperu.cspmovil.presentation.shared.SessionManager
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,8 +34,6 @@ class SignInViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(false)
     val uiState: StateFlow<Boolean> = _uiState
-
-    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     private val emailValidationService = EmailValidationService()
     private val passwordValidationService = PasswordValidationService()
@@ -76,17 +69,6 @@ class SignInViewModel @Inject constructor(
             Log.d("SignInViewModel", "Error: ${_errorMessage.value}")
         }
         return isValid
-    }
-
-    fun validatePasswordStrength(password: String): String {
-        return when {
-            password.length < 6 -> "La contraseña es muy corta"
-            !password.any { it.isDigit() } -> "La contraseña debe contener al menos un dígito"
-            !password.any { it.isUpperCase() } -> "La contraseña debe contener al menos una letra mayúscula"
-            !password.any { it.isLowerCase() } -> "La contraseña debe contener al menos una letra minúscula"
-            !password.any { !it.isLetterOrDigit() } -> "La contraseña debe contener al menos un carácter especial"
-            else -> "La contraseña es fuerte"
-        }
     }
 
     fun onSignInClick() {

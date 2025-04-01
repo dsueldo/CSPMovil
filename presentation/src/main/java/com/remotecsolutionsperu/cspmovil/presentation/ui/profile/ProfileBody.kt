@@ -72,7 +72,7 @@ fun ProfileBody(
 
             ItemProfileComponent(
                 imageVector = Icons.Outlined.Fingerprint,
-                title = "D.N.I.",
+                title = "DNI",
                 content = it.dni
             )
 
@@ -84,8 +84,8 @@ fun ProfileBody(
 
             ItemProfileComponent(
                 imageVector = Icons.Outlined.School,
-                title = "Consejo Departamental",
-                content = it.council
+                title = "Especialidad",
+                content = it.specialized
             )
 
             ItemProfileComponent(

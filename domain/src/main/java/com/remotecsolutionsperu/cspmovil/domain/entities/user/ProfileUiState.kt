@@ -10,7 +10,7 @@ data class ProfileUiState(
     val birthday: String = "",
     val codeNumber: String = "",
     val condition: String = "",
-    val council: String = "",
+    val specialized: String = "",
     val payLastPeriod: String = "",
     val role: String = "",
     val accessFirstTime: String = "",

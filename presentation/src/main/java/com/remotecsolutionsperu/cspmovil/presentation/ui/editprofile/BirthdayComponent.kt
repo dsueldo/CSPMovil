@@ -16,7 +16,6 @@ import androidx.compose.ui.tooling.preview.Preview
 fun BirthdayComponent(
     onDateSelected: (Long?) -> Unit,
     onDismiss: () -> Unit,
-    modifier: Modifier = Modifier
 ) {
 
     val datePickerState = rememberDatePickerState(initialDisplayMode = DisplayMode.Input)
