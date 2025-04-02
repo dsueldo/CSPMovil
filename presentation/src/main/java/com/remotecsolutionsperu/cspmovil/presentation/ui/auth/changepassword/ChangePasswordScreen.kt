@@ -66,7 +66,9 @@ fun ChangePasswordScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    CircularProgressIndicator()
+                    CircularProgressIndicator(
+                        color = Red_Dark
+                    )
                 }
             },
         )
