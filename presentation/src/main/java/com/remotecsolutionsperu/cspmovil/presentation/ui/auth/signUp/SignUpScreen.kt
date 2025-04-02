@@ -58,12 +58,17 @@ fun SignUpScreen(
     val confirmPasswordFocusRequester = remember { FocusRequester() }
 
     val isLoading by signUpViewModel.isLoading.collectAsState()
+    val uiState by signUpViewModel.uiState.collectAsState()
 
     var errorMessage by remember { mutableStateOf("") }
     val errorAccountValidationMessage by signUpViewModel.errorMessage.collectAsState()
 
     var showDialog by remember { mutableStateOf(false) }
     var showErrorDialog by remember { mutableStateOf(false) }
+
+    if (uiState) {
+        showDialog = true
+    }
 
     if (isLoading) {
         BasicAlertDialog(

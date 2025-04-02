@@ -30,10 +30,13 @@ import com.remotecsolutionsperu.presentation.R
 @Composable
 fun ChangePasswordBody(
     modifier: Modifier = Modifier,
+
     email: TextFieldValue,
     confirmEmail: TextFieldValue,
+
     emailValueChange: (TextFieldValue) -> Unit,
     confirmEmailValueChange: (TextFieldValue) -> Unit,
+
     emailFocusRequester: FocusRequester,
     confirmEmailFocusRequester: FocusRequester,
 ) {
