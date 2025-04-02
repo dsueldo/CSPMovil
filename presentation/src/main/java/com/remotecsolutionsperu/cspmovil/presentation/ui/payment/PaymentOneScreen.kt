@@ -25,6 +25,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.remotecsolutionsperu.cspmovil.presentation.navigation.PaymentInstructions
 import com.remotecsolutionsperu.cspmovil.presentation.ui.components.ItemPaymentComponent
+import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.payment.PaymentsViewModel
 
@@ -47,7 +48,9 @@ fun PaymentOneScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    CircularProgressIndicator()
+                    CircularProgressIndicator(
+                        color = Red_Dark
+                    )
                 }
             },
         )
