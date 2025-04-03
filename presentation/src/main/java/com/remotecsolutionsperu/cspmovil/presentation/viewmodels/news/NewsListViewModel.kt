@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 import com.remotecsolutionsperu.cspmovil.domain.entities.news.NewsItem
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,9 +32,6 @@ class NewsListViewModel @Inject constructor() : CspAppViewModel() {
     val isRefreshing: StateFlow<Boolean> = _isRefreshing
 
     private val db = Firebase.firestore
-    private val storage = Firebase.storage
-    private var storageRef = storage.reference
-    val newsImagesRef = storageRef.child("news")
 
     init {
         fetchNewsList()
@@ -48,16 +44,16 @@ class NewsListViewModel @Inject constructor() : CspAppViewModel() {
                 .get()
                 .addOnSuccessListener { snapshot ->
                     val newsItems = snapshot.documents.mapNotNull { document ->
-                        val image = document.getString("image")
+                        val imageUrl = document.getString("image")
                         val title = document.getString("title")
                         val content = document.getString("content")
                         val order = document.getLong("order")?.toInt()
-                        Log.d(TAG, "Current data Image: $image")
+                        Log.d(TAG, "Current data Image: $imageUrl")
                         Log.d(TAG, "Current data Title: $title")
                         Log.d(TAG, "Current data Content: $content")
                         Log.d(TAG, "Current data Order: $order")
-                        if (image != null && title != null && content != null && order != null) {
-                            NewsItem(image, title, content, order)
+                        if (imageUrl != null && title != null && content != null && order != null) {
+                            NewsItem(imageUrl, title, content, order)
                         } else {
                             null
                         }
@@ -82,16 +78,16 @@ class NewsListViewModel @Inject constructor() : CspAppViewModel() {
                 .get()
                 .addOnSuccessListener { snapshot ->
                     val newsItems = snapshot.documents.mapNotNull { document ->
-                        val image = document.getString("image")
+                        val imageUrl = document.getString("image")
                         val title = document.getString("title")
                         val content = document.getString("content")
                         val order = document.getLong("order")?.toInt()
-                        Log.d(TAG, "Current data Image: $image")
+                        Log.d(TAG, "Current data Image: $imageUrl")
                         Log.d(TAG, "Current data Title: $title")
                         Log.d(TAG, "Current data Content: $content")
                         Log.d(TAG, "Current data Order: $order")
-                        if (image != null && title != null && content != null && order != null) {
-                            NewsItem(image, title, content, order)
+                        if (imageUrl != null && title != null && content != null && order != null) {
+                            NewsItem(imageUrl, title, content, order)
                         } else {
                             null
                         }
