@@ -76,6 +76,7 @@ fun PaymentOneScreen(
                     image = paymentsItem.image,
                     title = paymentsItem.title,
                     content = paymentsItem.content,
+                    note = paymentsItem.note,
                     onClick = { navController.navigate(PaymentInstructions) }
                 )
             }

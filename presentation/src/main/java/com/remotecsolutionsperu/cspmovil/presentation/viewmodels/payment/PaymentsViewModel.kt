@@ -40,15 +40,16 @@ class PaymentsViewModel @Inject constructor() : CspAppViewModel() {
                 .get()
                 .addOnSuccessListener { snapshot ->
                     val paymentsItems = snapshot.documents.mapNotNull { document ->
-                        val image = document.getString("image")
-                        val title = document.getString("title")
-                        val content = document.getString("content")
+                        val image = document.getString("image").orEmpty()
+                        val title = document.getString("title").orEmpty()
+                        val content = document.getString("content").orEmpty()
+                        val note = document.getString("note").orEmpty()
                         val order = document.getLong("order")?.toInt()
                         Log.d(TAG, "Current data Image: $image")
                         Log.d(TAG, "Current data Title: $title")
                         Log.d(TAG, "Current data Content: $content")
-                        if (image != null && title != null && content != null && order != null) {
-                            PaymentsItem(image, title, content, order)
+                        if (order != null) {
+                            PaymentsItem(image, title, content, note, order)
                         } else {
                             null
                         }
@@ -68,8 +69,9 @@ class PaymentsViewModel @Inject constructor() : CspAppViewModel() {
 }
 
 data class PaymentsItem(
-    val image: String,
-    val title: String,
-    val content: String,
-    val order: Int,
+    val image: String = "",
+    val title: String = "",
+    val content: String = "",
+    val note: String = "",
+    val order: Int = 0,
 )
