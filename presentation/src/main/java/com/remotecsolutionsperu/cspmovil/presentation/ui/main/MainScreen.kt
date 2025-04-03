@@ -87,7 +87,7 @@ fun MainScreen(
                     FeedComponent(
                         modifier = Modifier.padding(
                             vertical = 8.dp,
-                            horizontal = 16.dp
+                            horizontal = 0.dp
                         ),
                         image = newsItem.imageUrl,
                         title = newsItem.title,

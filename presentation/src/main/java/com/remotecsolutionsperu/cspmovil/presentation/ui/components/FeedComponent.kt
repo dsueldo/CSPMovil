@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,28 +26,33 @@ fun FeedComponent(
     content: String,
 ) {
 
-    Column(modifier = Modifier.padding(4.dp)) {
-        AsyncImage(
-            modifier = Modifier.fillMaxWidth(),
-            model = image,
-            contentScale = ContentScale.Crop,
-            contentDescription = null
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = title,
-            fontWeight = FontWeight.Bold,
-            style = Typography.bodyLarge,
-            color = Color.Black
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = content,
-            style = Typography.bodyMedium,
-            color = Color.Black
-        )
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.medium
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            AsyncImage(
+                modifier = Modifier.fillMaxWidth(),
+                model = image,
+                contentScale = ContentScale.Crop,
+                contentDescription = null
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = title,
+                fontWeight = FontWeight.Bold,
+                style = Typography.bodyLarge,
+                color = Color.Black
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = content,
+                style = Typography.bodyMedium,
+                color = Color.Black
+            )
+        }
     }
 }
 
