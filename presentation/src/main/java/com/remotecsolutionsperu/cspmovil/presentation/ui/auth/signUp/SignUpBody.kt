@@ -88,7 +88,7 @@ fun SignUpBody(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Email,
-                    contentDescription = "Email",
+                    contentDescription = stringResource(R.string.email),
                     tint = Color.Black
                 )
             },
@@ -136,7 +136,7 @@ fun SignUpBody(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Lock,
-                    contentDescription = "Lock",
+                    contentDescription = stringResource(R.string.lock),
                     tint = Color.Black
                 )
             },
@@ -148,7 +148,7 @@ fun SignUpBody(
         if (showPasswordStrength) {
             Text(
                 text = passwordStrength,
-                color = if (passwordStrength == "La contraseña es fuerte") Color.Blue else Color.Red,
+                color = if (passwordStrength == stringResource(R.string.password_strong)) Color.Blue else Color.Red,
                 modifier = Modifier
                     .padding(top = 8.dp)
             )
@@ -193,7 +193,7 @@ fun SignUpBody(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Lock,
-                    contentDescription = "Lock",
+                    contentDescription = stringResource(R.string.lock),
                     tint = Color.Black
                 )
             },

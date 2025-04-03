@@ -88,7 +88,7 @@ fun LoginBody(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Email,
-                    contentDescription = "Email",
+                    contentDescription = stringResource(R.string.email),
                     tint = Color.Black
                 )
             },
@@ -142,7 +142,7 @@ fun LoginBody(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Lock,
-                    contentDescription = "Lock",
+                    contentDescription = stringResource(R.string.lock),
                     tint = Color.Black
                 )
             },

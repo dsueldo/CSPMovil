@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -35,6 +36,7 @@ import androidx.navigation.compose.rememberNavController
 import com.remotecsolutionsperu.cspmovil.presentation.navigation.Login
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.auth.signUp.SignUpViewModel
+import com.remotecsolutionsperu.presentation.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -104,11 +106,11 @@ fun SignUpScreen(
                         contentColor = Color.White
                     )
                 ) {
-                    Text("OK")
+                    Text(stringResource(R.string.ok))
                 }
             },
-            title = { Text("Registro Exitoso") },
-            text = { Text("Te has registrado correctamente.") }
+            title = { Text(stringResource(R.string.register_successful)) },
+            text = { Text(stringResource(R.string.register_successful_detail)) }
         )
     }
 
@@ -129,15 +131,15 @@ fun SignUpScreen(
                         contentColor = Color.White
                     )
                 ) {
-                    Text("OK")
+                    Text(stringResource(R.string.ok))
                 }
             },
-            title = { Text("Alerta!") },
+            title = { Text(stringResource(R.string.alert)) },
             text = { Text(errorMessage) }
         )
     }
 
-    if (errorAccountValidationMessage == "El correo ya se encuentra registrado.") {
+    if (errorAccountValidationMessage == stringResource(R.string.register_email_error)) {
         AlertDialog(
             onDismissRequest = {
                 signUpViewModel.resetState()
@@ -151,11 +153,11 @@ fun SignUpScreen(
                         contentColor = Color.White
                     )
                 ) {
-                    Text("Ok")
+                    Text(stringResource(R.string.ok))
                 }
             },
-            title = { Text("Cuenta Registrada") },
-            text = { Text("El correo ya se encuentra registrado.") }
+            title = { Text(stringResource(R.string.register_successful_account)) },
+            text = { Text(stringResource(R.string.register_email_error)) }
         )
     }
 
