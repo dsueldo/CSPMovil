@@ -24,7 +24,7 @@ fun PaymentInstructionBody(modifier: Modifier = Modifier) {
         )
 
         Text(
-            text = "Yape",
+            text = "Banco Interbank",
             style = Typography.bodyMedium,
             fontWeight = FontWeight.SemiBold,
             color = MaterialTheme.colorScheme.onBackground
@@ -39,7 +39,8 @@ fun PaymentInstructionBody(modifier: Modifier = Modifier) {
         )
 
         Text(
-            text = "123456789",
+            text = "Cuenta Corriente: 4883374362415 \n" +
+                    "Código Interbancario (CCI): 00348801337436241546\n",
             style = Typography.bodyMedium,
             fontWeight = FontWeight.SemiBold,
             color = MaterialTheme.colorScheme.onBackground
@@ -54,7 +55,8 @@ fun PaymentInstructionBody(modifier: Modifier = Modifier) {
         )
 
         Text(
-            text = "Colegio de Sociologos de Lima",
+            text = "ÚNICA CUENTA CORRIENTE A NOMBRE \n" +
+                    "MARTIN SOTO MENDOZA\n",
             style = Typography.bodyMedium,
             fontWeight = FontWeight.SemiBold,
             color = MaterialTheme.colorScheme.onBackground

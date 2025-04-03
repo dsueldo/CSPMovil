@@ -25,6 +25,7 @@ fun ItemPaymentComponent(
     image: String,
     title: String,
     content: String,
+    note: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -51,6 +52,14 @@ fun ItemPaymentComponent(
                         style = Typography.bodyMedium,
                         color = Color.Gray
                     )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    if (note.isNotEmpty()) {
+                        Text(
+                            text = note,
+                            style = Typography.bodySmall,
+                            color = Color.Gray
+                        )
+                    }
                 }
 
                 Icon(
@@ -75,6 +84,7 @@ private fun ItemPaymentComponentPreview() {
         image = "url",
         title = "Cuotas Sociales Ordinarias",
         content = "Contenido",
+        note = "Nota",
         onClick = {}
     )
 }
