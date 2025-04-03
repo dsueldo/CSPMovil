@@ -4,7 +4,7 @@ private const val TITLE_MAX_SIZE = 30
 
 data class NewsItem (
 //    @DocumentId val id: String = "",
-    val image: String = "",
+    val imageUrl: String = "",
     val title: String = "",
     val content: String = "",
     val order: Int = 0,
