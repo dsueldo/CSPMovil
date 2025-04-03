@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -35,6 +36,7 @@ import com.remotecsolutionsperu.cspmovil.presentation.navigation.ChangePassword
 import com.remotecsolutionsperu.cspmovil.presentation.navigation.SignUp
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.auth.signIn.SignInViewModel
+import com.remotecsolutionsperu.presentation.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -99,15 +101,15 @@ fun LoginScreen(
                         contentColor = Color.White
                     )
                 ) {
-                    Text("OK")
+                    Text(stringResource(R.string.ok))
                 }
             },
-            title = { Text("Alerta!") },
+            title = { Text(stringResource(R.string.alert)) },
             text = { Text(errorMessage) }
         )
     }
 
-    if (errorPasswordValidationMessage == "Credenciales incorrectas. Intente de nuevo.") {
+    if (errorPasswordValidationMessage == stringResource(R.string.password_incorrect_try_again)) {
         AlertDialog(
             onDismissRequest = {
                 signInViewModel.resetState()
@@ -121,11 +123,11 @@ fun LoginScreen(
                         contentColor = Color.White
                     )
                 ) {
-                    Text("Ok")
+                    Text(stringResource(R.string.ok))
                 }
             },
-            title = { Text("Contraseña Incorrecta") },
-            text = { Text("La contraseña ingresada es incorrecta. Intente de nuevo.") }
+            title = { Text(stringResource(R.string.password_incorrect)) },
+            text = { Text(stringResource(R.string.password_incorrect_detail)) }
         )
     }
 

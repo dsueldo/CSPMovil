@@ -8,9 +8,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
+import com.remotecsolutionsperu.presentation.R
 
 @Composable
 fun LoginFooter(
@@ -25,7 +27,7 @@ fun LoginFooter(
             colors = ButtonDefaults.textButtonColors(Red_Dark),
         ) {
             Text(
-                text = "Ingresar",
+                text = stringResource(R.string.enter),
                 color = MaterialTheme.colorScheme.onPrimary,
                 style = Typography.titleSmall
             )
@@ -36,7 +38,7 @@ fun LoginFooter(
             colors = ButtonDefaults.textButtonColors(Red_Dark),
         ) {
             Text(
-                text = "Registrarse",
+                text = stringResource(R.string.register),
                 color = MaterialTheme.colorScheme.onPrimary,
                 style = Typography.titleSmall
             )

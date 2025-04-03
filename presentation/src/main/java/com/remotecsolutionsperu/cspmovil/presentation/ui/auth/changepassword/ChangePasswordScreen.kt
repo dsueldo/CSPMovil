@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -35,6 +36,7 @@ import androidx.navigation.compose.rememberNavController
 import com.remotecsolutionsperu.cspmovil.presentation.navigation.Login
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.auth.changepassword.ChangePasswordViewModel
+import com.remotecsolutionsperu.presentation.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -92,11 +94,11 @@ fun ChangePasswordScreen(
                         contentColor = Color.White
                     )
                 ) {
-                    Text("OK")
+                    Text(stringResource(R.string.ok))
                 }
             },
-            title = { Text("Alerta!") },
-            text = { Text("Correo enviado exitosamente. Revisar su bandeja de entrada.") }
+            title = { Text(stringResource(R.string.alert)) },
+            text = { Text(stringResource(R.string.send_email)) }
         )
     }
 
@@ -117,10 +119,10 @@ fun ChangePasswordScreen(
                         contentColor = Color.White
                     )
                 ) {
-                    Text("OK")
+                    Text(stringResource(R.string.ok))
                 }
             },
-            title = { Text("Alerta!") },
+            title = { Text(stringResource(R.string.alert)) },
             text = { Text(errorMessage) }
         )
     }

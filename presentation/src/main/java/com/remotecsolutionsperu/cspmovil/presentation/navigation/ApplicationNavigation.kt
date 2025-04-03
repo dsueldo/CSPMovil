@@ -7,8 +7,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.auth.splash.SplashViewModel
+import com.remotecsolutionsperu.presentation.R
 
 @SuppressLint("RestrictedApi")
 @Composable
@@ -20,15 +22,20 @@ fun ApplicationNavigation(
 
     if (isAuthenticated) {
         Log.d(
-            "ApplicationNavigation",
+            stringResource(R.string.application_navigation),
             "MainNavigation.isAuthenticated: $isAuthenticated"
         )
-        MainNavigation(onSignOut = {
-            splashViewModel.signOut()
-            isAuthenticated = false
-        })
+        MainNavigation(
+            onSignOut = {
+                splashViewModel.signOut()
+                isAuthenticated = false
+            }
+        )
     } else {
         AuthNavigation(onAuthComplete = { isAuthenticated = true })
-        Log.d("ApplicationNavigation", "isAuthenticated: $isAuthenticated")
+        Log.d(
+            stringResource(R.string.application_navigation),
+            "isAuthenticated: $isAuthenticated"
+        )
     }
 }
