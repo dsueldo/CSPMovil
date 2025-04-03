@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.runtime.livedata)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.storage.ktx)
 
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)

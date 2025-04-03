@@ -89,7 +89,7 @@ fun MainScreen(
                             vertical = 8.dp,
                             horizontal = 16.dp
                         ),
-                        image = newsItem.image,
+                        image = newsItem.imageUrl,
                         title = newsItem.title,
                         content = newsItem.content,
                     )
