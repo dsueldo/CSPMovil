@@ -17,10 +17,11 @@ import kotlinx.serialization.Serializable
 @Serializable data object Benefit
 @Serializable data object Payment
 @Serializable data object PaymentInstructions
+@Serializable data object NewsDetail
 
 val topLevelRoutes = listOf(
-    TopLevelRoute("Noticias", Main, Icons.Filled.Newspaper),
-    TopLevelRoute("Convenios", Benefit, Icons.Filled.Work),
-    TopLevelRoute("Pagos", Payment, Icons.Filled.Money),
-    TopLevelRoute("Perfil", Profile, Icons.Filled.Face),
+    TopLevelRoute("Noticias", "news", Icons.Filled.Newspaper),
+    TopLevelRoute("Convenios", "benefit", Icons.Filled.Work),
+    TopLevelRoute("Pagos", "payment", Icons.Filled.Money),
+    TopLevelRoute("Perfil", "profile", Icons.Filled.Face),
 )

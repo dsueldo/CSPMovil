@@ -19,7 +19,7 @@ abstract class ServiceModule {
     abstract fun provideAccountService(accountServiceImpl: AccountServiceImpl): AccountService
 
     @Binds
-    abstract fun bindNewsService(newsServiceImpl: NewsRepositoryImpl): NewsRepository
+    abstract fun bindNewsRepository(newsRepositoryImpl: NewsRepositoryImpl): NewsRepository
 
     @Binds
     abstract fun provideUserProvideService(userProfileServiceImpl: UserProfileServiceImpl): UserProfileService

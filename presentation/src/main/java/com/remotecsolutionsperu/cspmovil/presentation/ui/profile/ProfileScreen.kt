@@ -33,7 +33,6 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
-import com.remotecsolutionsperu.cspmovil.presentation.navigation.EditProfile
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.profile.ProfileViewModel
 
@@ -117,7 +116,7 @@ fun ProfileScreen(
         topBar = {
             ProfileHeader(
                 name = profileState.name,
-                onEditAccount = { navController.navigate(EditProfile) }
+                onEditAccount = { navController.navigate("editProfile") }
             )
         },
         content = { paddingValues ->

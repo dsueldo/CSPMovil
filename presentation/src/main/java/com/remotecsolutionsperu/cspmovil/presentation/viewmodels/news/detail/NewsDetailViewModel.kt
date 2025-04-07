@@ -1,5 +1,6 @@
-package com.remotecsolutionsperu.cspmovil.presentation.viewmodels.news
+package com.remotecsolutionsperu.cspmovil.presentation.viewmodels.news.detail
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.remotecsolutionsperu.cspmovil.domain.entities.news.News
 import com.remotecsolutionsperu.cspmovil.domain.repositories.NewsRepository
@@ -11,12 +12,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NewsListViewModel @Inject constructor(
-    private val repository: NewsRepository,
+class NewsDetailViewModel @Inject constructor(
+    private val repository: NewsRepository
 ) : CspAppViewModel() {
 
-    private val _newsList = MutableStateFlow<List<News>>(emptyList())
-    val newsList: StateFlow<List<News>> = _newsList
+    private val _newsDetail = MutableStateFlow<News?>(null)
+    val newsDetail: StateFlow<News?> = _newsDetail
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
@@ -27,23 +28,16 @@ class NewsListViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(false)
     val uiState: StateFlow<Boolean> = _uiState
 
-    private val _isRefreshing = MutableStateFlow(false)
-    val isRefreshing: StateFlow<Boolean> = _isRefreshing
-
-    init {
-        fetchNewsList()
-    }
-
-    private fun fetchNewsList() {
+    fun fetchNewsDetail(newsId: String) {
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                _newsList.value = repository.getAllNews()
+                _newsDetail.value = repository.getNewsDetail(newsId)
                 _uiState.value = true
                 _isLoading.value = false
+                Log.d("NewsDetailViewModel", "News Detail: ${_newsDetail.value}")
             } catch (e: Exception) {
-                _errorMessage.value = "Error al cargar las noticias: ${e.localizedMessage}"
-                println("Error fetching news in ViewModel: ${e.localizedMessage}")
+                _errorMessage.value = "Error al cargar el detalle de la noticia: ${e.localizedMessage}"
                 _uiState.value = false
                 _isLoading.value = false
             } finally {
@@ -51,6 +45,4 @@ class NewsListViewModel @Inject constructor(
             }
         }
     }
-
-    fun refreshNewsList() { fetchNewsList() }
 }

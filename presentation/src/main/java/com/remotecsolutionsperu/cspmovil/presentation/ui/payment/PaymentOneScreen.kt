@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.remotecsolutionsperu.cspmovil.presentation.navigation.PaymentInstructions
 import com.remotecsolutionsperu.cspmovil.presentation.ui.components.ItemPaymentComponent
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
@@ -77,7 +76,7 @@ fun PaymentOneScreen(
                     title = paymentsItem.title,
                     content = paymentsItem.content,
                     note = paymentsItem.note,
-                    onClick = { navController.navigate(PaymentInstructions) }
+                    onClick = { navController.navigate("paymentInstruction") }
                 )
             }
         }

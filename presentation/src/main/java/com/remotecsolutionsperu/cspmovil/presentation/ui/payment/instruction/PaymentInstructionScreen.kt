@@ -14,7 +14,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.remotecsolutionsperu.cspmovil.presentation.navigation.PaymentInstructions
 
 @Composable
 fun PaymentInstructionScreen(
@@ -45,7 +44,7 @@ fun PaymentInstructionScreen(
         bottomBar = {
             PaymentInstructionFooter(
                 onBack = { navController.popBackStack() },
-                onNext = { navController.navigate(PaymentInstructions) }
+                onNext = { navController.navigate("paymentInstruction") }
             )
         }
     )
