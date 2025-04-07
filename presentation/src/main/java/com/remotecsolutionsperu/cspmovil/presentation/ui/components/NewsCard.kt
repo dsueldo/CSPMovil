@@ -1,5 +1,6 @@
 package com.remotecsolutionsperu.cspmovil.presentation.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,34 +14,35 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.remotecsolutionsperu.cspmovil.domain.entities.news.News
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
 
 @Composable
-fun FeedComponent(
+fun NewsCard(
     modifier: Modifier = Modifier,
-    image: String,
-    title: String,
-    content: String,
+    news: News,
+    onNewsClick: (News) -> Unit
 ) {
 
     Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.medium
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { onNewsClick(news) },
+        shape = MaterialTheme.shapes.medium,
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             AsyncImage(
                 modifier = Modifier.fillMaxWidth(),
-                model = image,
+                model = news.image,
                 contentScale = ContentScale.Crop,
                 contentDescription = null
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = title,
+                text = news.title,
                 fontWeight = FontWeight.Bold,
                 style = Typography.bodyLarge,
                 color = Color.Black
@@ -48,20 +50,10 @@ fun FeedComponent(
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = content,
+                text = news.content,
                 style = Typography.bodyMedium,
                 color = Color.Black
             )
         }
     }
-}
-
-@Preview
-@Composable
-private fun FeedComponentPreview() {
-    FeedComponent(
-        image = "url",
-        title = "Beca ingeniero global",
-        content = "Beneficio exclusivo"
-    )
 }

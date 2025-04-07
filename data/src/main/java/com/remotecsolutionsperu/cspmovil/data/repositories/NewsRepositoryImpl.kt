@@ -1,32 +1,50 @@
 package com.remotecsolutionsperu.cspmovil.data.repositories
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
-import com.remotecsolutionsperu.cspmovil.domain.entities.news.NewsItem
+import com.google.firebase.firestore.Query
+import com.remotecsolutionsperu.cspmovil.domain.entities.news.News
 import com.remotecsolutionsperu.cspmovil.domain.repositories.NewsRepository
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class NewsRepositoryImpl @Inject constructor(
-    private val firestore: FirebaseFirestore
-) : NewsRepository {
+class NewsRepositoryImpl @Inject constructor() : NewsRepository {
 
-    override suspend fun getNewsList(): Result<List<NewsItem>> {
-        val snapshot = firestore.collection("news").get().await()
+    private val firestore = FirebaseFirestore.getInstance()
+
+    override suspend fun getAllNews(): List<News> {
         return try {
-            val newsItems = snapshot.documents.mapNotNull { document ->
-                val image = document.getString("image")
-                val title = document.getString("title")
-                val content = document.getString("content")
-                val order = document.getLong("order")?.toInt()
-                if (image != null && title != null && content != null && order != null) {
-                    NewsItem(image, title, content, order)
-                } else {
-                    null
+            firestore.collection("news")
+                .orderBy("order", Query.Direction.ASCENDING)
+                .get()
+                .await()
+                .documents
+                .mapNotNull { document ->
+                document.toObject(News::class.java)?.apply {
+                    id = document.id
+                    Log.d(TAG, "Current data image: $image")
+                    Log.d(TAG, "Current data title: $title")
+                    Log.d(TAG, "Current data content: $content")
+                    Log.d(TAG, "Current data description: $description")
                 }
             }
-            Result.success(newsItems)
         } catch (e: Exception) {
-            Result.failure(e)
+            println("Error fetching all news: ${e.localizedMessage}")
+            emptyList()
+        }
+    }
+
+    override suspend fun getNewsDetail(newsId: String): News? {
+        return try {
+            firestore.collection("news")
+                .document(newsId)
+                .get()
+                .await()
+                .toObject(News::class.java)
+        } catch (e: Exception) {
+            println("Error fetching news detail for $newsId: ${e.localizedMessage}")
+            null
         }
     }
 }

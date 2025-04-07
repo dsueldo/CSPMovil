@@ -14,13 +14,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.remotecsolutionsperu.cspmovil.data.repositories.NewsRepositoryImpl
 import com.remotecsolutionsperu.cspmovil.presentation.ui.benefits.BenefitsScreen
 import com.remotecsolutionsperu.cspmovil.presentation.ui.editprofile.EditProfileScreen
-import com.remotecsolutionsperu.cspmovil.presentation.ui.main.MainScreen
+import com.remotecsolutionsperu.cspmovil.presentation.ui.news.NewsScreen
+import com.remotecsolutionsperu.cspmovil.presentation.ui.news.detail.NewsDetailScreen
 import com.remotecsolutionsperu.cspmovil.presentation.ui.payment.PaymentOneScreen
 import com.remotecsolutionsperu.cspmovil.presentation.ui.payment.instruction.PaymentInstructionScreen
 import com.remotecsolutionsperu.cspmovil.presentation.ui.profile.ProfileScreen
@@ -30,6 +34,7 @@ import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 @Composable
 fun MainNavigation(onSignOut: () -> Unit) {
 
+    val newsRepository = NewsRepositoryImpl()
     val navController = rememberNavController()
 
     Scaffold(
@@ -69,15 +74,24 @@ fun MainNavigation(onSignOut: () -> Unit) {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Main,
+            startDestination = "news",
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable<Main> { MainScreen() }
-            composable<Profile> { ProfileScreen(onSignOut,navController) }
-            composable<EditProfile> { EditProfileScreen(navController) }
-            composable<Benefit> { BenefitsScreen() }
-            composable<Payment> { PaymentOneScreen(navController) }
-            composable<PaymentInstructions> { PaymentInstructionScreen( navController) }
+            composable("news") {
+                NewsScreen(navController = navController, newsRepository = newsRepository)
+            }
+            composable("benefit") { BenefitsScreen() }
+            composable("payment") { PaymentOneScreen(navController) }
+            composable("paymentInstruction") { PaymentInstructionScreen( navController) }
+            composable("profile") { ProfileScreen(onSignOut,navController) }
+            composable("editProfile") { EditProfileScreen(navController) }
+            composable(
+                "news/{newsId}",
+                arguments = listOf(navArgument("newsId") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val newsId = backStackEntry.arguments?.getString("newsId") ?: ""
+                NewsDetailScreen(newsId = newsId)
+            }
         }
     }
 }

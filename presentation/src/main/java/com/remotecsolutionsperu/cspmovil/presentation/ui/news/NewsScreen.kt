@@ -1,4 +1,4 @@
-package com.remotecsolutionsperu.cspmovil.presentation.ui.main
+package com.remotecsolutionsperu.cspmovil.presentation.ui.news
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,27 +15,32 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
-import com.remotecsolutionsperu.cspmovil.presentation.ui.components.FeedComponent
+import com.remotecsolutionsperu.cspmovil.domain.repositories.NewsRepository
+import com.remotecsolutionsperu.cspmovil.presentation.ui.components.NewsCard
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
+import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.factories.NewsListViewModelFactory
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.news.NewsListViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(
-    modifier: Modifier = Modifier,
-    viewModel: NewsListViewModel = hiltViewModel()
+fun NewsScreen(
+    navController: NavHostController,
+    newsRepository: NewsRepository,
 ) {
-
+    val viewModel: NewsListViewModel = viewModel(
+        factory = remember { NewsListViewModelFactory(newsRepository) }
+    )
     val newsList by viewModel.newsList.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val isRefreshing by viewModel.isRefreshing.collectAsState()
@@ -79,28 +84,22 @@ fun MainScreen(
             }
         ) {
             LazyColumn(
-                modifier = modifier
+                modifier = Modifier
                     .background(MaterialTheme.colorScheme.background)
                     .fillMaxSize()
             ) {
-                items(newsList) { newsItem ->
-                    FeedComponent(
+                items(newsList) { news ->
+                    NewsCard(
                         modifier = Modifier.padding(
                             vertical = 8.dp,
                             horizontal = 0.dp
                         ),
-                        image = newsItem.imageUrl,
-                        title = newsItem.title,
-                        content = newsItem.content,
-                    )
+                        news = news
+                    ) {
+                        navController.navigate("news/${news.id}")
+                    }
                 }
             }
         }
     }
-}
-
-@Preview
-@Composable
-private fun MainScreenPreview() {
-    MainScreen()
 }
