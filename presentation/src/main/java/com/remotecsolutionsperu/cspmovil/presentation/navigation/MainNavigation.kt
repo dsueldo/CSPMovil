@@ -90,7 +90,7 @@ fun MainNavigation(onSignOut: () -> Unit) {
                 arguments = listOf(navArgument("newsId") { type = NavType.StringType })
             ) { backStackEntry ->
                 val newsId = backStackEntry.arguments?.getString("newsId") ?: ""
-                NewsDetailScreen(newsId = newsId)
+                NewsDetailScreen(newsId, navController)
             }
         }
     }
