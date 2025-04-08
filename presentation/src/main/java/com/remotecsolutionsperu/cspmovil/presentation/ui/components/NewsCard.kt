@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.remotecsolutionsperu.cspmovil.domain.entities.news.News
@@ -45,14 +46,16 @@ fun NewsCard(
                 text = news.title,
                 fontWeight = FontWeight.Bold,
                 style = Typography.bodyLarge,
-                color = Color.Black
+                color = Color.Black,
+                textAlign = TextAlign.Justify,
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = news.content,
                 style = Typography.bodyMedium,
-                color = Color.Black
+                color = Color.Black,
+                textAlign = TextAlign.Justify,
             )
         }
     }

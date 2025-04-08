@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
@@ -30,9 +31,7 @@ fun NewsDetailBody(
 
     Column(
         modifier = Modifier
-            .verticalScroll(rememberScrollState())
-            .fillMaxWidth()
-            .fillMaxSize(),
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AsyncImage(
@@ -43,24 +42,30 @@ fun NewsDetailBody(
             contentScale = ContentScale.Crop,
             contentDescription = null,
         )
+        Spacer(modifier = Modifier.padding(8.dp))
         Text(
-            modifier = modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             text = newsDetail.title,
             fontWeight = FontWeight.Bold,
             style = Typography.bodyLarge,
-            color = Color.Black
+            color = Color.Black,
+            textAlign = TextAlign.Justify,
         )
+        Spacer(modifier = Modifier.padding(8.dp))
         Text(
-            modifier = modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             text = newsDetail.content,
             style = Typography.bodyMedium,
-            color = Color.Black
+            color = Color.Black,
+            textAlign = TextAlign.Justify,
         )
+        Spacer(modifier = Modifier.padding(8.dp))
         Text(
-            modifier = modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             text = newsDetail.description,
             style = Typography.bodyMedium,
-            color = Color.Black
+            color = Color.Black,
+            textAlign = TextAlign.Justify,
         )
     }
 }
