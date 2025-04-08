@@ -15,28 +15,33 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
-import com.remotecsolutionsperu.cspmovil.presentation.ui.components.BenefitComponent
+import com.remotecsolutionsperu.cspmovil.domain.repositories.BenefitsRepository
+import com.remotecsolutionsperu.cspmovil.presentation.ui.components.BenefitsCard
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.benefits.BenefitsListViewModel
+import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.factories.BenefitsListViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BenefitsScreen(
-    modifier: Modifier = Modifier,
-    viewModel: BenefitsListViewModel = hiltViewModel(),
+    navController: NavHostController,
+    benefitsRepository: BenefitsRepository
 ) {
-
-    val benefitList by viewModel.benefitsList.collectAsState()
+    val viewModel: BenefitsListViewModel = viewModel(
+        factory = remember { BenefitsListViewModelFactory(benefitsRepository) }
+    )
+    val benefitsList by viewModel.benefitsList.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val isRefreshing by viewModel.isRefreshing.collectAsState()
 
@@ -79,29 +84,24 @@ fun BenefitsScreen(
             }
         ) {
             LazyColumn(
-                modifier = modifier
+                modifier = Modifier
                     .background(MaterialTheme.colorScheme.background)
                     .fillMaxSize()
             ) {
-                items(benefitList) { benefitsItem ->
-                    BenefitComponent(
+                items(benefitsList) { benefits ->
+                    BenefitsCard(
                         modifier = Modifier.padding(
                             vertical = 8.dp,
                             horizontal = 0.dp
                         ),
-                        image = benefitsItem.image,
-                        title = benefitsItem.title,
-                        content = benefitsItem.content,
-                        onNavigateWhatsapp = {}
+                        benefits = benefits,
+                        onBenefitsClick = {
+                            navController.navigate("benefits/${benefits.id}")
+                        },
+                        onNavigateWhatsapp = { },
                     )
                 }
             }
         }
     }
-}
-
-@Preview
-@Composable
-private fun BenefitsScreenPreview() {
-    BenefitsScreen()
 }

@@ -1,5 +1,6 @@
 package com.remotecsolutionsperu.cspmovil.presentation.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,60 +15,42 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.remotecsolutionsperu.cspmovil.domain.entities.benefits.Benefits
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
 
 @Composable
-fun BenefitComponent(
+fun BenefitsCard(
     modifier: Modifier = Modifier,
-    image: String,
-    title: String,
-    content: String,
+    benefits: Benefits,
+    onBenefitsClick: (Benefits) -> Unit,
     onNavigateWhatsapp: () -> Unit,
 ) {
 
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { onBenefitsClick(benefits) },
         shape = MaterialTheme.shapes.medium
     ) {
 
         Column(modifier = Modifier.padding(16.dp)) {
             AsyncImage(
                 modifier = Modifier.fillMaxWidth(),
-                model = image,
+                model = benefits.image,
                 contentScale = ContentScale.Crop,
                 contentDescription = null
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = title,
+                text = benefits.title,
                 fontWeight = FontWeight.Bold,
                 style = Typography.bodyLarge,
                 color = Color.Black,
                 textAlign = TextAlign.Justify,
             )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = content,
-                style = Typography.bodyMedium,
-                color = Color.Black,
-                textAlign = TextAlign.Justify,
-            )
         }
     }
-}
-
-@Preview
-@Composable
-private fun BenefitComponentPreview() {
-    BenefitComponent(
-        image = "url",
-        title = "Beca ingeniero global",
-        content = "Beneficio exclusivo",
-        onNavigateWhatsapp = {}
-    )
 }

@@ -20,8 +20,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.remotecsolutionsperu.cspmovil.data.repositories.BenefitsRepositoryImpl
 import com.remotecsolutionsperu.cspmovil.data.repositories.NewsRepositoryImpl
 import com.remotecsolutionsperu.cspmovil.presentation.ui.benefits.BenefitsScreen
+import com.remotecsolutionsperu.cspmovil.presentation.ui.benefits.detail.BenefitsDetailScreen
 import com.remotecsolutionsperu.cspmovil.presentation.ui.editprofile.EditProfileScreen
 import com.remotecsolutionsperu.cspmovil.presentation.ui.news.NewsScreen
 import com.remotecsolutionsperu.cspmovil.presentation.ui.news.detail.NewsDetailScreen
@@ -35,6 +37,7 @@ import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 fun MainNavigation(onSignOut: () -> Unit) {
 
     val newsRepository = NewsRepositoryImpl()
+    val benefitsRepository = BenefitsRepositoryImpl()
     val navController = rememberNavController()
 
     Scaffold(
@@ -80,7 +83,9 @@ fun MainNavigation(onSignOut: () -> Unit) {
             composable("news") {
                 NewsScreen(navController = navController, newsRepository = newsRepository)
             }
-            composable("benefit") { BenefitsScreen() }
+            composable("benefit") {
+                BenefitsScreen(navController = navController, benefitsRepository = benefitsRepository)
+            }
             composable("payment") { PaymentOneScreen(navController) }
             composable("paymentInstruction") { PaymentInstructionScreen( navController) }
             composable("profile") { ProfileScreen(onSignOut,navController) }
@@ -91,6 +96,13 @@ fun MainNavigation(onSignOut: () -> Unit) {
             ) { backStackEntry ->
                 val newsId = backStackEntry.arguments?.getString("newsId") ?: ""
                 NewsDetailScreen(newsId, navController)
+            }
+            composable(
+                "benefits/{benefitsId}",
+                arguments = listOf(navArgument("benefitsId") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val benefitsId = backStackEntry.arguments?.getString("benefitsId") ?: ""
+                BenefitsDetailScreen(benefitsId, navController)
             }
         }
     }
