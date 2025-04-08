@@ -97,8 +97,7 @@ fun BenefitsScreen(
                         benefits = benefits,
                         onBenefitsClick = {
                             navController.navigate("benefits/${benefits.id}")
-                        },
-                        onNavigateWhatsapp = { },
+                        }
                     )
                 }
             }

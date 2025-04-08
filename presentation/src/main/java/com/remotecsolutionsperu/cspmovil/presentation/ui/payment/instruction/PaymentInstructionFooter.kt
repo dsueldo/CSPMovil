@@ -8,13 +8,13 @@ import com.remotecsolutionsperu.cspmovil.presentation.ui.components.button.Foote
 @Composable
 fun PaymentInstructionFooter(
     onBack: () -> Unit,
-    onNext: () -> Unit,
+    onNavigateWhatsapp: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     FooterButtonComponent(
         modifier = modifier,
         onBack = onBack,
-        onNext = onNext,
+        onNavigateWhatsapp = onNavigateWhatsapp,
     )
 }
 
@@ -23,6 +23,6 @@ fun PaymentInstructionFooter(
 private fun PaymentInstructionFooterPreview() {
     PaymentInstructionFooter(
         onBack = {},
-        onNext = {}
+        onNavigateWhatsapp = {}
     )
 }

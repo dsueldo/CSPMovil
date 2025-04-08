@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun FooterButtonComponent(
     onBack: () -> Unit,
-    onNext: () -> Unit,
+    onNavigateWhatsapp: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -23,7 +23,7 @@ fun FooterButtonComponent(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         ButtonBack(onClick = onBack)
-        NextButton(onClick = onNext)
+        NextButton(onClick = onNavigateWhatsapp)
     }
 
 }
@@ -33,6 +33,6 @@ fun FooterButtonComponent(
 private fun FooterButtonComponentPreview() {
     FooterButtonComponent(
         onBack = {},
-        onNext = {}
+        onNavigateWhatsapp = {}
     )
 }
