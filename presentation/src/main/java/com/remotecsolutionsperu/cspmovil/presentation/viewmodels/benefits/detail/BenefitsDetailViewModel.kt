@@ -1,6 +1,5 @@
-package com.remotecsolutionsperu.cspmovil.presentation.viewmodels.benefits
+package com.remotecsolutionsperu.cspmovil.presentation.viewmodels.benefits.detail
 
-import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.remotecsolutionsperu.cspmovil.domain.entities.benefits.Benefits
@@ -13,12 +12,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BenefitsListViewModel @Inject constructor(
+class BenefitsDetailViewModel @Inject constructor(
     private val repository: BenefitsRepository,
 ) : CspAppViewModel() {
 
-    private val _benefitsList = MutableStateFlow<List<Benefits>>(emptyList())
-    val benefitsList: StateFlow<List<Benefits>> = _benefitsList
+    private val _benefitsDetail = MutableStateFlow(Benefits())
+    val benefitsDetail: StateFlow<Benefits> = _benefitsDetail
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
@@ -29,23 +28,17 @@ class BenefitsListViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(false)
     val uiState: StateFlow<Boolean> = _uiState
 
-    private val _isRefreshing = MutableStateFlow(false)
-    val isRefreshing: StateFlow<Boolean> = _isRefreshing
-
-    init {
-        fetchBenefitsList()
-    }
-
-    private fun fetchBenefitsList() {
+    fun fetchBenefitsDetail(benefitsId: String) {
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                _benefitsList.value = repository.getAllBenefits()
+                _benefitsDetail.value = repository.getBenefitsDetail(benefitsId)
                 _uiState.value = true
                 _isLoading.value = false
+                Log.d("BenefitsDetailViewModel", "Benefits Detail: ${_benefitsDetail.value}")
             } catch (e: Exception) {
-                _errorMessage.value = "Error fetching benefits: ${e.localizedMessage}"
-                Log.w(TAG, "Error fetching benefits", e)
+                _errorMessage.value =
+                    "Error al cargar el detalle del beneficio: ${e.localizedMessage}"
                 _uiState.value = false
                 _isLoading.value = false
             } finally {
@@ -53,6 +46,4 @@ class BenefitsListViewModel @Inject constructor(
             }
         }
     }
-
-    fun refreshBenefitsList() { fetchBenefitsList() }
 }

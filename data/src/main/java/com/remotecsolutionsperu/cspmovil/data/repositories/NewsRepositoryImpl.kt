@@ -21,8 +21,8 @@ class NewsRepositoryImpl @Inject constructor() : NewsRepository {
                 .await()
                 .documents
                 .mapNotNull { document ->
-                document.toObject(News::class.java)?.apply {
-                    id = document.id
+                    document.toObject(News::class.java)?.apply {
+                        id = document.id
                     Log.d(TAG, "Current data image: $image")
                     Log.d(TAG, "Current data title: $title")
                     Log.d(TAG, "Current data content: $content")
