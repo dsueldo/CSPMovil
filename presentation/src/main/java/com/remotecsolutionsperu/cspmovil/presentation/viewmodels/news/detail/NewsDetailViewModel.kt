@@ -16,8 +16,8 @@ class NewsDetailViewModel @Inject constructor(
     private val repository: NewsRepository
 ) : CspAppViewModel() {
 
-    private val _newsDetail = MutableStateFlow<News?>(null)
-    val newsDetail: StateFlow<News?> = _newsDetail
+    private val _newsDetail = MutableStateFlow(News())
+    val newsDetail: StateFlow<News> = _newsDetail
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading

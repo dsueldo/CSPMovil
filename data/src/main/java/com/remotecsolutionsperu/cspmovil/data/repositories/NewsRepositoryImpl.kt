@@ -35,16 +35,16 @@ class NewsRepositoryImpl @Inject constructor() : NewsRepository {
         }
     }
 
-    override suspend fun getNewsDetail(newsId: String): News? {
+    override suspend fun getNewsDetail(newsId: String): News {
         return try {
             firestore.collection("news")
                 .document(newsId)
                 .get()
                 .await()
-                .toObject(News::class.java)
+                .toObject(News::class.java) ?: throw Exception("News not found")
         } catch (e: Exception) {
             println("Error fetching news detail for $newsId: ${e.localizedMessage}")
-            null
+            throw e
         }
     }
 }
