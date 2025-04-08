@@ -25,7 +25,6 @@ fun BenefitsCard(
     modifier: Modifier = Modifier,
     benefits: Benefits,
     onBenefitsClick: (Benefits) -> Unit,
-    onNavigateWhatsapp: () -> Unit,
 ) {
 
     Card(

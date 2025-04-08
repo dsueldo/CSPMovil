@@ -44,7 +44,12 @@ fun PaymentInstructionScreen(
         bottomBar = {
             PaymentInstructionFooter(
                 onBack = { navController.popBackStack() },
-                onNext = { navController.navigate("paymentInstruction") }
+                onNavigateWhatsapp = {},
+                /*onNavigateWhatsapp = {
+                    WhatsAppButton(
+                    phoneNumber = "51961289348",
+                    message = "Hola, estoy interesado en el beneficio ${paymentsItem.title}"
+                ) }*/
             )
         }
     )
