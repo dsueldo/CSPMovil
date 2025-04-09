@@ -42,6 +42,7 @@ firebaseAuthKtx = "23.2.0"
 firebaseFirestoreKtx = "25.1.2"
 firebaseAuth = "23.2.0"
 firebaseStorageKtx = "21.0.1"
+recyclerview = "1.1.0"
 
 [libraries]
 androidx-compose-material3-material3 = { module = "androidx.compose.material3:material3" }
@@ -100,6 +101,7 @@ google-firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-aut
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

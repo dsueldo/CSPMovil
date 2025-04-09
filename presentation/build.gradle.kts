@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.google.firebase.auth.ktx)
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.recyclerview)
     kapt(libs.hilt.compiler)
     kapt(libs.hilt.android.compiler)
 

@@ -9,6 +9,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -22,6 +23,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.editprofile.EditProfileViewModel
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @Composable
 fun EditProfileBody(
@@ -29,7 +32,7 @@ fun EditProfileBody(
     viewModel: EditProfileViewModel,
 ) {
     val profileUiState by viewModel.profileUiState.collectAsState()
-    var showModalInput by remember { mutableStateOf(false) }
+    var showBirthdayPicker by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -153,7 +156,10 @@ fun EditProfileBody(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        SexComponent()
+        GenderComponent(
+            selectedGender = profileUiState.gender,
+            onGenderSelected = { viewModel.updateGender(it) }
+        )
 
         OutlinedTextField(
             singleLine = true,
@@ -164,7 +170,7 @@ fun EditProfileBody(
                 cursorColor = Color.Black
             ),
             value = profileUiState.birthday,
-            onValueChange = { viewModel.updateBirthday(it) },
+            onValueChange = { },
             label = {
                 Text(
                     text = "Cumpleaños",
@@ -178,6 +184,12 @@ fun EditProfileBody(
                     style = Typography.bodySmall,
                     color = Color.Black,
                 )
+            },
+            readOnly = true,
+            trailingIcon = {
+                TextButton(onClick = { showBirthdayPicker = true }) {
+                    Text(text = "Seleccionar", color = Color.Black)
+                }
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             keyboardActions = KeyboardActions(onNext = {}),
@@ -271,12 +283,16 @@ fun EditProfileBody(
             textStyle = Typography.bodySmall
         )
 
-        if (showModalInput) {
+        if (showBirthdayPicker) {
             BirthdayComponent(
-                onDateSelected = {
-                    showModalInput = false
+                onDateSelected = { dateMillis ->
+                    dateMillis?.let {
+                        val formattedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(it)
+                        viewModel.updateBirthday(formattedDate)
+                    }
+                    showBirthdayPicker = false
                 },
-                onDismiss = { showModalInput = false }
+                onDismiss = { showBirthdayPicker = false },
             )
         }
     }
