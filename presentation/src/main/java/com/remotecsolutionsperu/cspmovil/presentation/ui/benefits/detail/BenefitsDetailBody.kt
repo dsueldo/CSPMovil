@@ -1,5 +1,6 @@
 package com.remotecsolutionsperu.cspmovil.presentation.ui.benefits.detail
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +27,7 @@ import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.benefits.detail
 fun BenefitsDetailBody(
     modifier: Modifier = Modifier,
     viewModel: BenefitsDetailViewModel,
+    onImageClick: (String) -> Unit
 ) {
     val benefitsDetail by viewModel.benefitsDetail.collectAsState()
 
@@ -37,7 +39,8 @@ fun BenefitsDetailBody(
         AsyncImage(
             modifier = modifier
                 .fillMaxWidth()
-                .fillMaxSize(),
+                .fillMaxSize()
+                .clickable { onImageClick(benefitsDetail.image) },
             model = benefitsDetail.image,
             contentScale = ContentScale.Crop,
             contentDescription = null,

@@ -14,7 +14,7 @@ fun BenefitsDetailHeader(
 
     HeaderComponente(
         modifier = modifier,
-        title = "Detalle del beneficio",
+        title = "Detalle del Convenio",
         onBack = onBack
     )
 }
