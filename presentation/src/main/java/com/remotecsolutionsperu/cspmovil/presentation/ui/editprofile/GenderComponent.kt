@@ -15,23 +15,24 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
 
-data class Sexo(val id: String, val name: String)
+data class Gender(val id: String, val name: String)
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun SexComponent(modifier: Modifier = Modifier) {
+fun GenderComponent(
+    modifier: Modifier = Modifier,
+    selectedGender: String,
+    onGenderSelected: (String) -> Unit
+) {
 
-    val sexList = listOf(
-        Sexo(id = "1", name = "Hombre"),
-        Sexo(id = "2", name = "Mujer")
+    val options = listOf(
+        Gender(id = "1", name = "Hombre"),
+        Gender(id = "2", name = "Mujer")
     )
 
     var expanded by remember { mutableStateOf(false) }
-    var selectedSex by remember { mutableStateOf(sexList[0]) }
 
     ExposedDropdownMenuBox(
         modifier = modifier,
@@ -46,7 +47,7 @@ fun SexComponent(modifier: Modifier = Modifier) {
                 unfocusedBorderColor = Color.Black,
                 cursorColor = Color.Black,
             ),
-            value = TextFieldValue(selectedSex.name),
+            value = selectedGender,
             onValueChange = {},
             readOnly = true,
             label = {
@@ -65,26 +66,20 @@ fun SexComponent(modifier: Modifier = Modifier) {
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            sexList.forEach { sex ->
+            options.forEach { option ->
                 DropdownMenuItem(
                     text = {
                         Text(
-                            text = sex.name,
+                            text = option.name,
                             style = Typography.bodySmall
                         )
                     },
                     onClick = {
-                        selectedSex = sex
+                        onGenderSelected(option.name)
                         expanded = false
                     }
                 )
             }
         }
     }
-}
-
-@Preview
-@Composable
-private fun SexComponentPreview() {
-    SexComponent()
 }
