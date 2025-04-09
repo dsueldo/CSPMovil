@@ -1,5 +1,6 @@
 package com.remotecsolutionsperu.cspmovil.presentation.ui.news.detail
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +27,7 @@ import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.news.detail.New
 fun NewsDetailBody(
     modifier: Modifier = Modifier,
     viewModel: NewsDetailViewModel,
+    onImageClick: (String) -> Unit
 ) {
     val newsDetail by viewModel.newsDetail.collectAsState()
 
@@ -37,7 +39,8 @@ fun NewsDetailBody(
         AsyncImage(
             modifier = modifier
                 .fillMaxWidth()
-                .fillMaxSize(),
+                .fillMaxSize()
+                .clickable { onImageClick(newsDetail.image) },
             model = newsDetail.image,
             contentScale = ContentScale.Crop,
             contentDescription = null,
