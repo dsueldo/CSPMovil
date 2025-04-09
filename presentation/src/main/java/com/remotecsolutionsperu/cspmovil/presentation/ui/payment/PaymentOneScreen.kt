@@ -76,7 +76,7 @@ fun PaymentOneScreen(
                     title = paymentsItem.title,
                     content = paymentsItem.content,
                     note = paymentsItem.note,
-                    onClick = { navController.navigate("paymentInstruction") }
+                    onClick = { navController.navigate("paymentInstruction/${paymentsItem.title}") }
                 )
             }
         }

@@ -188,7 +188,11 @@ fun EditProfileBody(
             readOnly = true,
             trailingIcon = {
                 TextButton(onClick = { showBirthdayPicker = true }) {
-                    Text(text = "Seleccionar", color = Color.Black)
+                    Text(
+                        text = "Seleccionar",
+                        color = Color.Black,
+                        style = Typography.bodySmall
+                    )
                 }
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),

@@ -87,7 +87,13 @@ fun MainNavigation(onSignOut: () -> Unit) {
                 BenefitsScreen(navController = navController, benefitsRepository = benefitsRepository)
             }
             composable("payment") { PaymentOneScreen(navController) }
-            composable("paymentInstruction") { PaymentInstructionScreen( navController) }
+            composable(
+                "paymentInstruction/{title}",
+                arguments = listOf(navArgument("title") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val title = backStackEntry.arguments?.getString("title") ?: ""
+                PaymentInstructionScreen(navController, title)
+            }
             composable("profile") { ProfileScreen(onSignOut,navController) }
             composable("editProfile") { EditProfileScreen(navController) }
             composable(

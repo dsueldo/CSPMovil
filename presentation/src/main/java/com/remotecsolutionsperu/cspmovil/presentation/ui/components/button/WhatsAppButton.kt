@@ -9,11 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 @Composable
-fun WhatsAppButton(phoneNumber: String = "", message: String = "Hola desde mi app!") {
+fun WhatsAppButton(numeroTelefono: String, mensaje: String) {
     val context = LocalContext.current
 
     Button(onClick = {
-        val uri = Uri.parse("https://wa.me/$phoneNumber?text=${Uri.encode(message)}")
+        val uri = Uri.parse("https://wa.me/$numeroTelefono/?text=${Uri.encode(mensaje)}")
         val intent = Intent(Intent.ACTION_VIEW, uri)
         try {
             context.startActivity(intent)
@@ -25,6 +25,6 @@ fun WhatsAppButton(phoneNumber: String = "", message: String = "Hola desde mi ap
             Toast.makeText(context, "WhatsApp no está instalado.", Toast.LENGTH_SHORT).show()
         }
     }) {
-        Text(text = "Contactar por WhatsApp")
+        Text(text = "Enviar mensaje por WhatsApp")
     }
 }
