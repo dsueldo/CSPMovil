@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.security.crypto.ktx.v110alpha06)
     kapt(libs.hilt.compiler)
     kapt(libs.hilt.android.compiler)
 

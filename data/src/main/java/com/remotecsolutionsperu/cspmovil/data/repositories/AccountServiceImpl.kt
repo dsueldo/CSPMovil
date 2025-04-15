@@ -4,21 +4,24 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.Firebase
-import com.remotecsolutionsperu.cspmovil.domain.repositories.AccountService
+import com.google.firebase.database.GenericTypeIndicator
+import com.google.firebase.database.database
 import com.remotecsolutionsperu.cspmovil.domain.entities.user.User
+import com.remotecsolutionsperu.cspmovil.domain.repositories.AuthRepository
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class AccountServiceImpl @Inject constructor() : AccountService {
+class AccountServiceImpl @Inject constructor() : AuthRepository {
 
+    private val auth: FirebaseAuth = Firebase.auth
     override val currentUser: Flow<User?>
         get() = callbackFlow {
             val listener =
                 FirebaseAuth.AuthStateListener { auth ->
-                    this.trySend(auth.currentUser?.let { User(it.uid) })
+                    this.trySend(auth.currentUser?.let {User(it.uid, it.email) })
                 }
             Firebase.auth.addAuthStateListener(listener)
             awaitClose { Firebase.auth.removeAuthStateListener(listener) }
@@ -48,7 +51,30 @@ class AccountServiceImpl @Inject constructor() : AccountService {
     }
 
     override suspend fun signUp(email: String, password: String) {
-        Firebase.auth.createUserWithEmailAndPassword(email, password).await()
+        try {
+            val userCredential = Firebase.auth.createUserWithEmailAndPassword(email, password).await()
+            val user = userCredential.user ?: throw Exception("User creation failed")
+
+            val allowedUsersRef = Firebase.database.reference.child("allowed_user")
+            val snapshot = allowedUsersRef.get().await()
+
+            val genericTypeIndicator = object : GenericTypeIndicator<List<String>>() {}
+            val allowedUsers = snapshot.getValue(genericTypeIndicator) ?: emptyList()
+
+            if (allowedUsers.contains(email)) {
+                val userRef = Firebase.database.reference.child("users").child(user.uid)
+                userRef.setValue(mapOf("email" to email)).await()
+                Log.d("AuthRepositoryImpl", "User allowed and saved: $email")
+            } else {
+                user.delete().await()
+                Log.d("AuthRepositoryImpl", "User not allowed and deleted: $email")
+                throw Exception("Email is not allowed")
+            }
+        } catch (e: Exception) {
+            Log.e("AuthRepositoryImpl", "Error during sign-up: ${e.message}")
+            throw e
+        }
+
         Log.d("AccountServiceImpl", "User signUp in successfully")
         Log.d("AccountServiceImpl", "User ID: ${Firebase.auth.currentUser!!.uid}")
         Log.d("AccountServiceImpl", "Email: $email")
@@ -69,7 +95,7 @@ class AccountServiceImpl @Inject constructor() : AccountService {
     }
 
     override suspend fun signOut() {
-        Firebase.auth.signOut()
+        auth.signOut()
         Log.d("AccountServiceImpl", "User signed out successfully")
     }
 
@@ -79,5 +105,21 @@ class AccountServiceImpl @Inject constructor() : AccountService {
 
     override suspend fun getIdToken(): String? {
         return Firebase.auth.currentUser?.getIdToken(true)?.await()?.token
+    }
+
+    override suspend fun refreshToken(): String? {
+        TODO("Not yet implemented")
+    }
+
+    override fun saveToken(token: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getToken(): String? {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteToken() {
+        TODO("Not yet implemented")
     }
 }

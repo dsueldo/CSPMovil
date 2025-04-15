@@ -161,6 +161,28 @@ fun SignUpScreen(
         )
     }
 
+    if (errorAccountValidationMessage == stringResource(R.string.register_email_error_not_exist)) {
+        AlertDialog(
+            onDismissRequest = {
+                signUpViewModel.resetState()
+            },
+            confirmButton = {
+                Button(onClick = {
+                    signUpViewModel.resetState()
+                },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Red_Dark,
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text(stringResource(R.string.ok))
+                }
+            },
+            title = { Text(stringResource(R.string.alert)) },
+            text = { Text(stringResource(R.string.register_email_error_not_exist)) }
+        )
+    }
+
     Scaffold(
         modifier = modifier
             .systemBarsPadding()

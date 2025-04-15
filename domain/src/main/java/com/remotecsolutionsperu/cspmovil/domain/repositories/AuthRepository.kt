@@ -3,7 +3,7 @@ package com.remotecsolutionsperu.cspmovil.domain.repositories
 import com.remotecsolutionsperu.cspmovil.domain.entities.user.User
 import kotlinx.coroutines.flow.Flow
 
-interface AccountService {
+interface AuthRepository {
     val currentUser: Flow<User?>
     val currentUserId: String
     fun hasUser(): Boolean
@@ -14,4 +14,8 @@ interface AccountService {
     suspend fun signOut()
     suspend fun deleteAccount()
     suspend fun getIdToken(): String?
+    suspend fun refreshToken(): String?
+    fun saveToken(token: String)
+    fun getToken(): String?
+    fun deleteToken()
 }

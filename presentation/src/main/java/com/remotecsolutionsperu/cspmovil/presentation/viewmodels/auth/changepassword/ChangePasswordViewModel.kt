@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.viewModelScope
 import com.remotecsolutionsperu.cspmovil.data.repositories.EmailValidationService
-import com.remotecsolutionsperu.cspmovil.domain.repositories.AccountService
+import com.remotecsolutionsperu.cspmovil.domain.repositories.AuthRepository
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChangePasswordViewModel @Inject constructor(
-    private val accountService: AccountService,
+    private val authRepository: AuthRepository,
 ): CspAppViewModel() {
 
     private val _email = MutableStateFlow(TextFieldValue(""))
@@ -76,9 +76,9 @@ class ChangePasswordViewModel @Inject constructor(
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                accountService.sendPasswordResetEmail(_email.value.text)
+                authRepository.sendPasswordResetEmail(_email.value.text)
                 _isEmailSent.value = true
-                Log.d("ChangePasswordViewModel", "isEmailSent: ${accountService.sendPasswordResetEmail(_isEmailSent.value.toString())}")
+                Log.d("ChangePasswordViewModel", "isEmailSent: ${authRepository.sendPasswordResetEmail(_isEmailSent.value.toString())}")
             } catch (e: Exception) {
                 _errorMessage.value = when {
                     e.message?.contains("Failed to send password reset email. Please try again.") == true -> {

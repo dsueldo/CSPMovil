@@ -19,4 +19,5 @@
     <string name="register_successful_detail">Te has registrado correctamente.</string>
     <string name="register_successful_account">Cuenta Registrada</string>
     <string name="register_email_error">El correo ya se encuentra registrado.</string>
+    <string name="register_email_error_not_exist">El correo no puede ser registrado.</string>
 </resources>

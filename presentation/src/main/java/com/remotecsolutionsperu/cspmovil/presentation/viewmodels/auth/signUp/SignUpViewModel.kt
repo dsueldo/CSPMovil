@@ -5,7 +5,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.viewModelScope
 import com.remotecsolutionsperu.cspmovil.data.repositories.EmailValidationService
 import com.remotecsolutionsperu.cspmovil.data.repositories.PasswordValidationService
-import com.remotecsolutionsperu.cspmovil.domain.repositories.AccountService
+import com.remotecsolutionsperu.cspmovil.domain.repositories.AuthRepository
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val accountService: AccountService
+    private val authRepository: AuthRepository
 ) : CspAppViewModel() {
 
     private val _email = MutableStateFlow(TextFieldValue(""))
@@ -103,18 +103,16 @@ class SignUpViewModel @Inject constructor(
         _isLoading.value = true
         viewModelScope.launch {
             try {
-//                val isValidCode = accountService.validateCollegiateCode(_email.value, _collegiateCode.value)
-//                if (!isValidCode) {
-//                    _errorMessage.value = "Invalid collegiate code."
-//                    return@launch
-//                }
-                accountService.signUp(email = _email.value.text, password = _password.value.text)
+                authRepository.signUp(email = _email.value.text, password = _password.value.text)
                 _uiState.value = true
             } catch (e: Exception) {
                 _uiState.value = false
                 _errorMessage.value = when {
                     e.message?.contains("The email address is already in use by another account.") == true -> {
                         "El correo ya se encuentra registrado."
+                    }
+                    e.message?.contains("Email is not allowed") == true -> {
+                        "El correo no puede ser registrado."
                     }
                     e.message?.contains("Network error") == true -> {
                         "Error de conexión. Por favor, inténtelo de nuevo."
