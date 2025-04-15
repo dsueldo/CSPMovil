@@ -82,6 +82,7 @@ dependencies {
     implementation(libs.logging.interceptor)
 
     implementation(libs.coil)
+    implementation(libs.androidx.security.crypto.ktx.v110alpha06)
 
     implementation(project(":domain"))
 }

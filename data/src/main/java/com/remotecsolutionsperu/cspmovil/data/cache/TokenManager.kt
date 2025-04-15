@@ -1,8 +1,9 @@
-package com.remotecsolutionsperu.cspmovil.presentation.shared
+package com.remotecsolutionsperu.cspmovil.data.cache
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.security.crypto.MasterKey
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,7 +11,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.tasks.await
 
-class SessionManager(context: Context) {
+class TokenManager(context: Context) {
+
+    private val masterKeys = MasterKey.Builder(context)
+        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+        .build()
 
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences(

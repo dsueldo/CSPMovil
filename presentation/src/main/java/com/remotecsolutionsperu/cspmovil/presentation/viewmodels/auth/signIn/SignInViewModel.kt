@@ -5,8 +5,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.viewModelScope
 import com.remotecsolutionsperu.cspmovil.data.repositories.EmailValidationService
 import com.remotecsolutionsperu.cspmovil.data.repositories.PasswordValidationService
-import com.remotecsolutionsperu.cspmovil.domain.repositories.AccountService
-import com.remotecsolutionsperu.cspmovil.presentation.shared.SessionManager
+import com.remotecsolutionsperu.cspmovil.domain.repositories.AuthRepository
+import com.remotecsolutionsperu.cspmovil.data.cache.TokenManager
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,8 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val accountService: AccountService,
-    private val sessionManager: SessionManager,
+    private val authRepository: AuthRepository,
+    private val tokenManager: TokenManager,
 ) : CspAppViewModel() {
 
     private val _email = MutableStateFlow(TextFieldValue(""))
@@ -76,18 +76,18 @@ class SignInViewModel @Inject constructor(
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                accountService.signIn(_email.value.text, _password.value.text)
-                val idToken = accountService.getIdToken()
+                authRepository.signIn(_email.value.text, _password.value.text)
+                val idToken = authRepository.getIdToken()
                 if (idToken != null) {
                     val expirationTime = System.currentTimeMillis() + TOKEN_EXPIRATION_DURATION
-                    sessionManager.saveUserSession(
-                        accountService.currentUserId,
+                    tokenManager.saveUserSession(
+                        authRepository.currentUserId,
                         idToken,
                         expirationTime
                     )
                 }
-                Log.d("SignInViewModel", "currentUserId: ${accountService.currentUserId}")
-                Log.d("SignInViewModel", "User signed in getIdToken: ${accountService.getIdToken()}")
+                Log.d("SignInViewModel", "currentUserId: ${authRepository.currentUserId}")
+                Log.d("SignInViewModel", "User signed in getIdToken: ${authRepository.getIdToken()}")
                 _uiState.value = true
             } catch (e: Exception) {
                 _uiState.value = false
