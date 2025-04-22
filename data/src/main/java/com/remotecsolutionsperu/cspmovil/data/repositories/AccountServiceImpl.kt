@@ -65,6 +65,15 @@ class AccountServiceImpl @Inject constructor() : AuthRepository {
                 val userRef = Firebase.database.reference.child("users").child(user.uid)
                 userRef.setValue(mapOf("email" to email)).await()
                 Log.d("AuthRepositoryImpl", "User allowed and saved: $email")
+                Log.d("AccountServiceImpl", "User signUp in successfully")
+                Log.d("AccountServiceImpl", "User ID: ${Firebase.auth.currentUser!!.uid}")
+                Log.d("AccountServiceImpl", "Email: $email")
+                Log.d("AccountServiceImpl", "Password: $password")
+                Log.d("AccountServiceImpl", "User: ${Firebase.auth.currentUser}")
+                Log.d("AccountServiceImpl", "User UID: ${Firebase.auth.currentUser?.uid}")
+                Log.d("AccountServiceImpl", "User Email: ${Firebase.auth.currentUser?.email}")
+                Log.d("AccountServiceImpl", "User Display Name: ${Firebase.auth.currentUser?.displayName}")
+                Log.d("AccountServiceImpl", "User Phone Number: ${Firebase.auth.currentUser?.tenantId}")
             } else {
                 user.delete().await()
                 Log.d("AuthRepositoryImpl", "User not allowed and deleted: $email")
@@ -74,16 +83,6 @@ class AccountServiceImpl @Inject constructor() : AuthRepository {
             Log.e("AuthRepositoryImpl", "Error during sign-up: ${e.message}")
             throw e
         }
-
-        Log.d("AccountServiceImpl", "User signUp in successfully")
-        Log.d("AccountServiceImpl", "User ID: ${Firebase.auth.currentUser!!.uid}")
-        Log.d("AccountServiceImpl", "Email: $email")
-        Log.d("AccountServiceImpl", "Password: $password")
-        Log.d("AccountServiceImpl", "User: ${Firebase.auth.currentUser}")
-        Log.d("AccountServiceImpl", "User UID: ${Firebase.auth.currentUser?.uid}")
-        Log.d("AccountServiceImpl", "User Email: ${Firebase.auth.currentUser?.email}")
-        Log.d("AccountServiceImpl", "User Display Name: ${Firebase.auth.currentUser?.displayName}")
-        Log.d("AccountServiceImpl", "User Phone Number: ${Firebase.auth.currentUser?.tenantId}")
     }
 
     override suspend fun sendEmailVerification() {
