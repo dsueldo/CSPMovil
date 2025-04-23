@@ -161,6 +161,15 @@ fun EditProfileBody(
             onGenderSelected = { viewModel.updateGender(it) }
         )
 
+        if (showBirthdayPicker) {
+            BirthdayComponent(
+                onDateSelected = { formattedDate ->
+                    viewModel.updateBirthday(formattedDate)
+                },
+                onDismiss = { showBirthdayPicker = false },
+            )
+        }
+
         OutlinedTextField(
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
@@ -286,18 +295,5 @@ fun EditProfileBody(
             keyboardActions = KeyboardActions(onNext = {}),
             textStyle = Typography.bodySmall
         )
-
-        if (showBirthdayPicker) {
-            BirthdayComponent(
-                onDateSelected = { dateMillis ->
-                    dateMillis?.let {
-                        val formattedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(it)
-                        viewModel.updateBirthday(formattedDate)
-                    }
-                    showBirthdayPicker = false
-                },
-                onDismiss = { showBirthdayPicker = false },
-            )
-        }
     }
 }
