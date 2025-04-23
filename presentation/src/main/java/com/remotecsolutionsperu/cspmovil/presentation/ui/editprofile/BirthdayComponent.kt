@@ -14,22 +14,34 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BirthdayComponent(
-    onDateSelected: (Long?) -> Unit,
+    onDateSelected: (String) -> Unit,
     onDismiss: () -> Unit,
 ) {
 
     val datePickerState = rememberDatePickerState(initialDisplayMode = DisplayMode.Input)
 
+    // Define custom colors for the DatePicker
+    val customColors = DatePickerDefaults.colors(
+        selectedDayContainerColor = Red_Dark
+
+    )
+
     DatePickerDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(onClick = {
-                onDateSelected(datePickerState.selectedDateMillis)
+                datePickerState.selectedDateMillis?.let { dateMillis ->
+                    val formattedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(dateMillis)
+                    onDateSelected(formattedDate)
+                }
                 onDismiss()
             }) {
                 Text(text = "OK", color = Color.Black)
@@ -60,7 +72,7 @@ fun BirthdayComponent(
                 },
 
                 state = datePickerState,
-                colors = DatePickerDefaults.colors(),
+                colors = customColors,
             )
         },
     )
