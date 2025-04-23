@@ -1,3 +1,5 @@
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.logging.LogFactory.release
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -12,6 +14,10 @@ android {
     namespace = "com.remotecsolutionsperu.cspmovil"
     compileSdk = 34
 
+    signingConfigs {
+
+    }
+
     defaultConfig {
         applicationId = "com.remotecsolutionsperu.cspmovil"
         minSdk = 24
@@ -24,7 +30,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
