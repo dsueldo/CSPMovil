@@ -16,8 +16,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
-import java.text.SimpleDateFormat
-import java.util.Locale
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,20 +27,26 @@ fun BirthdayComponent(
     onDismiss: () -> Unit,
 ) {
 
-    val datePickerState = rememberDatePickerState(initialDisplayMode = DisplayMode.Input)
+    val state = rememberDatePickerState(
+        initialDisplayMode = DisplayMode.Input
+    )
 
     // Define custom colors for the DatePicker
     val customColors = DatePickerDefaults.colors(
         selectedDayContainerColor = Red_Dark
-
     )
 
     DatePickerDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(onClick = {
-                datePickerState.selectedDateMillis?.let { dateMillis ->
-                    val formattedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(dateMillis)
+                val date = state.selectedDateMillis
+                date?.let {
+                    val localDate = Instant.ofEpochMilli(it)
+                        .atZone(ZoneId.of("UTC"))
+                        .toLocalDate()
+                    val formattedDate = localDate
+                        .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
                     onDateSelected(formattedDate)
                 }
                 onDismiss()
@@ -54,6 +61,7 @@ fun BirthdayComponent(
         },
         content = {
             DatePicker(
+                state = state,
                 title = {
                     Text(
                         text = "Cumpleaños",
@@ -70,8 +78,6 @@ fun BirthdayComponent(
                         modifier = Modifier.padding(16.dp)
                     )
                 },
-
-                state = datePickerState,
                 colors = customColors,
             )
         },
