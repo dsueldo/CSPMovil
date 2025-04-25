@@ -34,7 +34,10 @@ import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Red_Dark
 
 @SuppressLint("RestrictedApi")
 @Composable
-fun MainNavigation(onSignOut: () -> Unit) {
+fun MainNavigation(
+    onSignOut: () -> Unit,
+    onDeleteAccount: () -> Unit,
+) {
 
     val newsRepository = NewsRepositoryImpl()
     val benefitsRepository = BenefitsRepositoryImpl()
@@ -94,7 +97,11 @@ fun MainNavigation(onSignOut: () -> Unit) {
                 val title = backStackEntry.arguments?.getString("title") ?: ""
                 PaymentInstructionScreen(navController, title)
             }
-            composable("profile") { ProfileScreen(onSignOut,navController) }
+            composable("profile") { ProfileScreen(
+                onSignOut,
+                onDeleteAccount,
+                navController,
+            ) }
             composable("editProfile") { EditProfileScreen(navController) }
             composable(
                 "news/{newsId}",

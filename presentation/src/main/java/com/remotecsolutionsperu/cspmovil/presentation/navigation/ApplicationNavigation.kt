@@ -29,6 +29,10 @@ fun ApplicationNavigation(
             onSignOut = {
                 splashViewModel.signOut()
                 isAuthenticated = false
+            },
+            onDeleteAccount = {
+                splashViewModel.deleteAccount()
+                isAuthenticated = false
             }
         )
     } else {

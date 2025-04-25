@@ -40,6 +40,7 @@ import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.profile.Profile
 @Composable
 fun ProfileScreen(
     onSignOut: () -> Unit,
+    onDeleteAccount: () -> Unit,
     navController: NavController = rememberNavController(),
     modifier: Modifier = Modifier,
     viewModel: ProfileViewModel = hiltViewModel()
@@ -48,6 +49,7 @@ fun ProfileScreen(
     val isLoading by viewModel.isLoading.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
     val showSignOutDialog = remember { mutableStateOf(false) }
+    val showDeleteAccountDialog = remember { mutableStateOf(false) }
     val isRefreshing by viewModel.isRefreshing.collectAsState()
 
     LaunchedEffect(Unit) {
@@ -107,6 +109,39 @@ fun ProfileScreen(
         )
     }
 
+    if (showDeleteAccountDialog.value) {
+        AlertDialog(
+            onDismissRequest = { showDeleteAccountDialog.value = false },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showDeleteAccountDialog.value = false
+                        onDeleteAccount()
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Red_Dark,
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text("OK")
+                }
+            },
+            title = { Text("Eliminar Cuenta") },
+            text = { Text("¿Está seguro que desea eliminar cuenta?") },
+            dismissButton = {
+                Button(
+                    onClick = { showDeleteAccountDialog.value = false },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Red_Dark,
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text("Cancelar")
+                }
+            }
+        )
+    }
+
     Scaffold(
         modifier = modifier
             .background(MaterialTheme.colorScheme.background)
@@ -143,7 +178,10 @@ fun ProfileScreen(
             ProfileFooter(
                 onSignOut = {
                     showSignOutDialog.value = true
-                }
+                },
+                onDeleteAccount = {
+                    showDeleteAccountDialog.value = true
+                },
             )
         }
     )
@@ -152,5 +190,8 @@ fun ProfileScreen(
 @Preview
 @Composable
 private fun ProfileScreenPreview() {
-    ProfileScreen(onSignOut = {})
+    ProfileScreen(
+        onSignOut = {},
+        onDeleteAccount = {}
+    )
 }
