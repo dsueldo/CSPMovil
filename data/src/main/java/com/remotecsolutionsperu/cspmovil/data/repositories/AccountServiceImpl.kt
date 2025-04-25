@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.database
 import com.remotecsolutionsperu.cspmovil.domain.entities.user.User
@@ -99,7 +100,26 @@ class AccountServiceImpl @Inject constructor() : AuthRepository {
     }
 
     override suspend fun deleteAccount() {
-        Firebase.auth.currentUser!!.delete().await()
+        try {
+            val user = Firebase.auth.currentUser
+            if (user != null) {
+                // Eliminar el nodo del usuario en Realtime Database
+                val userRef = Firebase.database.reference.child("users").child(user.uid)
+                userRef.removeValue().await()
+
+                // Eliminar el usuario de Firebase Authentication
+                user.delete().await()
+                Log.d("AccountServiceImpl", "User deleted successfully from Auth and Database")
+            } else {
+                Log.e("AccountServiceImpl", "No user is currently signed in")
+            }
+        } catch (e: FirebaseAuthRecentLoginRequiredException) {
+            Log.e("AccountServiceImpl", "Recent login required to delete account: ${e.message}")
+            throw e
+        } catch (e: Exception) {
+            Log.e("AccountServiceImpl", "Error deleting account: ${e.message}")
+            throw e
+        }
     }
 
     override suspend fun getIdToken(): String? {

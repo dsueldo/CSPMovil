@@ -21,4 +21,10 @@ class SplashViewModel @Inject constructor(
       authRepository.signOut()
     }
   }
+
+    fun deleteAccount() {
+      viewModelScope.launch {
+        authRepository.deleteAccount()
+        }
+    }
 }
