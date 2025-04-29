@@ -33,7 +33,37 @@ fun BirthdayComponent(
 
     // Define custom colors for the DatePicker
     val customColors = DatePickerDefaults.colors(
-        selectedDayContainerColor = Red_Dark
+        //Colores Generales
+        containerColor = Color.White, //Fondo del DatePicker
+        titleContentColor = Color.Red, //Color del Titulo
+        headlineContentColor = Color.Black, //Color del encabezado
+
+        //Modo Input
+        subheadContentColor = Color.Yellow, //Color del texto en el modo Input
+        dividerColor = Color.Black, //Color del separador
+        yearContentColor = Color.Black,
+        disabledYearContentColor = Color.Black,
+        selectedYearContentColor = Color.White,
+        selectedYearContainerColor = Red_Dark,
+
+        //Modo Display
+        selectedDayContainerColor = Red_Dark,
+        selectedDayContentColor = Color.White,
+
+        todayContentColor = Color.Black, //Color del dia por defecto
+        todayDateBorderColor = Color.Transparent,
+        dayContentColor = Color.Black,
+
+        weekdayContentColor = Color.Black,
+        navigationContentColor = Color.Black,
+        currentYearContentColor = Color.Black,
+        disabledSelectedDayContainerColor = Color.Black,
+        disabledSelectedYearContentColor = Color.Black,
+        disabledDayContentColor = Color.Black,
+        disabledSelectedDayContentColor = Color.Black,
+        dayInSelectionRangeContentColor = Color.Black,
+        dayInSelectionRangeContainerColor = Color.Black,
+
     )
 
     DatePickerDialog(
