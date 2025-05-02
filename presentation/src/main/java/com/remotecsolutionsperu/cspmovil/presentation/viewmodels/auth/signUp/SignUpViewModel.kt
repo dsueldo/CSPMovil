@@ -86,6 +86,15 @@ class SignUpViewModel @Inject constructor(
         return isValid
     }
 
+    fun validatePasswordComplexity(password: String): Boolean {
+        val hasUppercase = password.any { it.isUpperCase() }
+        val hasLowercase = password.any { it.isLowerCase() }
+        val hasDigit = password.any { it.isDigit() }
+        val hasSpecialChar = password.any { !it.isLetterOrDigit() }
+        val isValidLength = password.length >= 8
+        return hasUppercase && hasLowercase && hasDigit && hasSpecialChar && isValidLength
+    }
+
     fun validatePasswordStrength(password: String): String {
         return when {
             password.length < 6 -> "La contraseña es muy corta"
