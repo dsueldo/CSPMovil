@@ -32,6 +32,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
+import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.green_Dark
 import com.remotecsolutionsperu.presentation.R
 
 @Composable
@@ -148,7 +149,7 @@ fun SignUpBody(
         if (showPasswordStrength) {
             Text(
                 text = passwordStrength,
-                color = if (passwordStrength == stringResource(R.string.password_strong)) Color.Blue else Color.Red,
+                color = if (passwordStrength == stringResource(R.string.password_strong)) green_Dark else Color.Red,
                 modifier = Modifier
                     .padding(top = 8.dp)
             )

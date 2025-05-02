@@ -238,6 +238,9 @@ fun SignUpScreen(
                         if (signUpViewModel.password.value != signUpViewModel.confirmPassword.value) {
                             errorMessage = "Las contraseñas no coinciden."
                             showErrorDialog = true
+                        } else if(!signUpViewModel.validatePasswordComplexity(password.text)) {
+                            errorMessage = "Contraseña no cumple con los requisitos."
+                            showErrorDialog = true
                         } else {
                             signUpViewModel.onSignUpClick()
                         }
