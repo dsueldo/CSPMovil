@@ -23,8 +23,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.editprofile.EditProfileViewModel
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 @Composable
 fun EditProfileBody(

@@ -47,7 +47,7 @@ fun ProfileHeader(
             colors = ButtonDefaults.textButtonColors(Red_Dark),
         ) {
             Text(
-                text = "Editar cuenta",
+                text = "Editar Perfil",
                 color = Color.White
             )
         }
@@ -58,7 +58,7 @@ fun ProfileHeader(
 @Composable
 private fun ProfileHeaderPreview() {
     ProfileHeader(
-        name = "cristian",
+        name = "Diego",
         onEditAccount = {}
     )
 }

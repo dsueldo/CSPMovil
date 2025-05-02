@@ -1,9 +1,11 @@
 package com.remotecsolutionsperu.cspmovil.presentation.ui.components.button
 
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Whatsapp
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -14,7 +16,6 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun NextButton(
-    name: String = "Next",
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -24,14 +25,19 @@ fun NextButton(
         contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
         shape = RoundedCornerShape(32.dp),
         onClick = { onClick() },
-        icon = {
+        content = {
+            Text(
+                text = "Ir a WhatsApp",
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
+            Spacer(modifier = Modifier.padding(horizontal = 4.dp))
             Icon(
-                Icons.Filled.ArrowForward,
-                contentDescription = "Extended floating action button.",
+                Icons.Filled.Whatsapp,
+                contentDescription = "Botón de WhatsApp",
                 tint = MaterialTheme.colorScheme.onSecondaryContainer
             )
-       },
-        text = { Text(text = name) },
+        }
     )
 }
 
@@ -39,7 +45,6 @@ fun NextButton(
 @Composable
 private fun NextButtonPreview() {
     NextButton(
-        name = "Next",
         onClick = {}
     )
 }
