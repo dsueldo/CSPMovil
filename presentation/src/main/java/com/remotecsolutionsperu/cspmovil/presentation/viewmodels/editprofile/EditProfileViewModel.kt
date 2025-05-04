@@ -29,9 +29,6 @@ class EditProfileViewModel @Inject constructor(
     private val _errorMessage = MutableStateFlow("")
     val errorMessage: StateFlow<String> = _errorMessage
 
-    private val _userEmail = MutableStateFlow("")
-    val userEmail: StateFlow<String> = _userEmail
-
     private val auth = FirebaseAuth.getInstance()
 
     private val currentUser = auth.currentUser
@@ -40,10 +37,6 @@ class EditProfileViewModel @Inject constructor(
         currentUser?.let {
             _profileUiState.value = _profileUiState.value.copy(email = it.email.orEmpty())
         }
-    }
-    fun resetState() {
-        _uiState.value = false
-        _errorMessage.value = ""
     }
 
     fun updateName(name: String) {

@@ -20,9 +20,9 @@ import com.remotecsolutionsperu.cspmovil.presentation.utils.theme.Typography
 
 @Composable
 fun ProfileHeader(
+    modifier: Modifier = Modifier,
     name: String,
     onEditAccount: () -> Unit,
-    modifier: Modifier = Modifier
 ) {
 
     Text(
@@ -30,6 +30,7 @@ fun ProfileHeader(
         style = Typography.headlineMedium,
         fontWeight = FontWeight.Bold
     )
+
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -48,7 +49,8 @@ fun ProfileHeader(
         ) {
             Text(
                 text = "Editar Perfil",
-                color = Color.White
+                color = Color.White,
+                style = Typography.bodyMedium
             )
         }
     }
