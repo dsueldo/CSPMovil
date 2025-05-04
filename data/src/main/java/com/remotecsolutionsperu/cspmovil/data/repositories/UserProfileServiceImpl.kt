@@ -8,18 +8,18 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class UserProfileServiceImpl @Inject constructor(
-    private val firebaseAuth: FirebaseAuth,
+    private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore
 ) : UserProfileService {
 
     override suspend fun getProfile(): ProfileUiState {
-        val uid = firebaseAuth.currentUser?.uid ?: throw IllegalStateException("Usuario no autenticado")
-        val document = firestore.collection("profiles").document(uid).get().await()
+        val userId = auth.currentUser?.uid ?: throw IllegalStateException("Usuario no autenticado")
+        val document = firestore.collection("profiles").document(userId).get().await()
         return document.toObject(ProfileUiState::class.java) ?: ProfileUiState()
     }
 
     override suspend fun saveProfile(profile: ProfileUiState) {
-        val uid = firebaseAuth.currentUser?.uid ?: throw IllegalStateException("Usuario no autenticado")
+        val uid = auth.currentUser?.uid ?: throw IllegalStateException("Usuario no autenticado")
         firestore.collection("profiles").document(uid).set(profile).await()
     }
 }
