@@ -3,7 +3,7 @@ package com.remotecsolutionsperu.cspmovil.domain.entities.user
 data class ProfileUiState(
     val name: String = "",
     val lastName: String = "",
-    val email: String = "",
+    var email: String = "",
     val phone: String = "",
     val dni: String = "",
     val gender: String = "",

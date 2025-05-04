@@ -51,6 +51,7 @@ fun ProfileScreen(
     val showSignOutDialog = remember { mutableStateOf(false) }
     val showDeleteAccountDialog = remember { mutableStateOf(false) }
     val isRefreshing by viewModel.isRefreshing.collectAsState()
+    val email = viewModel.userEmail.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.refreshProfile()
@@ -171,6 +172,7 @@ fun ProfileScreen(
                         .padding(paddingValues)
                         .verticalScroll(rememberScrollState()),
                     viewModel = viewModel,
+                    email = email.value,
                 )
             }
         },

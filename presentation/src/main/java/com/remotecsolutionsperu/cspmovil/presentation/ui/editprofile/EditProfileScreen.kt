@@ -8,6 +8,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -20,6 +21,8 @@ fun EditProfileScreen(
     modifier: Modifier = Modifier,
     viewModel: EditProfileViewModel = hiltViewModel(),
 ) {
+
+    val email = viewModel.userEmail.collectAsState()
 
     Scaffold(
         modifier = modifier
@@ -38,6 +41,7 @@ fun EditProfileScreen(
                     .padding(paddingValues)
                     .verticalScroll(rememberScrollState()),
                 viewModel = viewModel,
+                email = email.value
             )
         },
         bottomBar = {

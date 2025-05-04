@@ -2,6 +2,7 @@ package com.remotecsolutionsperu.cspmovil.presentation.viewmodels.editprofile
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import com.remotecsolutionsperu.cspmovil.domain.entities.user.ProfileUiState
 import com.remotecsolutionsperu.cspmovil.domain.usecases.EditProfileUseCase
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
@@ -28,6 +29,18 @@ class EditProfileViewModel @Inject constructor(
     private val _errorMessage = MutableStateFlow("")
     val errorMessage: StateFlow<String> = _errorMessage
 
+    private val _userEmail = MutableStateFlow("")
+    val userEmail: StateFlow<String> = _userEmail
+
+    private val auth = FirebaseAuth.getInstance()
+
+    private val currentUser = auth.currentUser
+
+    init {
+        currentUser?.let {
+            _profileUiState.value = _profileUiState.value.copy(email = it.email.orEmpty())
+        }
+    }
     fun resetState() {
         _uiState.value = false
         _errorMessage.value = ""

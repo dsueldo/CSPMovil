@@ -2,12 +2,14 @@ package com.remotecsolutionsperu.cspmovil.presentation.viewmodels.profile
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import com.remotecsolutionsperu.cspmovil.domain.entities.user.ProfileUiState
 import com.remotecsolutionsperu.cspmovil.domain.usecases.GetProfileUseCase
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,6 +33,11 @@ class ProfileViewModel @Inject constructor(
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing
 
+    private val _userEmail = MutableStateFlow("")
+    val userEmail: StateFlow<String> = _userEmail
+
+    private val auth = FirebaseAuth.getInstance()
+
     init {
         fetchUserProfileData()
     }
@@ -40,6 +47,8 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val profile = getProfileUseCase.invoke()
+                val currentUser = auth.currentUser
+                _userEmail.value = currentUser?.email.toString()
                 _profileUiState.value = profile
                 _uiState.value = true
                 Log.d("ProfileViewModel", "profile: ${_profileUiState.value}")

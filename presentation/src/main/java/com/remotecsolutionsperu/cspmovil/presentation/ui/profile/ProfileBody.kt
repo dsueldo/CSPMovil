@@ -23,6 +23,7 @@ import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.profile.Profile
 fun ProfileBody(
     modifier: Modifier = Modifier,
     viewModel: ProfileViewModel,
+    email: String,
 ) {
     val profileUiState by viewModel.profileUiState.collectAsState()
 
@@ -55,7 +56,7 @@ fun ProfileBody(
             ItemProfileComponent(
                 imageVector = Icons.Outlined.Email,
                 title = "Correo",
-                content = it.email
+                content = email
             )
 
             ItemProfileComponent(
