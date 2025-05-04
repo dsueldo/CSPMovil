@@ -28,7 +28,6 @@ import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.editprofile.Edi
 fun EditProfileBody(
     modifier: Modifier = Modifier,
     viewModel: EditProfileViewModel,
-    email: String,
 ) {
     val profileUiState by viewModel.profileUiState.collectAsState()
     var showBirthdayPicker by remember { mutableStateOf(false) }
