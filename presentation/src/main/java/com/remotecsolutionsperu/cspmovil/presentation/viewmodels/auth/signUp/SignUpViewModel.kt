@@ -45,17 +45,26 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun updateEmail(newEmail: TextFieldValue) {
-        _email.value = newEmail
+        _email.value = newEmail.copy(
+            text = newEmail.text.trim(),
+            selection = newEmail.selection
+        )
         _errorMessage.value = ""
     }
 
     fun updatePassword(newPassword: TextFieldValue) {
-        _password.value = newPassword
+        _password.value = newPassword.copy(
+            text = newPassword.text.trim(),
+            selection = newPassword.selection
+        )
         _errorMessage.value = ""
     }
 
     fun updateConfirmPassword(newConfirmPassword: TextFieldValue) {
-        _confirmPassword.value = newConfirmPassword
+        _confirmPassword.value = newConfirmPassword.copy(
+            text = newConfirmPassword.text.trim(),
+            selection = newConfirmPassword.selection
+        )
         _errorMessage.value = ""
     }
 
