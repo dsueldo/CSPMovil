@@ -57,6 +57,7 @@ fun GenderComponent(
                     color = Color.Black
                 )
             },
+            textStyle = Typography.bodySmall,
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             }

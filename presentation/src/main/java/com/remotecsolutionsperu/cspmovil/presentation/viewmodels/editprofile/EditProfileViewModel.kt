@@ -34,8 +34,13 @@ class EditProfileViewModel @Inject constructor(
     private val currentUser = auth.currentUser
 
     init {
+        getEmail()
+    }
+
+    private fun getEmail() {
         currentUser?.let {
             _profileUiState.value = _profileUiState.value.copy(email = it.email.orEmpty())
+            Log.d("EditProfileViewModel", "getEmail: ${it.email}")
         }
     }
 
@@ -48,31 +53,31 @@ class EditProfileViewModel @Inject constructor(
     }
 
     fun updateEmail(email: String) {
-        _profileUiState.value = _profileUiState.value.copy(email = email)
+        _profileUiState.value = _profileUiState.value.copy(email = email.trim())
     }
 
     fun updatePhoneNumber(phone: String) {
-        _profileUiState.value = _profileUiState.value.copy(phone = phone)
+        _profileUiState.value = _profileUiState.value.copy(phone = phone.trim())
     }
 
     fun updateBirthday(birthday: String) {
-        _profileUiState.value = _profileUiState.value.copy(birthday = birthday)
+        _profileUiState.value = _profileUiState.value.copy(birthday = birthday.trim())
     }
 
     fun updateGender(gender: String) {
-        _profileUiState.value = _profileUiState.value.copy(gender = gender)
+        _profileUiState.value = _profileUiState.value.copy(gender = gender.trim())
     }
 
     fun updateDni(dni: String) {
-        _profileUiState.value = _profileUiState.value.copy(dni = dni)
+        _profileUiState.value = _profileUiState.value.copy(dni = dni.trim())
     }
 
     fun updateCodeNumber(codeNumber: String) {
-        _profileUiState.value = _profileUiState.value.copy(codeNumber = codeNumber)
+        _profileUiState.value = _profileUiState.value.copy(codeNumber = codeNumber.trim())
     }
 
     fun updateSpecialized(specialized: String) {
-        _profileUiState.value = _profileUiState.value.copy(specialized = specialized)
+        _profileUiState.value = _profileUiState.value.copy(specialized = specialized.trim())
     }
 
     fun validateFields(): Boolean {
