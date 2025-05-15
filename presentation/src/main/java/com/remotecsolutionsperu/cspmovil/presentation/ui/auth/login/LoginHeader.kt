@@ -34,13 +34,13 @@ fun LoginHeader(modifier: Modifier = Modifier) {
         Image(
             modifier = Modifier
                 .fillMaxWidth(),
-            painter = painterResource(id = R.drawable.ic_logo),
+            painter = painterResource(id = R.drawable.logo__2_),
             contentDescription = null
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.login_screen_subtitle),
+            text = "Colegio de Arquitectos del Perú",
             color = MaterialTheme.colorScheme.onBackground,
             style = Typography.titleMedium,
             fontSize = 30.sp,
@@ -54,7 +54,7 @@ fun LoginHeader(modifier: Modifier = Modifier) {
             .padding(8.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.login_screen_subtitle_2),
+            text = "",
             color = MaterialTheme.colorScheme.onBackground,
             style = Typography.titleSmall,
             fontSize = 30.sp,

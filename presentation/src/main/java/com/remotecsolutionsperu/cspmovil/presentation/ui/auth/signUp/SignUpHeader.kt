@@ -25,7 +25,7 @@ fun SignUpHeader(modifier: Modifier = Modifier) {
         Image(
             modifier = Modifier
                 .fillMaxWidth(),
-            painter = painterResource(id = R.drawable.ic_logo),
+            painter = painterResource(id = R.drawable.logo__2_),
             contentDescription = null
         )
         Spacer(modifier = Modifier.height(16.dp))
