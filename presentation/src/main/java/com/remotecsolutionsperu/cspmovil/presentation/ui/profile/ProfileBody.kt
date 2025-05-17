@@ -61,7 +61,7 @@ fun ProfileBody(
 
             ItemProfileComponent(
                 imageVector = Icons.Outlined.People,
-                title = "Genero",
+                title = "Género",
                 content = it.gender
             )
 
@@ -92,13 +92,13 @@ fun ProfileBody(
             ItemProfileComponent(
                 imageVector = Icons.Outlined.School,
                 title = "Condición",
-                content = it.condition
+                content = it.condition ?: ""
             )
 
             ItemProfileComponent(
                 imageVector = Icons.Outlined.School,
                 title = "Ultimo periodo pagado",
-                content = it.payLastPeriod
+                content = it.payLastPeriod ?: ""
             )
         }
 

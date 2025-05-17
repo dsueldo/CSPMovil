@@ -85,7 +85,13 @@ fun SignUpBody(
                     color = Color.Black,
                 )
             },
-            placeholder = { Text(stringResource(R.string.login_screen_enter_email)) },
+            placeholder = {
+                Text(
+                    stringResource(R.string.login_screen_enter_email),
+                    style = Typography.bodySmall,
+                    color = Color.Black,
+                )
+            },
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Email,
@@ -119,7 +125,13 @@ fun SignUpBody(
                     color = Color.Black,
                 )
             },
-            placeholder = { Text(stringResource(R.string.login_screen_enter_password)) },
+            placeholder = {
+                Text(
+                    text = stringResource(R.string.login_screen_enter_password),
+                    style = Typography.bodySmall,
+                    color = Color.Black,
+                )
+            },
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 IconButton(onClick = { passwordVisibleValueChange(!passwordVisible) }) {
@@ -176,7 +188,13 @@ fun SignUpBody(
                     color = Color.Black,
                 )
             },
-            placeholder = { Text(stringResource(R.string.login_screen_enter_password)) },
+            placeholder = {
+                Text(
+                    text = stringResource(R.string.login_screen_enter_password),
+                    style = Typography.bodySmall,
+                    color = Color.Black,
+                )
+            },
             visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 IconButton(onClick = { confirmPasswordVisibleValueChange(!confirmPasswordVisible) }) {

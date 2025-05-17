@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.remotecsolutionsperu.cspmovil.domain.entities.user.ProfileUiState
-import com.remotecsolutionsperu.cspmovil.domain.usecases.EditProfileUseCase
+import com.remotecsolutionsperu.cspmovil.domain.usecases.ProfileUseCase
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditProfileViewModel @Inject constructor(
-    private val editProfileUseCase: EditProfileUseCase,
+    private val profileUseCase: ProfileUseCase,
 ) : CspAppViewModel() {
 
     private val _uiState = MutableStateFlow(false)
@@ -94,12 +94,12 @@ class EditProfileViewModel @Inject constructor(
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                editProfileUseCase.invoke(_profileUiState.value)
+                profileUseCase.saveProfileData(_profileUiState.value)
                 _uiState.value = true
                 Log.d("EditProfileViewModel", "profile: ${_profileUiState.value}")
             } catch (e: Exception) {
                 _uiState.value = false
-                _errorMessage.value = e.message ?: "Error"
+                _errorMessage.value = e.message ?: "Error al guardar el perfil"
             } finally {
                 _isLoading.value = false
             }

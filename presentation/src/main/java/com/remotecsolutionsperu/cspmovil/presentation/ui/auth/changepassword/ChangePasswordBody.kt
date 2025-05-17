@@ -65,7 +65,13 @@ fun ChangePasswordBody(
                     color = Color.Black,
                 )
             },
-            placeholder = { Text(stringResource(R.string.login_screen_enter_email)) },
+            placeholder = {
+                Text(
+                    stringResource(R.string.login_screen_enter_email),
+                    style = Typography.bodySmall,
+                    color = Color.Black,
+                )
+            },
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Email,
@@ -99,7 +105,13 @@ fun ChangePasswordBody(
                     color = Color.Black,
                 )
             },
-            placeholder = { Text(stringResource(R.string.login_screen_enter_email)) },
+            placeholder = {
+                Text(
+                    stringResource(R.string.login_screen_enter_email),
+                    style = Typography.bodySmall,
+                    color = Color.Black,
+                )
+            },
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Email,

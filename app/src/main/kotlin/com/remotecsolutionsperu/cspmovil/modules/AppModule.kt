@@ -3,8 +3,7 @@ package com.remotecsolutionsperu.cspmovil.modules
 import com.remotecsolutionsperu.cspmovil.domain.repositories.BenefitsRepository
 import com.remotecsolutionsperu.cspmovil.domain.repositories.NewsRepository
 import com.remotecsolutionsperu.cspmovil.domain.repositories.UserProfileService
-import com.remotecsolutionsperu.cspmovil.domain.usecases.EditProfileUseCase
-import com.remotecsolutionsperu.cspmovil.domain.usecases.GetProfileUseCase
+import com.remotecsolutionsperu.cspmovil.domain.usecases.ProfileUseCase
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.benefits.BenefitsListViewModel
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.benefits.detail.BenefitsDetailViewModel
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.editprofile.EditProfileViewModel
@@ -22,13 +21,10 @@ import dagger.hilt.components.SingletonComponent
 object AppModule {
 
     @Provides
-    fun provideGetProfileUseCase(repository: UserProfileService): GetProfileUseCase = GetProfileUseCase(repository)
+    fun provideProfileUseCase(repository: UserProfileService): ProfileUseCase = ProfileUseCase(repository)
 
     @Provides
-    fun provideEditProfileUseCase(repository: UserProfileService): EditProfileUseCase = EditProfileUseCase(repository)
-
-    @Provides
-    fun provideEditProfileViewModel(editProfileUseCase: EditProfileUseCase): EditProfileViewModel = EditProfileViewModel(editProfileUseCase)
+    fun provideEditProfileViewModel(profileUseCase: ProfileUseCase,): EditProfileViewModel = EditProfileViewModel(profileUseCase)
 
     @Provides
     fun provideNewsListViewModel(repository: NewsRepository): NewsListViewModel = NewsListViewModel(repository)

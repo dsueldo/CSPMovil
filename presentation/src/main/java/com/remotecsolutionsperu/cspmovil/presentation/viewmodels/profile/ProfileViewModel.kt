@@ -4,18 +4,17 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.remotecsolutionsperu.cspmovil.domain.entities.user.ProfileUiState
-import com.remotecsolutionsperu.cspmovil.domain.usecases.GetProfileUseCase
+import com.remotecsolutionsperu.cspmovil.domain.usecases.ProfileUseCase
 import com.remotecsolutionsperu.cspmovil.presentation.viewmodels.CspAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val getProfileUseCase: GetProfileUseCase,
+    private val profileUseCase: ProfileUseCase,
 ) : CspAppViewModel() {
 
     private val _uiState = MutableStateFlow(false)
@@ -46,7 +45,7 @@ class ProfileViewModel @Inject constructor(
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val profile = getProfileUseCase.invoke()
+                val profile = profileUseCase.getProfileData()
                 val currentUser = auth.currentUser
                 _userEmail.value = currentUser?.email.toString()
                 _profileUiState.value = profile
@@ -64,7 +63,7 @@ class ProfileViewModel @Inject constructor(
         _isRefreshing.value = true
         viewModelScope.launch {
             try {
-                val profile = getProfileUseCase.invoke()
+                val profile = profileUseCase.getProfileData()
                 _profileUiState.value = profile
             } catch (e: Exception) {
                 _errorMessage.value = e.message ?: "Error"

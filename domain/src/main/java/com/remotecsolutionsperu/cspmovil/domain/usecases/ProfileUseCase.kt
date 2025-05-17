@@ -4,10 +4,14 @@ import com.remotecsolutionsperu.cspmovil.domain.entities.user.ProfileUiState
 import com.remotecsolutionsperu.cspmovil.domain.repositories.UserProfileService
 import javax.inject.Inject
 
-class GetProfileUseCase @Inject constructor(
+class ProfileUseCase @Inject constructor(
     private val userProfileService: UserProfileService
 ) {
-    suspend operator fun invoke(): ProfileUiState {
+    suspend fun getProfileData(): ProfileUiState {
         return userProfileService.getProfile()
+    }
+
+    suspend fun saveProfileData(profile: ProfileUiState) {
+        return userProfileService.saveProfile(profile)
     }
 }
