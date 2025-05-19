@@ -41,6 +41,8 @@ fun ChangePasswordBody(
     confirmEmailFocusRequester: FocusRequester,
 ) {
 
+    val emailMatch = email.text == confirmEmail.text
+
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.End,
@@ -123,6 +125,13 @@ fun ChangePasswordBody(
             keyboardActions = KeyboardActions(onDone = {}),
             textStyle = Typography.bodySmall
         )
+
+        if (!emailMatch) {
+            Text(
+                text = "Los correos no coinciden",
+                color = Color.Red
+            )
+        }
     }
 }
 

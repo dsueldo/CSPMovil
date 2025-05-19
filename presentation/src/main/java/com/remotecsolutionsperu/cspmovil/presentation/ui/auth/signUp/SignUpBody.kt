@@ -61,6 +61,8 @@ fun SignUpBody(
     passwordStrength: String
 ) {
 
+    val passwordMatch = password.text == confirmPassword.text
+
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.End,
@@ -220,6 +222,13 @@ fun SignUpBody(
             keyboardActions = KeyboardActions(onDone = {}),
             textStyle = Typography.bodySmall
         )
+
+        if (!passwordMatch) {
+            Text(
+                text = "Las contraseñas no coinciden",
+                color = Color.Red
+            )
+        }
     }
 }
 

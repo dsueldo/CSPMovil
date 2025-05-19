@@ -60,6 +60,8 @@ fun ChangePasswordScreen(
     var showDialog by remember { mutableStateOf(false) }
     var showErrorDialog by remember { mutableStateOf(false) }
 
+    val emailsMatch = email.text == confirmEmail.text
+
     if (isLoading) {
         BasicAlertDialog(
             onDismissRequest = { },
@@ -156,15 +158,16 @@ fun ChangePasswordScreen(
         bottomBar = {
             ChangePasswordFooter(
                 onClick = {
+                    if (!emailsMatch) {
+                        showErrorDialog = true
+                        errorMessage = "Correos no coinciden."
+                        return@ChangePasswordFooter
+                    }
+
                     val isConfirmEmailValid = changePasswordViewModel.validateEnterConfirmEmail()
                     val isEmailValid = changePasswordViewModel.validateEnterEmail()
                     if (isEmailValid && isConfirmEmailValid) {
-                        if (changePasswordViewModel.email.value != changePasswordViewModel.confirmEmail.value) {
-                            errorMessage = "Los correos no coinciden."
-                            showErrorDialog = true
-                        } else {
-                            changePasswordViewModel.sendPasswordResetEmail()
-                        }
+                        changePasswordViewModel.sendPasswordResetEmail()
                     } else {
                         showErrorDialog = true
                         errorMessage = changePasswordViewModel.errorMessage.value

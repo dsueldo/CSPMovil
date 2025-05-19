@@ -68,6 +68,8 @@ fun SignUpScreen(
     var showDialog by remember { mutableStateOf(false) }
     var showErrorDialog by remember { mutableStateOf(false) }
 
+    val passwordsMatch = password.text == confirmPassword.text
+
     if (uiState) {
         showDialog = true
     }
@@ -231,16 +233,19 @@ fun SignUpScreen(
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp),
                 onClickRegistration = {
+                    if (!passwordsMatch) {
+                     showErrorDialog = true
+                     errorMessage = "Contraseñas no coinciden."
+                     return@SignUpFooter
+                    }
+
                     val isPasswordValid = signUpViewModel.validateEnterPassword()
                     val isConfirmPasswordValid = signUpViewModel.validateEnterConfirmPassword()
                     val isEmailValid = signUpViewModel.validateEnterEmail()
                     if (isEmailValid && isPasswordValid && isConfirmPasswordValid) {
-                        if (signUpViewModel.password.value != signUpViewModel.confirmPassword.value) {
-                            errorMessage = "Las contraseñas no coinciden."
+                        if(!signUpViewModel.validatePasswordComplexity(password.text)) {
                             showErrorDialog = true
-                        } else if(!signUpViewModel.validatePasswordComplexity(password.text)) {
                             errorMessage = "Contraseña no cumple con los requisitos."
-                            showErrorDialog = true
                         } else {
                             signUpViewModel.onSignUpClick()
                         }
