@@ -107,3 +107,6 @@ lint/tmp/
 
 # Google Services file
 google-services.json
+
+# Archivos relacionados con la firma de Android
+keystore.properties
